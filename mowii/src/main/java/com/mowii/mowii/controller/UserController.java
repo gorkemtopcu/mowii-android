@@ -1,13 +1,12 @@
-package controller;
+package com.mowii.mowii.controller;
 
 
-import model.User;
-import org.apache.logging.log4j.message.Message;
+import com.mowii.mowii.model.User;
+import com.mowii.mowii.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.UserService;
 
 @RestController
 @RequestMapping("/user")
@@ -19,7 +18,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    
+
     @GetMapping("/greet")
     public String sayHello() {
 
