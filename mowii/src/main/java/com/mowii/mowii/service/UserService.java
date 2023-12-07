@@ -1,10 +1,9 @@
-package service;
+package com.mowii.mowii.service;
 
-import repository.UserRepository;
-import model.User;
+import com.mowii.mowii.repository.UserRepository;
+import com.mowii.mowii.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
 
 @Service
 public class UserService {
