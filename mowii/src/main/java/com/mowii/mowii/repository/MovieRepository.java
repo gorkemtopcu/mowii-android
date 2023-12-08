@@ -10,4 +10,10 @@ public interface MovieRepository extends MongoRepository<Movie, String> {
 
 
     List<Movie> findByDirector(String director);
+
+    List<Movie> findByImdbScoreGreaterThanEqual(double imdbScore);
+
+    List<Movie> findByReleaseYear(int year);
+
+    List<Movie> findByGenresContaining(String genre);
 }

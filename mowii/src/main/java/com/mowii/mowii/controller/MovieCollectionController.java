@@ -49,8 +49,7 @@ public class MovieCollectionController {
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
-
-
+    
     @DeleteMapping("/delete/{id}")
     public void deleteMovieCollection(@PathVariable String id) {
         movieCollectionService.deleteMovieCollection(id);

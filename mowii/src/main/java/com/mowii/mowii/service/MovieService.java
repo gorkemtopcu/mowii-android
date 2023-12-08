@@ -68,4 +68,16 @@ public class MovieService {
     public List<Movie> getMovieByDirector(String director) {
         return movieRepository.findByDirector(director);
     }
+
+    public List<Movie> getMovieByRating(double rating) {
+        return movieRepository.findByImdbScoreGreaterThanEqual(rating);
+    }
+
+    public List<Movie> getMovieByYear(Integer year) {
+        return movieRepository.findByReleaseYear(year);
+    }
+
+    public List<Movie> getMovieByGenre(String genre) {
+        return movieRepository.findByGenresContaining(genre);
+    }
 }

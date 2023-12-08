@@ -4,6 +4,7 @@ import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,20 @@ public class MovieController {
     @GetMapping("director/{name}")
     public List<Movie> getMovieByDirector(@PathVariable String name) {
         return movieService.getMovieByDirector(name);
+    }
+
+    @GetMapping("genre/{genre}")
+    public List<Movie> getMovieByGenre(@PathVariable String genre) {
+        return movieService.getMovieByGenre(genre);
+    }
+    @GetMapping("IMDB/{rating}")
+    public List<Movie> getMovieIMDBRating(@PathVariable double rating) {
+        return movieService.getMovieByRating(rating);
+    }
+
+    @GetMapping("releaseYear/{year}")
+    public List<Movie> getMovieIMDBRating(@PathVariable int year) {
+        return movieService.getMovieByYear(year);
     }
 
     @PostMapping("/add")
