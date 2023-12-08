@@ -21,16 +21,21 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/getAllUser")
+    @GetMapping("/getAll")
     private List<User> getAllUsers() {
         return userService.getAll();
     }
 
-    @PostMapping("/post")
+    @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
 
         User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<User> deleteUser(@RequestBody String id) {
+        User deletedUser = userService.deleteUser(id);
+        return new ResponseEntity<>(deletedUser, deletedUser != null ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+    }
 }

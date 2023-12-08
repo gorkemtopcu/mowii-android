@@ -30,4 +30,15 @@ public class UserService {
     public List<User> getAll() {
         return userRepository.findAll();
     }
+
+    public User deleteUser(String id) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            userRepository.deleteById(id);
+            return user;
+        }
+        return null;
+    }
 }
