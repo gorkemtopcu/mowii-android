@@ -1,5 +1,7 @@
 package com.mowii.mowii.controller;
 
+import com.mowii.mowii.exception.MovieCollectionNotFoundException;
+import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.model.*;
 import com.mowii.mowii.service.MovieCollectionService;
@@ -81,7 +83,13 @@ public class MovieCollectionController {
 
 
     @DeleteMapping("/delete/{id}")
-    public void deleteMovieCollection(@PathVariable String id) {
-        movieCollectionService.delete(id);
+    public ResponseEntity<?> deleteMovieCollection(@PathVariable String id) {
+        try {
+            MovieCollection deletedCollection = movieCollectionService.delete(id);
+            return new ResponseEntity<>(deletedCollection, HttpStatus.OK);
+        } catch (MovieCollectionNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
     }
 }
