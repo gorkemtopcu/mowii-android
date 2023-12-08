@@ -29,7 +29,6 @@ public class MovieCollectionController {
         return movieCollectionService.getMovieCollectionById(id);
     }
 
-
     @DeleteMapping("/delete/{id}")
     public void deleteMovieCollection(@PathVariable String id) {
         movieCollectionService.deleteMovieCollection(id);
