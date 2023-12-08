@@ -1,5 +1,6 @@
 package com.mowii.mowii.service;
 
+import com.mowii.mowii.exception.MovieCollectionNotFoundException;
 import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.model.MovieCollection;
 import com.mowii.mowii.model.User;
@@ -40,7 +41,7 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
             return movieCollectionOptional.get();
         } else {
             // User not found, throw an exception or return a special value
-            throw new UserNotFoundException("User not found with ID: " + id);
+            throw new MovieCollectionNotFoundException("Movie collection not found with ID: " + id);
         }
     }
 
@@ -59,5 +60,9 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
         MovieCollection movieCollection = getById(id);
         movieCollectionRepository.deleteById(id);
         return movieCollection;
+    }
+
+    public void updateMovieCollection(MovieCollection movieCollection) {
+        movieCollectionRepository.save(movieCollection);
     }
 }
