@@ -23,7 +23,7 @@ public class MovieCollectionController {
     private final UserService userService;
 
     @Autowired
-    public MovieCollectionController(MovieCollectionService movieCollectionService) {
+    public MovieCollectionController(MovieCollectionService movieCollectionService, UserService userService) {
         this.movieCollectionService = movieCollectionService;
         this.userService = userService;
     }
