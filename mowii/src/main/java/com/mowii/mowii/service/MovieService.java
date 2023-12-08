@@ -55,4 +55,8 @@ public class MovieService {
 
     public boolean doesMovieExist(String id) {return movieRepository.existsById(id);
     }
+
+    public List<Movie> getMovieByDirector(String director) {
+        return movieRepository.findByDirector(director);
+    }
 }

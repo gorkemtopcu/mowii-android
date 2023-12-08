@@ -30,6 +30,11 @@ public class MovieController {
         return movieService.getMovieById(id);
     }
 
+    @GetMapping("director/{name}")
+    public List<Movie> getMovieByDirector(@PathVariable String name) {
+        return movieService.getMovieByDirector(name);
+    }
+
     @PostMapping("/add")
     public Movie addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);
