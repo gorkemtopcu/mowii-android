@@ -1,14 +1,11 @@
 package com.mowii.mowii.service;
 
-import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.model.MovieCollection;
-import com.mowii.mowii.model.User;
 import com.mowii.mowii.repository.MovieCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MovieCollectionService {
