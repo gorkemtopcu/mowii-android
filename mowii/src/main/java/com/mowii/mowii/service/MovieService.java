@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MovieService {
+public class MovieService implements MowiiService<Movie>{
 
     private final MovieRepository movieRepository;
 
@@ -19,48 +19,18 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
-    }
-
-    public Movie getMovieById(String id) {
-        Optional<Movie> optionalMovie = movieRepository.findById(id);
-        return optionalMovie.orElse(null);
-    }
-
-    public Movie addMovie(Movie movie) {
+    @Override
+    public Movie create(Movie movie) {
         return movieRepository.save(movie);
     }
 
-    public Movie updateMovie(String id, Movie updatedMovie) {
-        Optional<Movie> optionalMovie = movieRepository.findById(id);
+    @Override
+    public Movie getById(String id) {
+        Optional<Movie> userOptional = movieRepository.findById(id);
 
-        if (optionalMovie.isPresent()) {
-            Movie existingMovie = optionalMovie.get();
-            existingMovie.setTitle(updatedMovie.getTitle());
-            existingMovie.setGenres(updatedMovie.getGenres());
-            existingMovie.setDirector(updatedMovie.getDirector());
-            existingMovie.setActors(updatedMovie.getActors());
-            existingMovie.setImdbScore(updatedMovie.getImdbScore());
-            existingMovie.setReleaseYear(updatedMovie.getReleaseYear());
-
-            return movieRepository.save(existingMovie);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
         } else {
-            return null; // Movie with the given id not found
-        }
-    }
-
-    public Movie deleteMovie(String id)
-    {
-        Optional<Movie> movieOptional = movieRepository.findById(id);
-
-        if (movieOptional.isPresent()) {
-            Movie movie = movieOptional.get();
-            movieRepository.deleteById(id);
-            return movie;
-        }
-        else {
-            // Movie not found, throw an exception or return a special value
             throw new MovieNotFoundException("Movie not found with ID: " + id);
         }
     }
@@ -79,5 +49,31 @@ public class MovieService {
 
     public List<Movie> getMovieByGenre(String genre) {
         return movieRepository.findByGenresContaining(genre);
+    }
+
+    @Override
+    public List<Movie> getAll() {
+        return movieRepository.findAll();
+    }
+
+    @Override
+    public Movie update(String id, Movie updatedMovie) {
+        Movie movie = getById(id);
+
+        movie.setTitle(updatedMovie.getTitle());
+        movie.setGenres(updatedMovie.getGenres());
+        movie.setDirector(updatedMovie.getDirector());
+        movie.setActors(updatedMovie.getActors());
+        movie.setImdbScore(updatedMovie.getImdbScore());
+        movie.setReleaseYear(updatedMovie.getReleaseYear());
+
+        return movieRepository.save(movie);
+    }
+
+    @Override
+    public Movie delete(String id) {
+        Movie movie = getById(id);
+        movieRepository.deleteById(id);
+        return movie;
     }
 }

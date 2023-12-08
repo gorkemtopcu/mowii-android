@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements MowiiService<User> {
 
     private final UserRepository userRepository;
 
@@ -19,12 +19,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) {
+    @Override
+    public User create(User user) {
         // Add any additional business logic here if needed
         return userRepository.save(user);
     }
 
-    public User getUserById(String id) {
+    @Override
+    public User getById(String id) {
         Optional<User> userOptional = userRepository.findById(id);
 
         if (userOptional.isPresent()) {
@@ -35,20 +37,27 @@ public class UserService {
         }
     }
 
+    @Override
     public List<User> getAll() {
         return userRepository.findAll();
     }
 
-    public User deleteUser(String id) {
-        Optional<User> userOptional = userRepository.findById(id);
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            userRepository.deleteById(id);
-            return user;
-        } else {
-            // User not found, throw an exception or return a special value
-            throw new UserNotFoundException("User not found with ID: " + id);
-        }
+    @Override
+    public User update(String id, User updatedUser) {
+        User user = getById(id);
+
+        user.setName(updatedUser.getName());
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(updatedUser.getPassword());
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User delete(String id) {
+        User user = getById(id);
+        userRepository.deleteById(id);
+        return user;
     }
 }

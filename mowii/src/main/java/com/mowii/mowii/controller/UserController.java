@@ -29,14 +29,14 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
+        User createdUser = userService.create(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
         try {
-            User deletedUser = userService.deleteUser(id);
+            User deletedUser = userService.delete(id);
             return new ResponseEntity<>(deletedUser, HttpStatus.CREATED);
         } catch (UserNotFoundException e) {
             String errorMessage = e.getMessage();

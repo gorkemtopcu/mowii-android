@@ -24,12 +24,13 @@ public class MovieController {
 
     @GetMapping("/getAll")
     public List<Movie> getAllMovies() {
-        return movieService.getAllMovies();
+        return movieService.getAll();
     }
 
     @GetMapping("/{id}")
     public Movie getMovieById(@PathVariable String id) {
-        return movieService.getMovieById(id);
+
+        return movieService.getById(id);
     }
 
     @GetMapping("director/{name}")
@@ -53,18 +54,18 @@ public class MovieController {
 
     @PostMapping("/add")
     public Movie addMovie(@RequestBody Movie movie) {
-        return movieService.addMovie(movie);
+        return movieService.create(movie);
     }
 
     @PutMapping("/update/{id}")
     public Movie updateMovie(@PathVariable String id, @RequestBody Movie updatedMovie) {
-        return movieService.updateMovie(id, updatedMovie);
+        return movieService.update(id, updatedMovie);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteMovie(@PathVariable String id) {
         try {
-            Movie deletedMovie = movieService.deleteMovie(id);
+            Movie deletedMovie = movieService.delete(id);
             return new ResponseEntity<>(deletedMovie, HttpStatus.OK);
         } catch (MovieNotFoundException e) {
             String errorMessage = e.getMessage();
