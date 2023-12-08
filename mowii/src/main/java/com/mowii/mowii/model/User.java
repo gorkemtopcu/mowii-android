@@ -16,6 +16,8 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private int collectionCount;
+    private int totalLikes;
 
     @DBRef
     private List<MovieCollection> collections;

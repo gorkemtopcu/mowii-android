@@ -12,19 +12,28 @@ import java.util.List;
 public class MovieCollection {
     @Id
     private String id;
-    private String userId;
+
     private String name;
+    private int like;
 
     @DBRef
     private List<Movie> movies;
+    @DBRef
+    private User user;
 
     public MovieCollection() {
     }
 
-    public MovieCollection(String userId, String name, List<Movie> movies) {
-        this.userId = userId;
+    public MovieCollection(User user, String name, int like) {
+        this.user = user;
         this.name = name;
-        this.movies = movies;
+        this.like = like;
     }
 
+    public MovieCollection(User user, String name, List<Movie> movies, int like) {
+        this.user = user;
+        this.name = name;
+        this.movies = movies;
+        this.like = like;
+    }
 }
