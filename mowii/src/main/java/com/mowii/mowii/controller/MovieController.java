@@ -3,6 +3,8 @@ package com.mowii.mowii.controller;
 import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/getAll")
     public List<Movie> getAllMovies() {
         return movieService.getAllMovies();
     }
@@ -39,7 +41,16 @@ public class MovieController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteMovie(@PathVariable String id) {
-        movieService.deleteMovie(id);
+    public ResponseEntity<String> deleteMovie(@PathVariable String id) {
+        if (movieService.doesMovieExist(id)) {
+            try {
+                movieService.deleteMovie(id);
+                return new ResponseEntity<>("Movie deleted successfully", HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>("Error deleting movie: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity<>("Error deleting movie: Movie with ID " + id + " not found", HttpStatus.NOT_FOUND);
+        }
     }
 }

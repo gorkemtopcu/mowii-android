@@ -52,4 +52,7 @@ public class MovieService {
     public void deleteMovie(String id) {
         movieRepository.deleteById(id);
     }
+
+    public boolean doesMovieExist(String id) {return movieRepository.existsById(id);
+    }
 }
