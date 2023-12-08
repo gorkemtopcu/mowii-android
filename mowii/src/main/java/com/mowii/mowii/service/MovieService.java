@@ -1,5 +1,6 @@
 package com.mowii.mowii.service;
 
+import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ public class MovieService {
         if (optionalMovie.isPresent()) {
             Movie existingMovie = optionalMovie.get();
             existingMovie.setTitle(updatedMovie.getTitle());
-            existingMovie.setGenre(updatedMovie.getGenre());
+            existingMovie.setGenres(updatedMovie.getGenres());
             existingMovie.setDirector(updatedMovie.getDirector());
-            existingMovie.setActor(updatedMovie.getActor());
+            existingMovie.setActors(updatedMovie.getActors());
             existingMovie.setImdbScore(updatedMovie.getImdbScore());
             existingMovie.setReleaseYear(updatedMovie.getReleaseYear());
 
@@ -49,10 +50,18 @@ public class MovieService {
         }
     }
 
-    public void deleteMovie(String id) {
-        movieRepository.deleteById(id);
-    }
+    public Movie deleteMovie(String id)
+    {
+        Optional<Movie> movieOptional = movieRepository.findById(id);
 
-    public boolean doesMovieExist(String id) {return movieRepository.existsById(id);
+        if (movieOptional.isPresent()) {
+            Movie movie = movieOptional.get();
+            movieRepository.deleteById(id);
+            return movie;
+        }
+        else {
+            // Movie not found, throw an exception or return a special value
+            throw new MovieNotFoundException("Movie not found with ID: " + id);
+        }
     }
 }
