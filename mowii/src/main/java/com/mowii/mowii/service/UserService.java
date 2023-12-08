@@ -1,5 +1,6 @@
 package com.mowii.mowii.service;
 
+import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.repository.UserRepository;
 import com.mowii.mowii.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class UserService {
             userRepository.deleteById(id);
             return user;
         }
-        return null;
+        else {
+            // User not found, throw an exception or return a special value
+            throw new UserNotFoundException("User not found with ID: " + id);
+        }
     }
 }

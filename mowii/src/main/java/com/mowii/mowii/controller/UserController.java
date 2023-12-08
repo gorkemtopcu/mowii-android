@@ -1,6 +1,7 @@
 package com.mowii.mowii.controller;
 
 
+import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.model.User;
 import com.mowii.mowii.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,18 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-
         User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<User> deleteUser(@RequestBody String id) {
-        User deletedUser = userService.deleteUser(id);
-        return new ResponseEntity<>(deletedUser, deletedUser != null ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> deleteUser(@RequestParam String id) {
+        try {
+            User deletedUser = userService.deleteUser(id);
+            return new ResponseEntity<>(deletedUser, HttpStatus.CREATED);
+        } catch (UserNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
     }
 }
