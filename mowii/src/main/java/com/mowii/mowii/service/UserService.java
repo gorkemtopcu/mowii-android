@@ -24,8 +24,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> getUserById(String userId) {
-        return  userRepository.findById(userId);
+    public User getUserById(String id) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else {
+            // User not found, throw an exception or return a special value
+            throw new UserNotFoundException("User not found with ID: " + id);
+        }
     }
 
     public List<User> getAll() {
@@ -39,8 +46,7 @@ public class UserService {
             User user = userOptional.get();
             userRepository.deleteById(id);
             return user;
-        }
-        else {
+        } else {
             // User not found, throw an exception or return a special value
             throw new UserNotFoundException("User not found with ID: " + id);
         }

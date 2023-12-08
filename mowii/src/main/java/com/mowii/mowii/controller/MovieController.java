@@ -1,5 +1,6 @@
 package com.mowii.mowii.controller;
 
+import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,16 +47,13 @@ public class MovieController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteMovie(@PathVariable String id) {
-        if (movieService.doesMovieExist(id)) {
-            try {
-                movieService.deleteMovie(id);
-                return new ResponseEntity<>("Movie deleted successfully", HttpStatus.OK);
-            } catch (Exception e) {
-                return new ResponseEntity<>("Error deleting movie: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } else {
-            return new ResponseEntity<>("Error deleting movie: Movie with ID " + id + " not found", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> deleteMovie(@PathVariable String id) {
+        try {
+            Movie deletedMovie = movieService.deleteMovie(id);
+            return new ResponseEntity<>(deletedMovie, HttpStatus.OK);
+        } catch (MovieNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
 }

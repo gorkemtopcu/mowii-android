@@ -4,28 +4,33 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @Document
 public class Movie {
     @Id
     private String id;
+
     private String title;
-    private String genre;
+    private List<String> genres;
     private String director;
-    private String actor;
+    private List<String> actors;
+    private String plot;
     private double imdbScore;
     private int releaseYear;
 
     public Movie() {
+
     }
 
-    public Movie(String title, String genre, String director, String actor, double imdbScore, int releaseYear) {
+    public Movie(String title, List<String> genres, String director, List<String> actors, String plot, double imdbScore, int releaseYear) {
         this.title = title;
-        this.genre = genre;
+        this.genres = genres;
         this.director = director;
-        this.actor = actor;
+        this.actors = actors;
+        this.plot = plot;
         this.imdbScore = imdbScore;
         this.releaseYear = releaseYear;
     }
-
 }
