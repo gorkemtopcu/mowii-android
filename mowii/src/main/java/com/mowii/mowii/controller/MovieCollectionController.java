@@ -36,8 +36,14 @@ public class MovieCollectionController {
     }
 
     @GetMapping("/{id}")
-    public MovieCollection getMovieCollectionById(@PathVariable String id) {
-        return movieCollectionService.getById(id);
+    public ResponseEntity<?> getMovieCollectionById(@PathVariable String id) {
+        try {
+            MovieCollection movieCollection = movieCollectionService.getById(id);
+            return new ResponseEntity<>(movieCollection, HttpStatus.OK);
+        } catch (MovieCollectionNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/create")

@@ -1,7 +1,9 @@
 package com.mowii.mowii.controller;
 
 
+import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.exception.UserNotFoundException;
+import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.model.User;
 import com.mowii.mowii.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    private User getUserById(@PathVariable String id) {
-        return userService.getById(id);
+    private ResponseEntity<?> getUserById(@PathVariable String id) {
+        try {
+            User user = userService.getById(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (MovieNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/getAll")
