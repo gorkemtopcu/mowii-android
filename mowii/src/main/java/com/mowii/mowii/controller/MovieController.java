@@ -28,9 +28,14 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Movie getMovieById(@PathVariable String id) {
-
-        return movieService.getById(id);
+    public ResponseEntity<?> getMovieById(@PathVariable String id) {
+        try {
+            Movie movie = movieService.getById(id);
+            return new ResponseEntity<>(movie, HttpStatus.OK);
+        } catch (MovieNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("director/{name}")
