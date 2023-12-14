@@ -6,17 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="28dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="-20dp">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,6 +110,7 @@
                     android:textColor="@color/primary"></TextView>
 
                 <TextView
+                    android:id="@+id/txt_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -144,5 +144,6 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 </FrameLayout>
