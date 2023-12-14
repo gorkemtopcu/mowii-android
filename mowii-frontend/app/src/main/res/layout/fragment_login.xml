@@ -36,7 +36,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Please login with your information"
+                android:text="Please log in with your information"
                 android:textColor="@color/primary"
                 android:alpha="0.7">
 
@@ -59,10 +59,11 @@
             </TextView>
 
             <EditText
+                android:id="@+id/etxt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:drawableEnd="@drawable/done_icon">
+                android:drawableEnd="@drawable/email_icon"
+                android:inputType="textEmailAddress">
 
             </EditText>
 
@@ -84,10 +85,11 @@
             </TextView>
 
             <EditText
+                android:id="@+id/etxt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:drawableEnd="@drawable/password_icon">
+                android:drawableEnd="@drawable/password_icon"
+                android:inputType="textPassword">
 
             </EditText>
 
@@ -97,28 +99,35 @@
 
             </View>
 
-            <RelativeLayout
+            <LinearLayout
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/txt_ask_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:text="I forgot my password"
-                    android:textColor="@color/primary"></TextView>
+                    android:text="Don't have an account?"
+                    android:textColor="@color/primary"
+                    android:alpha="0.7">
+                </TextView>
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent">
+                </View>
 
                 <TextView
                     android:id="@+id/txt_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="Sign Up"
-                    android:textColor="@color/primary"></TextView>
+                    android:text="Sign up"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold">
+                </TextView>
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="wrap_content"
@@ -127,10 +136,10 @@
             </View>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogin"
+                android:id="@+id/btn_signup"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Login"
+                android:text="Log in"
                 app:cornerRadius="32dp">
 
             </com.google.android.material.button.MaterialButton>
