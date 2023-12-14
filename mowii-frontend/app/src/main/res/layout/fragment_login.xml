@@ -60,10 +60,11 @@
             </TextView>
 
             <EditText
+                android:id="@+id/txtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:drawableEnd="@drawable/done_icon">
+                android:drawableEnd="@drawable/done_icon"
+                android:inputType="textEmailAddress">
 
             </EditText>
 
@@ -85,10 +86,11 @@
             </TextView>
 
             <EditText
+                android:id="@+id/txtPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:drawableEnd="@drawable/password_icon">
+                android:drawableEnd="@drawable/password_icon"
+                android:inputType="textPassword">
 
             </EditText>
 
