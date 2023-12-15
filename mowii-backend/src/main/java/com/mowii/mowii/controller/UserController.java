@@ -41,6 +41,22 @@ public class UserController {
         return userService.getAll();
     }
 
+    @PostMapping("/check-email")
+    public ResponseEntity<?> checkEmailAvailability(@RequestBody AuthenticationRequest request) {
+        try {
+            // Attempt to retrieve a user with the provided email
+            User existingUser = userService.getByEmail(request.getEmail());
+
+            // If the user is found, the email is already taken
+            return new ResponseEntity<>("Email is already taken", HttpStatus.BAD_REQUEST);
+
+        } catch (UserNotFoundException e) {
+            // If the user is not found, the email is available
+            return new ResponseEntity<>("Email is available", HttpStatus.OK);
+        }
+    }
+
+
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticateUser(@RequestBody AuthenticationRequest request) {
         try {
