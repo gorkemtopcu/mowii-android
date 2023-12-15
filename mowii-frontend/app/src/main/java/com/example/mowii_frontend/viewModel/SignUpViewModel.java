@@ -28,7 +28,7 @@ public class SignUpViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 // Handle registration failure
-                Log.i("REG", "onFailure: ");
+                Log.i("REG", "onFailure: " + t.getMessage());
             }
         });
     }
