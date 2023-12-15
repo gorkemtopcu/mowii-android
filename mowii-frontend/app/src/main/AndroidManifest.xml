@@ -20,6 +20,9 @@
             android:name=".view.RegistrationActivity"
             android:exported="false" />
         <activity
+            android:name=".view.BottomNavigationMenu"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
