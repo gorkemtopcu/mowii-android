@@ -60,4 +60,15 @@ public class UserService implements MowiiService<User> {
         userRepository.deleteById(id);
         return user;
     }
+
+    public User getByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else {
+            // User not found, throw an exception or return a special value
+            throw new UserNotFoundException("User not found with email: " + email);
+        }
+    }
 }

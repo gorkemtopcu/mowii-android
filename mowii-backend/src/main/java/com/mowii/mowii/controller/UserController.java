@@ -3,6 +3,7 @@ package com.mowii.mowii.controller;
 
 import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.exception.UserNotFoundException;
+import com.mowii.mowii.model.AuthenticationRequest;
 import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.model.User;
 import com.mowii.mowii.service.UserService;
@@ -29,7 +30,7 @@ public class UserController {
         try {
             User user = userService.getById(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
-        } catch (MovieNotFoundException e) {
+        } catch (UserNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
@@ -38,6 +39,25 @@ public class UserController {
     @GetMapping("/getAll")
     private List<User> getAllUsers() {
         return userService.getAll();
+    }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> authenticateUser(@RequestBody AuthenticationRequest request) {
+        try {
+            User user = userService.getByEmail(request.getEmail());
+
+            // Check if the provided password matches the stored password
+            boolean isValid = user.getPassword().equals(request.getPassword());
+
+            if (isValid) {
+                return new ResponseEntity<>("Authentication successful", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/create")
