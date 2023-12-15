@@ -49,13 +49,13 @@ public class SignupFragment extends Fragment {
         String enteredPassword = passwordEditText.getText().toString();
 
         if (!isValidUsername(enteredUsername)){
-            Toast.makeText(requireContext(), "Invalid username! Username must be at least 3 characters.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Username must be at least 3 characters.", Toast.LENGTH_SHORT).show();
         }
         else if (!isValidEmail(enteredEmail)) {
             Toast.makeText(requireContext(), "Invalid email!", Toast.LENGTH_SHORT).show();
         }
         else if (!isValidPassword(enteredPassword)) {
-            Toast.makeText(requireContext(), "Invalid password! Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
         }
         else {
             // TODO: try to register user to database
