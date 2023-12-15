@@ -77,9 +77,14 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.create(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        boolean isEmailAvailable = checkEmailAvailability(new AuthenticationRequest(user.getEmail(), user.getPassword())).getStatusCode() == HttpStatus.OK;
+        if (isEmailAvailable) {
+            User createdUser = userService.create(user);
+            return new ResponseEntity<>(createdUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Email is already taken", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/delete/{id}")

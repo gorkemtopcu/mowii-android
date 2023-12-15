@@ -1,5 +1,6 @@
 package com.example.mowii_frontend.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -67,7 +68,11 @@ public class LoginFragment extends Fragment {
     }
 
     private void onLoginSuccessful(){
+        Intent intent = new Intent(requireActivity(), BottomNavigationMenu.class);
+        startActivity(intent);
 
+        // Finish the current activity (splash screen) to prevent going back
+        requireActivity().finish();
     }
 
     private void onLoginFailed(String message) {

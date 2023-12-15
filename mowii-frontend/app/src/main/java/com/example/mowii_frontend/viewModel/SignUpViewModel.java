@@ -29,6 +29,7 @@ public class SignUpViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.code() == 200) { registrationResult.setValue(new ApiResponse(true, "")); }
+                else if(response.code() == 400) {registrationResult.setValue(new ApiResponse(false, "Email is already taken."));}
                 else  registrationResult.setValue(new ApiResponse(false, "Registration failed."));
             }
 

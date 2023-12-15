@@ -1,5 +1,6 @@
 package com.example.mowii_frontend.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mowii_frontend.viewModel.LogInViewModel;
@@ -51,7 +52,7 @@ public class SignupFragment extends Fragment {
         });
 
         // Signup button clicked
-        Button signupButton = view.findViewById(R.id.btn_signup);
+        signupButton = view.findViewById(R.id.btn_signup);
         signupButton.setOnClickListener(this::onSignUpButtonClicked);
 
         usernameEditText = view.findViewById(R.id.etxt_username);
@@ -88,7 +89,11 @@ public class SignupFragment extends Fragment {
     }
 
     private void onRegistrationSuccessful() {
+        Intent intent = new Intent(requireActivity(), BottomNavigationMenu.class);
+        startActivity(intent);
 
+        // Finish the current activity (splash screen) to prevent going back
+        requireActivity().finish();
     }
 
     private void onRegistrationFailed(String message) {

@@ -18,27 +18,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Simulating a delay for demonstration purposes
         new Handler().postDelayed(() -> {
-            // Check if the user is authenticated (replace with your authentication logic)
-            //boolean isAuthenticated = checkAuthenticationStatus();
 
-           // if (isAuthenticated) {
-                // If authenticated, navigate to the MainActivity with the bottom navigation
-                Intent intent = new Intent(MainActivity.this, BottomNavigationMenu.class);
-                startActivity(intent);
-           // } else {
-                // If not authenticated, navigate to the login/signup flow
-            //    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            //    startActivity(intent);
-           // }
+            Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
+            startActivity(intent);
 
             // Finish the current activity (splash screen) to prevent going back
             finish();
         }, 2000);
-    }
-
-    // Replace this with authentication logic
-    private boolean checkAuthenticationStatus() {
-
-        return false;
     }
 }
