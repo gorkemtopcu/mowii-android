@@ -8,4 +8,7 @@ import retrofit2.http.POST;
 public interface ApiService {
     @POST("user/create")
     Call<Void> registerUser(@Body User user);
+
+    @POST("user/authenticate")
+    Call<Void> authenticateUser(@Body User user);
 }
