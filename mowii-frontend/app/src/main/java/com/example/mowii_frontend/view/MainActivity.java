@@ -1,29 +1,44 @@
 package com.example.mowii_frontend.view;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mowii_frontend.R;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Use a Handler to post a delayed action
+        // Simulating a delay for demonstration purposes
         new Handler().postDelayed(() -> {
-            // Create an Intent to navigate to the RegistrationActivity
-            Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
+            // Check if the user is authenticated (replace with your authentication logic)
+            //boolean isAuthenticated = checkAuthenticationStatus();
 
-            // Start the RegistrationActivity
-            startActivity(intent);
+           // if (isAuthenticated) {
+                // If authenticated, navigate to the MainActivity with the bottom navigation
+                Intent intent = new Intent(MainActivity.this, BottomNavigationMenu.class);
+                startActivity(intent);
+           // } else {
+                // If not authenticated, navigate to the login/signup flow
+            //    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            //    startActivity(intent);
+           // }
 
             // Finish the current activity (splash screen) to prevent going back
             finish();
         }, 2000);
+    }
+
+    // Replace this with authentication logic
+    private boolean checkAuthenticationStatus() {
+
+        return false;
     }
 }
