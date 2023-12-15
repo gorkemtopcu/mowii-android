@@ -1,4 +1,4 @@
-package com.example.mowii_frontend;
+package com.example.mowii_frontend.view;
 
 import android.os.Bundle;
 
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Button;
-import android.widget.Toast;
+
+import com.example.mowii_frontend.R;
 
 public class LoginFragment extends Fragment {
     private EditText emailEditText;

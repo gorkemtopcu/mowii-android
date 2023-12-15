@@ -1,8 +1,10 @@
-package com.example.mowii_frontend;
+package com.example.mowii_frontend.view;
 
 import android.os.Bundle;
+import com.example.mowii_frontend.viewModel.SignUpViewModel;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -14,11 +16,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mowii_frontend.R;
+import com.example.mowii_frontend.model.User;
+
 public class SignupFragment extends Fragment {
 
     private EditText usernameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
+    private SignUpViewModel signUpViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +36,8 @@ public class SignupFragment extends Fragment {
             RegistrationActivity registrationActivity = (RegistrationActivity) requireActivity();
             registrationActivity.selectRegistrationFragment(new LoginFragment());
         });
+
+        signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
 
         // Signup button clicked
         Button signupButton = view.findViewById(R.id.btn_signup);
@@ -58,8 +66,8 @@ public class SignupFragment extends Fragment {
             Toast.makeText(requireContext(), "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
         }
         else {
-            // TODO: try to register user to database
-            Toast.makeText(requireContext(), "Registration successful", Toast.LENGTH_SHORT).show();
+            User user = new User(enteredUsername, enteredEmail, enteredPassword);
+            signUpViewModel.registerUser(user);
         }
     }
 

@@ -1,9 +1,11 @@
-package com.example.mowii_frontend;
+package com.example.mowii_frontend.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.mowii_frontend.R;
 
 public class MainActivity extends AppCompatActivity {
 
