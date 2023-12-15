@@ -1,9 +1,11 @@
 package com.example.mowii_frontend;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,12 +69,24 @@ public class LoginFragment extends Fragment {
         String email = ((EditText)view.findViewById(R.id.txtEmail)).getText().toString();
         String password = ((EditText)view.findViewById(R.id.txtPass)).getText().toString();
 
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to start the new activity
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+
+                Log.d("DEV", "Button clicked");
+
+                // Start the activity
+                startActivity(intent);
+
+            }
+        });
+
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
-
-
+        return view;
 
     }
 }

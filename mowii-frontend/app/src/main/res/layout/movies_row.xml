@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--LinearLayout orientation horizontal -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llMain"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:id="@+id/movieYear"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true">
+
+    </TextView>
+
+    <!--TextView for displaying Movie -->
+    <TextView
+        android:id="@+id/movieName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_toEndOf="@+id/movieYear"
+        tools:text="Movie Name"
+        android:textSize="20dp"/>
+
+    <!--TextView for displaying Director -->
+    <TextView
+        android:id="@+id/movieDirector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        tools:text="Director"
+        android:layout_toEndOf="@+id/movieYear"
+        android:layout_below="@+id/movieName"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/movieYear"
+        android:layout_marginTop="10dp"
+        android:background="@color/accent">
+
+    </LinearLayout>
+
+</RelativeLayout>

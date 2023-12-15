@@ -3,10 +3,16 @@ package com.example.mowii_frontend;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,12 +59,31 @@ public class MoviesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies, container, false);
+        View view = inflater.inflate(R.layout.fragment_movies, container, false);
+
+        RecyclerView recycMovie = view.findViewById(R.id.recycleMovie);
+
+        List<Movie> movies = new ArrayList<Movie>();
+        movies.add(new Movie("The Dark Knight", "Christopher Nolan", 2008));
+        movies.add(new Movie("The Dark Knight Rises", "Christopher Nolan", 2012));
+        movies.add(new Movie("Batman Begins", "Christopher Nolan", 2005));
+        movies.add(new Movie("Spider-Man", "Sam Raimi", 2002));
+        movies.add(new Movie("Taxi Driver", "Martin Scorsese", 1979));
+
+
+
+        recycMovie.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recycMovie.setAdapter(new MovieAdapter(getContext().getApplicationContext(), movies));
+
+        return view;
     }
 }
