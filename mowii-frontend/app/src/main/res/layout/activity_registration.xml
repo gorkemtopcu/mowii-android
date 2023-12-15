@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secondary"
-    tools:context=".RegistrationActivity">
+    android:background="@color/primary"
+    tools:context=".view.RegistrationActivity">
 
     <TextView
         android:id="@+id/txtBrand"
@@ -24,14 +24,13 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.example.mowii_frontend.LoginFragment"
+        android:name="com.example.mowii_frontend.view.LoginFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtBrand"
-        app:flow_verticalAlign="bottom"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtBrand" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
