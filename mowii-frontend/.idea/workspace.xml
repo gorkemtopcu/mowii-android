@@ -3,18 +3,19 @@
   <component name="AndroidLayouts">
     <shared>
       <config>
+        <device id="pixel_6" />
         <device id="pixel_7" />
         <device id="_device_class_foldable" />
         <device id="_device_class_phone" />
       </config>
     </shared>
     <layouts>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_authentication.xml">
         <config>
           <theme>@style/baseTheme.mowiifrontend.dark</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_registration.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml">
         <config>
           <theme>@style/baseTheme.mowiifrontend.dark</theme>
         </config>
@@ -26,7 +27,6 @@
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_collections.xml">
         <config>
-          <state>Landscape</state>
           <theme>@style/baseTheme.mowiifrontend.dark</theme>
         </config>
       </layout>
@@ -50,6 +50,11 @@
           <theme>@style/baseTheme.mowiifrontend.dark</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/rv_collection_row.xml">
+        <config>
+          <theme>@style/baseTheme.mowiifrontend.dark</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/bottom_navigation_menu.xml">
         <config>
           <theme>@style/baseTheme.mowiifrontend.dark</theme>
@@ -62,13 +67,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="089964e2-3e62-446f-8944-05e787af259b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/model/Collection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/model/Movie.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/recyclerView/RecyclerViewInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/CollectionsViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/like_icon.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/rv_collection_row.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/LoginFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/LoginFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/SignupFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/SignupFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/api/ApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/api/ApiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/apiModel/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/apiModel/ApiResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/BottomNavigationMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/BottomNavigationMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/CollectionsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/CollectionsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/LoginFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/auth/LoginFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/splash/SplashActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/ProfileFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/RegistrationActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/auth/AuthenticationActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/SignupFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/auth/SignupFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/LogInViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/LogInViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/SignUpViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/SignUpViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_registration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_authentication.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bottom_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bottom_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_collections.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_collections.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_signup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_signup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,9 +123,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="resourceFile" />
+        <option value="valueResourceFile" />
+        <option value="Interface" />
         <option value="layoutResourceFile" />
         <option value="Class" />
-        <option value="valueResourceFile" />
       </list>
     </option>
   </component>

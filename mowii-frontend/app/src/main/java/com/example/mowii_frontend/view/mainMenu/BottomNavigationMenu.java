@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view;
+package com.example.mowii_frontend.view.mainMenu;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -33,7 +33,7 @@ public class BottomNavigationMenu extends AppCompatActivity {
         fragmentMap.put(R.id.user_profile, new ProfileFragment());
 
         // Set the initial fragment
-        loadFragment(fragmentMap.get(R.id.movie_collection));
+        loadFragment(fragmentMap.get(R.id.navigation_home));
 
         // Handle item selection
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/movie/baseline_movie_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/favorite/baseline_favorite_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,8 +33,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="494949" />
-                            <entry key="outputName" value="baseline_movie_24" />
+                            <entry key="color" value="bd3143" />
+                            <entry key="outputName" value="like_icon" />
                             <entry key="sourceFile" value="C:\Users\berka\Documents\GitHub\mowii-android\mowii-frontend" />
                           </map>
                         </option>

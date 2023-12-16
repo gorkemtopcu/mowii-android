@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view;
+package com.example.mowii_frontend.view.mainMenu;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -28,14 +28,14 @@ public class SignUpViewModel extends ViewModel {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 200) { registrationResult.setValue(new ApiResponse(true, "")); }
-                else if(response.code() == 400) {registrationResult.setValue(new ApiResponse(false, "Email is already taken."));}
-                else  registrationResult.setValue(new ApiResponse(false, "Registration failed."));
+                if (response.code() == 200) { registrationResult.setValue(new ApiResponse(true, "", response.toString())); }
+                else if(response.code() == 400) {registrationResult.setValue(new ApiResponse(false, "Email is already taken.", response.toString()));}
+                else  registrationResult.setValue(new ApiResponse(false, "Registration failed.", ""));
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                registrationResult.setValue(new ApiResponse(false, "Something went wrong."));
+                registrationResult.setValue(new ApiResponse(false, "Something went wrong.", ""));
             }
         });
     }

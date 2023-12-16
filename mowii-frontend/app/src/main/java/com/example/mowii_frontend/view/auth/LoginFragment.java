@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view;
+package com.example.mowii_frontend.view.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.model.User;
+import com.example.mowii_frontend.view.mainMenu.BottomNavigationMenu;
 import com.example.mowii_frontend.viewModel.LogInViewModel;
 
 public class LoginFragment extends Fragment {
@@ -33,8 +34,8 @@ public class LoginFragment extends Fragment {
 
         switchText = view.findViewById(R.id.txt_switch);
         switchText.setOnClickListener(v -> {
-            RegistrationActivity registrationActivity = (RegistrationActivity) requireActivity();
-            registrationActivity.selectRegistrationFragment(new SignupFragment());
+            AuthenticationActivity authenticationActivity = (AuthenticationActivity) requireActivity();
+            authenticationActivity.selectRegistrationFragment(new SignupFragment());
         });
 
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".view.RegistrationActivity">
+    tools:context=".view.auth.AuthenticationActivity">
 
     <TextView
         android:id="@+id/txtBrand"
@@ -24,7 +24,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.example.mowii_frontend.view.LoginFragment"
+        android:name="com.example.mowii_frontend.view.auth.LoginFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"

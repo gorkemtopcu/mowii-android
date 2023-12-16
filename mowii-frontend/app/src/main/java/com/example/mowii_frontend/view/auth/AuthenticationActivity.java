@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view;
+package com.example.mowii_frontend.view.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,12 +9,12 @@ import android.os.Bundle;
 
 import com.example.mowii_frontend.R;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class AuthenticationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_authentication);
 
         selectRegistrationFragment(new LoginFragment());
     }
