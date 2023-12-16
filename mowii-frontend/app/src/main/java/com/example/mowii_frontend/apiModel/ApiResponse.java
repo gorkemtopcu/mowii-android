@@ -1,12 +1,12 @@
 package com.example.mowii_frontend.apiModel;
 import retrofit2.Response;
 
-public class ApiResponse {
+public class ApiResponse<T> {
     private final boolean isSuccess;
     private final String errorMessage;
-    private final String data;
+    private final T data;
 
-    public ApiResponse(boolean isSuccess, String errorMessage, String data) {
+    public ApiResponse(boolean isSuccess, String errorMessage, T data) {
         this.isSuccess = isSuccess;
         this.errorMessage = errorMessage;
         this.data = data;
@@ -20,5 +20,5 @@ public class ApiResponse {
         return errorMessage;
     }
 
-    public String getData() { return data; }
+    public T getData() { return data; }
 }
