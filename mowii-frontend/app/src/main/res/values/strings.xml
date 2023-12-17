@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Mowii</string>
+    <string name="error">Something went wrong</string>
+    <string name="no_item">No items to display</string>
 </resources>

@@ -22,6 +22,7 @@ public class Collection_RecyclerViewAdapter extends RecyclerView.Adapter<Collect
         this.context = context;
         this.collectionsArrayList = collectionsArrayList;
     }
+
     @NonNull
     @Override
     public Collection_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,7 +51,6 @@ public class Collection_RecyclerViewAdapter extends RecyclerView.Adapter<Collect
             collectionName = itemView.findViewById(R.id.txt_cname);
             userName = itemView.findViewById(R.id.txt_user);
             likes = itemView.findViewById(R.id.txt_likes);
-
         }
     }
 }

@@ -32,36 +32,34 @@ public class CollectionsViewModel extends ViewModel {
     private final ApiService apiService = RetrofitClient.createService(ApiService.class);
 
     public void getAllCollections() {
-        Call<Void> call = apiService.getAllMovieCollections();
-
-        call.enqueue(new Callback<Void>() {
+        Call<ArrayList<Collection>> call = apiService.getAllMovieCollections();
+        call.enqueue(new Callback<ArrayList<Collection>>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 200) { allCollectionsResult.setValue(new ApiResponse(true, "", response.body())); }
-                else allCollectionsResult.setValue(new ApiResponse(false, "Something went wrong.", ""));
+            public void onResponse(@NonNull Call<ArrayList<Collection>> call, @NonNull Response<ArrayList<Collection>> response) {
+                if (response.isSuccessful()) { allCollectionsResult.setValue(new ApiResponse<ArrayList<Collection>>(true, "", response.body())); }
+                else allCollectionsResult.setValue(new ApiResponse<ArrayList<Collection>>(false, "Something went wrong.", null));
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                allCollectionsResult.setValue(new ApiResponse(false, "Something went wrong.", ""));
+            public void onFailure(@NonNull Call<ArrayList<Collection>> call, @NonNull Throwable t) {
+                allCollectionsResult.setValue(new ApiResponse<ArrayList<Collection>>(false, "Something went wrong.", null));
             }
         });
     }
 
 
     public void getMyCollections(User user) {
-        Call<Void> call = apiService.getMovieCollectionsByUser(user.getId());
-
-        call.enqueue(new Callback<Void>() {
+        Call<ArrayList<Collection>> call = apiService.getMovieCollectionsByUser(user.getId());
+        call.enqueue(new Callback<ArrayList<Collection>>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 200) { myCollectionsResult.setValue(new ApiResponse(true, "", response.toString())); }
-                else myCollectionsResult.setValue(new ApiResponse(false, "Something went wrong.", ""));
+            public void onResponse(@NonNull Call<ArrayList<Collection>> call, @NonNull Response<ArrayList<Collection>> response) {
+                if (response.isSuccessful()) { myCollectionsResult.setValue(new ApiResponse<ArrayList<Collection>>(true, "", response.body())); }
+                else myCollectionsResult.setValue(new ApiResponse<ArrayList<Collection>>(false, "Something went wrong.", null));
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                myCollectionsResult.setValue(new ApiResponse(false, "Something went wrong.", ""));
+            public void onFailure(@NonNull Call<ArrayList<Collection>> call, @NonNull Throwable t) {
+                myCollectionsResult.setValue(new ApiResponse<ArrayList<Collection>>(false, "Something went wrong.", null));
             }
         });
     }

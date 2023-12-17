@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -22,9 +23,10 @@ import java.util.ArrayList;
 
 public class CollectionsFragment extends Fragment implements RecyclerViewInterface {
 
-    private ArrayList<Collection> collectionModels = new ArrayList<>();
-    private CollectionsViewModel collectionViewModel;
-    private Collection_RecyclerViewAdapter adapter;
+    private final ArrayList<Collection> collectionModels = new ArrayList<>();
+    private ProgressBar progressBar;
+    private TextView errorTextView, noItemsTextView;
+    private RecyclerView recyclerView;
 
     public CollectionsFragment() {
         // Required empty public constructor
@@ -34,42 +36,31 @@ public class CollectionsFragment extends Fragment implements RecyclerViewInterfa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_collections, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.rv_collections);
 
-        Log.d("CollectionsFragment", "onCreateView: Initializing ViewModel");
-        collectionViewModel = new ViewModelProvider(this).get(CollectionsViewModel.class);
+        recyclerView = view.findViewById(R.id.rv_collections);
+        progressBar = view.findViewById(R.id.pb_collections);
+        errorTextView = view.findViewById(R.id.txt_error_message);
+        noItemsTextView = view.findViewById(R.id.txt_no_items_message);
+
+        CollectionsViewModel collectionViewModel = new ViewModelProvider(this).get(CollectionsViewModel.class);
         collectionViewModel.getAllCollectionsResult().observe(getViewLifecycleOwner(), collectionResult -> {
-            Log.d("CollectionsFragment", "LiveData Observer triggered");
             if (collectionResult != null) {
                 if (collectionResult.isSuccess()) {
-                    Log.d("CollectionsFragment", "onCreateView: onRequestSuccessful called");
                     onRequestSuccessful(collectionResult.getData());
                 } else {
-                    Log.d("CollectionsFragment", "onCreateView: onRequestFailed called");
                     onRequestFailed();
                 }
             }
         });
+        collectionViewModel.getAllCollections();
 
-        Log.d("CollectionsFragment", "onCreateView: Initializing RecyclerView and Adapter");
-        adapter = new Collection_RecyclerViewAdapter(requireContext(), collectionModels);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-        Log.d("CollectionsFragment", "onCreateView: Returning view");
         return view;
     }
 
 
     private void onRequestFailed() {
-        // Handle failure if needed
-        View view = getView();
-        if (view != null) {
-            TextView errorTextView = view.findViewById(R.id.tv_error_message);
-            errorTextView.setVisibility(View.VISIBLE);
-            // You can set a specific error message
-            errorTextView.setText("Failed to retrieve collections. Please try again later.");
-        }
+        progressBar.setVisibility(View.INVISIBLE);
+        errorTextView.setVisibility(View.VISIBLE);
     }
 
 
@@ -82,17 +73,16 @@ public class CollectionsFragment extends Fragment implements RecyclerViewInterfa
     }
 
     private void onNoItems() {
-        View view = getView();
-        if (view != null) {
-            TextView noItemsTextView = view.findViewById(R.id.tv_no_items_message);
-            noItemsTextView.setVisibility(View.VISIBLE); // Make the TextView visible
-        }
+        progressBar.setVisibility(View.INVISIBLE);
+        noItemsTextView.setVisibility(View.VISIBLE);
     }
 
     private void onItemExists(ArrayList<Collection> results) {
         collectionModels.clear();
         collectionModels.addAll(results);
-        adapter.notifyDataSetChanged();
+        Collection_RecyclerViewAdapter adapter = new Collection_RecyclerViewAdapter(requireContext(), collectionModels);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
     }
 
     @Override

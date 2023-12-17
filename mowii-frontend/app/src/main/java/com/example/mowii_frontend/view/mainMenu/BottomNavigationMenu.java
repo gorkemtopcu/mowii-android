@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class BottomNavigationMenu extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
     private Map<Integer, Fragment> fragmentMap;
 
     @Override
@@ -24,7 +23,7 @@ public class BottomNavigationMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bottom_menu);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Initialize the fragment map
         fragmentMap = new HashMap<>();
@@ -43,6 +42,9 @@ public class BottomNavigationMenu extends AppCompatActivity {
                 return loadFragment(selectedFragment);
             }
         });
+
+        // Programmatically select the "Home" item
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
     }
 
     private boolean loadFragment(Fragment fragment) {

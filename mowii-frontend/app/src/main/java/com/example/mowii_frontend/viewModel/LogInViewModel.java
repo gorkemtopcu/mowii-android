@@ -29,7 +29,7 @@ public class LogInViewModel extends ViewModel {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 200) { authenticationResult.setValue(new ApiResponse(true, "", response.toString())); }
+                if (response.code() == 200) {authenticationResult.setValue(new ApiResponse(true, "", response.toString())); }
                 else authenticationResult.setValue(new ApiResponse(false, "Invalid Credentials.", ""));
             }
 
