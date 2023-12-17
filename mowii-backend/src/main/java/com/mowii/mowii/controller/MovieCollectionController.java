@@ -36,7 +36,7 @@ public class MovieCollectionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getMovieCollectionById(@PatStrinhVariable String id) {
+    public ResponseEntity<?> getMovieCollectionById(@PathVariable String id) {
         try {
             MovieCollection movieCollection = movieCollectionService.getById(id);
             return new ResponseEntity<>(movieCollection, HttpStatus.OK);
