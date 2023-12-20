@@ -37,25 +37,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="089964e2-3e62-446f-8944-05e787af259b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/api/ApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/api/ApiService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/BottomNavigationMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/BottomNavigationMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/model/Collection.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/model/MovieCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/CollectionsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/CollectionsFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/recyclerView/Collection_RecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/recyclerView/Collection_RecyclerViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/recyclerView/Collection_RecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/recyclerView/MovieCollectionAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/CollectionsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/CollectionsViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/LogInViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/viewModel/LogInViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_collections.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_collections.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/WiredTiger.turtle" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/WiredTiger.turtle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/WiredTiger.wt" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/WiredTiger.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/collection-4-2625119513036845987.wt" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/collection-4-2625119513036845987.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/diagnostic.data/metrics.2023-12-17T12-03-54Z-00000" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/diagnostic.data/metrics.2023-12-17T12-03-54Z-00000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/diagnostic.data/metrics.interim" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/diagnostic.data/metrics.interim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/index-5-2625119513036845987.wt" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/index-5-2625119513036845987.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/index-6-2625119513036845987.wt" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/index-6-2625119513036845987.wt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/journal/WiredTigerLog.0000000002" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/journal/WiredTigerLog.0000000002" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii/data/sizeStorer.wt" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii/data/sizeStorer.wt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/rv_collection_row.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/rv_collection_row.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +53,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/gorkemtopcu/.android/avd/Pixel_3a_API_30_x86.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Hakan\.android\avd\Pixel_6_API_34.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -119,7 +107,7 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "gorkem",
-    "last_opened_file_path": "C:/Users/Hakan/Desktop/Github/School Projects/mowii-android/mowii-frontend",
+    "last_opened_file_path": "C:/Users/Hakan/Desktop/Sabanci/CS310/InClass/PlanetsApp2023",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>

@@ -1,7 +1,6 @@
 package com.example.mowii_frontend.view.mainMenu;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,57 +13,52 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mowii_frontend.R;
-import com.example.mowii_frontend.model.Collection;
-import com.example.mowii_frontend.view.recyclerView.Collection_RecyclerViewAdapter;
+import com.example.mowii_frontend.databinding.FragmentCollectionsBinding;
+import com.example.mowii_frontend.model.MovieCollection;
+import com.example.mowii_frontend.view.recyclerView.MovieCollectionAdapter;
 import com.example.mowii_frontend.view.recyclerView.RecyclerViewInterface;
 import com.example.mowii_frontend.viewModel.CollectionsViewModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CollectionsFragment extends Fragment implements RecyclerViewInterface {
 
-    private final ArrayList<Collection> collectionModels = new ArrayList<>();
-    private ProgressBar progressBar;
-    private TextView errorTextView, noItemsTextView;
-    private RecyclerView recyclerView;
+    private FragmentCollectionsBinding binding;
+    private final ArrayList<MovieCollection> movieCollectionModels = new ArrayList<>();
 
     public CollectionsFragment() {
         // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_collections, container, false);
+        binding = FragmentCollectionsBinding.inflate(getLayoutInflater());
+        binding.rvCollections.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        recyclerView = view.findViewById(R.id.rv_collections);
-        progressBar = view.findViewById(R.id.pb_collections);
-        errorTextView = view.findViewById(R.id.txt_error_message);
-        noItemsTextView = view.findViewById(R.id.txt_no_items_message);
-
-        CollectionsViewModel collectionViewModel = new ViewModelProvider(this).get(CollectionsViewModel.class);
+        CollectionsViewModel collectionViewModel = new ViewModelProvider(requireActivity()).get(CollectionsViewModel.class);
         collectionViewModel.getAllCollectionsResult().observe(getViewLifecycleOwner(), collectionResult -> {
-            if (collectionResult != null) {
-                if (collectionResult.isSuccess()) {
-                    onRequestSuccessful(collectionResult.getData());
-                } else {
-                    onRequestFailed();
-                }
+            if (collectionResult != null && collectionResult.isSuccess()) {
+                onRequestSuccessful(collectionResult.getData());
+            } else {
+                onRequestFailed();
             }
+            binding.pbCollections.setVisibility(View.INVISIBLE);
         });
         collectionViewModel.getAllCollections();
 
-        return view;
+        return binding.getRoot();
     }
 
 
     private void onRequestFailed() {
-        progressBar.setVisibility(View.INVISIBLE);
-        errorTextView.setVisibility(View.VISIBLE);
+        binding.txtErrorMessage.setVisibility(View.VISIBLE);
     }
 
 
-    private void onRequestSuccessful(ArrayList<Collection> results) {
+    private void onRequestSuccessful(ArrayList<MovieCollection> results) {
         if (results != null && !results.isEmpty()) {
             onItemExists(results);
         } else {
@@ -73,16 +67,14 @@ public class CollectionsFragment extends Fragment implements RecyclerViewInterfa
     }
 
     private void onNoItems() {
-        progressBar.setVisibility(View.INVISIBLE);
-        noItemsTextView.setVisibility(View.VISIBLE);
+        binding.txtNoItemsMessage.setVisibility(View.VISIBLE);
     }
 
-    private void onItemExists(ArrayList<Collection> results) {
-        collectionModels.clear();
-        collectionModels.addAll(results);
-        Collection_RecyclerViewAdapter adapter = new Collection_RecyclerViewAdapter(requireContext(), collectionModels);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+    private void onItemExists(ArrayList<MovieCollection> results) {
+        movieCollectionModels.clear();
+        movieCollectionModels.addAll(results);
+        MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results);
+        binding.rvCollections.setAdapter(adapter);
     }
 
     @Override
