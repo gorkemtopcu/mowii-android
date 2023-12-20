@@ -29,13 +29,13 @@ public class LogInViewModel extends ViewModel {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 200) { authenticationResult.setValue(new ApiResponse(true, "")); }
-                else authenticationResult.setValue(new ApiResponse(false, "Invalid Credentials."));
+                if (response.code() == 200) {authenticationResult.setValue(new ApiResponse(true, "", response.toString())); }
+                else authenticationResult.setValue(new ApiResponse(false, "Invalid Credentials.", ""));
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                authenticationResult.setValue(new ApiResponse(false, "Something went wrong."));
+                authenticationResult.setValue(new ApiResponse(false, "Something went wrong.", ""));
             }
         });
     }
