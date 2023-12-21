@@ -75,6 +75,8 @@ public class CollectionsFragment extends Fragment implements RecyclerViewInterfa
         movieCollectionModels.addAll(results);
         MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results);
         binding.rvCollections.setAdapter(adapter);
+        binding.rvCollections.setVisibility(View.VISIBLE);
+
     }
 
     @Override
