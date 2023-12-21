@@ -67,8 +67,8 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
 
         public MovieCollectionViewHolder(@NonNull View itemView) {
             super(itemView);
-            collectionName = itemView.findViewById(R.id.txt_cname);
-            userName = itemView.findViewById(R.id.txt_user);
+            collectionName = itemView.findViewById(R.id.txt_movieName);
+            userName = itemView.findViewById(R.id.txtReleaseYear);
             likes = itemView.findViewById(R.id.txt_likes);
             row = itemView.findViewById(R.id.rv_collection_row);
         }

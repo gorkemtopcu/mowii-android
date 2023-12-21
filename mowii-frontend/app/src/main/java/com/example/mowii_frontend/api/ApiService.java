@@ -1,4 +1,5 @@
 package com.example.mowii_frontend.api;
+import com.example.mowii_frontend.model.Movie;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.User;
 
@@ -22,4 +23,7 @@ public interface ApiService {
 
     @GET("/movie-collection/{id}")
     Call<ArrayList<MovieCollection>> getMovieCollectionsByUser(@Path("id") String id);
+
+    @GET("/movie/getAll")
+    Call<ArrayList<Movie>> getAllMovies();
 }

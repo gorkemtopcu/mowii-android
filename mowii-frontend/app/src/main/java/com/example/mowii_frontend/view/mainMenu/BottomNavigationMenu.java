@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.view.mainMenu.collection.CollectionsFragment;
+import com.example.mowii_frontend.view.mainMenu.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
