@@ -8,13 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mowii_frontend.R;
-import com.example.mowii_frontend.model.Movie;
 import com.example.mowii_frontend.model.MovieCollection;
 
 import java.util.List;
@@ -43,7 +40,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         holder.likes.setCompoundDrawablesWithIntrinsicBounds(0,0,likeIcon, 0);
         holder.likes.setText(data.get(position).getLike() + " ");
 
-       // holder.row.setOnClickListener(v -> onRowClicked(position));
+        holder.row.setOnClickListener(v -> onRowClicked(position));
     }
 
     @Override

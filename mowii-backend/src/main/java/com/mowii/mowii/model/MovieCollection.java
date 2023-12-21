@@ -20,23 +20,23 @@ public class MovieCollection {
     @DBRef
     private List<Movie> movies = new ArrayList<>();
 
-    private String user_id;
+    private String userId;
 
-    private String user_name;
+    private String userName;
 
     public MovieCollection() {
     }
 
-    public MovieCollection(String user_id, String user_name, String name, int like) {
-        this.user_id = user_id;
-        this.user_name = user_name;
+    public MovieCollection(String userId, String userName, String name, int like) {
+        this.userId = userId;
+        this.userName = userName;
         this.name = name;
         this.like = like;
     }
 
     public MovieCollection(String user, String name, List<Movie> movies, int like) {
-        this.user_id = user_id;
-        this.user_name = user_name;
+        this.userId = userId;
+        this.userName = userName;
         this.name = name;
         this.movies = movies;
         this.like = like;

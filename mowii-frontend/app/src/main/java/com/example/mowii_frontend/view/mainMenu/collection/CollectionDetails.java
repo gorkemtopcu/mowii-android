@@ -1,6 +1,7 @@
 package com.example.mowii_frontend.view.mainMenu.collection;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 
@@ -18,9 +19,8 @@ public class CollectionDetails extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
         int likeCount = getIntent().getIntExtra("likeCount", 0);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(collectionName);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        Toolbar toolbar = findViewById(R.id.toolbar_collection_details);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(collectionName);
     }
 }
