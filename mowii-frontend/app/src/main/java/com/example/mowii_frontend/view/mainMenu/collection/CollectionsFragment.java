@@ -1,26 +1,20 @@
-package com.example.mowii_frontend.view.mainMenu;
+package com.example.mowii_frontend.view.mainMenu.collection;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.databinding.FragmentCollectionsBinding;
 import com.example.mowii_frontend.model.MovieCollection;
-import com.example.mowii_frontend.view.recyclerView.MovieCollectionAdapter;
 import com.example.mowii_frontend.view.recyclerView.RecyclerViewInterface;
 import com.example.mowii_frontend.viewModel.CollectionsViewModel;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CollectionsFragment extends Fragment implements RecyclerViewInterface {
 
@@ -75,6 +69,7 @@ public class CollectionsFragment extends Fragment implements RecyclerViewInterfa
         movieCollectionModels.addAll(results);
         MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results);
         binding.rvCollections.setAdapter(adapter);
+        binding.rvCollections.setVisibility(View.VISIBLE);
     }
 
     @Override

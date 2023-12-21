@@ -3,14 +3,14 @@ package com.mowii.mowii.model;
 import lombok.Data;
 
 @Data
-public class MovieCollectionInput {
+public class MovieCollectionCreationInput {
     private String userId;
     private String name;
 
-    public MovieCollectionInput() {
+    public MovieCollectionCreationInput() {
     }
 
-    public MovieCollectionInput(String userId, String name) {
+    public MovieCollectionCreationInput(String userId, String name) {
         this.userId = userId;
         this.name = name;
     }

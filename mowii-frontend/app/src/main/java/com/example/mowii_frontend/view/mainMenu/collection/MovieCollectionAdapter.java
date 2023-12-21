@@ -1,7 +1,7 @@
-package com.example.mowii_frontend.view.recyclerView;
+package com.example.mowii_frontend.view.mainMenu.collection;
 
 import android.content.Context;
-import android.text.Layout;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +35,12 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
     @Override
     public void onBindViewHolder(@NonNull MovieCollectionViewHolder holder, int position) {
         holder.collectionName.setText(data.get(position).getName());
-        holder.userName.setText(data.get(position).getUser().getName());
-        holder.likes.setText(String.valueOf(data.get(position).getLike()));
+        holder.userName.setText(data.get(position).getUserName());
+        int likeIcon = false ? R.drawable.like_fill_icon : R.drawable.like_border_icon;
+        holder.likes.setCompoundDrawablesWithIntrinsicBounds(0,0,likeIcon, 0);
+        holder.likes.setText(data.get(position).getLike() + " ");
 
-        // TODO: implement on click listener when user taps on an item
+        holder.row.setOnClickListener(v -> onRowClicked(position));
     }
 
     @Override
@@ -46,11 +48,22 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         return data.size();
     }
 
-    public static class MovieCollectionViewHolder extends RecyclerView.ViewHolder{
-         TextView collectionName;
-         TextView userName;
-         TextView likes;
-         ConstraintLayout row;
+    private void onRowClicked(int position) {
+        MovieCollection selectedCollection = data.get(position);
+
+        Intent intent = new Intent(ctx, CollectionDetails.class);
+        intent.putExtra("collectionId", selectedCollection.getId());
+        intent.putExtra("collectionName", selectedCollection.getName());
+        intent.putExtra("likeCount", selectedCollection.getLike());
+
+        ctx.startActivity(intent);
+    }
+
+    public static class MovieCollectionViewHolder extends RecyclerView.ViewHolder {
+        TextView collectionName;
+        TextView userName;
+        TextView likes;
+        ConstraintLayout row;
 
         public MovieCollectionViewHolder(@NonNull View itemView) {
             super(itemView);

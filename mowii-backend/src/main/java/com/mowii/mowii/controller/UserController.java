@@ -1,10 +1,8 @@
 package com.mowii.mowii.controller;
 
 
-import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.model.AuthenticationRequest;
-import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.model.User;
 import com.mowii.mowii.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +78,7 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody User user) {
         boolean isEmailAvailable = checkEmailAvailability(new AuthenticationRequest(user.getEmail(), user.getPassword())).getStatusCode() == HttpStatus.OK;
         if (isEmailAvailable) {
-            User createdUser = userService.create(user);
+            User createdUser = userService.save(user);
             return new ResponseEntity<>(createdUser, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Email is already taken", HttpStatus.BAD_REQUEST);

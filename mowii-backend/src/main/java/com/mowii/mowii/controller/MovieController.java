@@ -4,7 +4,6 @@ import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +58,7 @@ public class MovieController {
 
     @PostMapping("/add")
     public Movie addMovie(@RequestBody Movie movie) {
-        return movieService.create(movie);
+        return movieService.save(movie);
     }
 
     @PutMapping("/update/{id}")
