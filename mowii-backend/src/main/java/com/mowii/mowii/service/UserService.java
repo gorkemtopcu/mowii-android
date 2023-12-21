@@ -20,7 +20,7 @@ public class UserService implements MowiiService<User> {
     }
 
     @Override
-    public User create(User user) {
+    public User save(User user) {
         // Add any additional business logic here if needed
         return userRepository.save(user);
     }
@@ -59,5 +59,16 @@ public class UserService implements MowiiService<User> {
         User user = getById(id);
         userRepository.deleteById(id);
         return user;
+    }
+
+    public User getByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else {
+            // User not found, throw an exception or return a special value
+            throw new UserNotFoundException("User not found with email: " + email);
+        }
     }
 }
