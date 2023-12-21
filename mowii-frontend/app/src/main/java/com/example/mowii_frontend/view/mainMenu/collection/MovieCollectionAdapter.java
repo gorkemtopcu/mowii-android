@@ -1,7 +1,6 @@
-package com.example.mowii_frontend.view.recyclerView;
+package com.example.mowii_frontend.view.mainMenu.collection;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,9 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
     public void onBindViewHolder(@NonNull MovieCollectionViewHolder holder, int position) {
         holder.collectionName.setText(data.get(position).getName());
         holder.userName.setText(data.get(position).getUser().getName());
-        holder.likes.setText(String.valueOf(data.get(position).getLike()));
+        int likeIcon = false ? R.drawable.like_fill_icon : R.drawable.like_border_icon;
+        holder.likes.setCompoundDrawablesWithIntrinsicBounds(0,0,likeIcon, 0);
+        holder.likes.setText(data.get(position).getLike() + " ");
 
         // TODO: implement on click listener when user taps on an item
     }

@@ -1,7 +1,6 @@
 package com.mowii.mowii.controller;
 
 import com.mowii.mowii.exception.MovieCollectionNotFoundException;
-import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.model.*;
 import com.mowii.mowii.service.MovieCollectionService;
@@ -47,10 +46,24 @@ public class MovieCollectionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createMovieCollection(@RequestBody MovieCollectionInput movieCollectionInput) {
+    public ResponseEntity<?> createMovieCollection(@RequestBody MovieCollectionCreationInput movieCollectionCreationInput) {
         try {
-            User owner = userService.getById(movieCollectionInput.getUserId());
-            MovieCollection movieCollection = new MovieCollection(owner,movieCollectionInput.getName(),0);
+            User owner = userService.getById(movieCollectionCreationInput.getUserId());
+            MovieCollection movieCollection = new MovieCollection(owner, movieCollectionCreationInput.getName(),0);
+            movieCollectionService.create(movieCollection);
+            return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
+        } catch (UserNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<?> likeMovieCollection(@RequestBody MovieCollectionLikeInput movieCollectionLikeInput) {
+        try {
+            MovieCollection movieCollection = movieCollectionService.getById(movieCollectionLikeInput.getCollectionId());
+            movieCollection.setLike(movieCollection.getLike() + 1);
+            User liker = userService.getById(movieCollectionLikeInput.getLikerId());
             movieCollectionService.create(movieCollection);
             return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
         } catch (UserNotFoundException e) {

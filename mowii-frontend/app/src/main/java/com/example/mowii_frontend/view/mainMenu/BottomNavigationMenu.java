@@ -3,12 +3,15 @@ package com.example.mowii_frontend.view.mainMenu;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mowii_frontend.R;
+import com.example.mowii_frontend.view.mainMenu.collection.CollectionsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
@@ -45,6 +48,9 @@ public class BottomNavigationMenu extends AppCompatActivity {
 
         // Programmatically select the "Home" item
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private boolean loadFragment(Fragment fragment) {

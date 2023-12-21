@@ -17,18 +17,21 @@ public class User {
     private String email;
     private String password;
     private int collectionCount;
-    private int totalLikes;
 
     @DBRef
     private List<MovieCollection> collections;
 
+    @DBRef
+    private List<MovieCollection> likedCollections;
+
     public User() {
     }
 
-    public User(String name, String email, String password, List<MovieCollection> collections) {
+    public User(String name, String email, String password, List<MovieCollection> collections, List<MovieCollection> likedCollections) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.collections = collections;
+        this.likedCollections = likedCollections;
     }
 }
