@@ -27,8 +27,15 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
         this.movieCollectionRepository = movieCollectionRepository;
     }
 
+    public boolean isCollectionAlreadyLiked(String likerId, MovieCollection movieCollection) {
+        User liker = userService.getById(likerId);
+        List<MovieCollection> likedCollections = liker.getLikedCollections();
+        // Check if the collection is already in the liked collections
+        return likedCollections.contains(movieCollection);
+    }
+
     @Override
-    public MovieCollection create(MovieCollection movieCollection) {
+    public MovieCollection save(MovieCollection movieCollection) {
         return movieCollectionRepository.save(movieCollection);
 
     }
@@ -65,4 +72,6 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
     public void updateMovieCollection(MovieCollection movieCollection) {
         movieCollectionRepository.save(movieCollection);
     }
+
+
 }

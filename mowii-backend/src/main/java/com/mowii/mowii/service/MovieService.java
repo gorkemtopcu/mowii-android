@@ -20,7 +20,7 @@ public class MovieService implements MowiiService<Movie>{
     }
 
     @Override
-    public Movie create(Movie movie) {
+    public Movie save(Movie movie) {
         return movieRepository.save(movie);
     }
 

@@ -20,7 +20,7 @@ public class UserService implements MowiiService<User> {
     }
 
     @Override
-    public User create(User user) {
+    public User save(User user) {
         // Add any additional business logic here if needed
         return userRepository.save(user);
     }

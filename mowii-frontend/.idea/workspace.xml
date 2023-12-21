@@ -52,21 +52,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="089964e2-3e62-446f-8944-05e787af259b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/model/MovieCollectionLikeInput.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/manager/UserManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/like_border_icon.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/controller/MovieCollectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/controller/MovieCollectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/model/MovieCollectionInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/model/MovieCollectionCreationInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mowii-backend/src/main/java/com/mowii/mowii/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/BottomNavigationMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/BottomNavigationMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/CollectionsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/collection/CollectionsFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/recyclerView/MovieCollectionAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mowii_frontend/view/mainMenu/collection/MovieCollectionAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/like_icon.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/like_fill_icon.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bottom_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bottom_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/rv_collection_row.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/rv_collection_row.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +64,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Hakan\.android\avd\Pixel_6_API_34.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Can Zunal\.android\avd\Pixel_2_API_29.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -129,7 +117,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "gorkem",
+    "git-widget-placeholder": "can",
     "last_opened_file_path": "C:/Users/Hakan/Desktop/Sabanci/CS310/InClass/PlanetsApp2023",
     "show.migrate.to.gradle.popup": "false"
   }
