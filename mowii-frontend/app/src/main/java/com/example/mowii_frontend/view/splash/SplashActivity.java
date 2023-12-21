@@ -1,5 +1,6 @@
 package com.example.mowii_frontend.view.splash;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.view.auth.AuthenticationActivity;
 import com.example.mowii_frontend.view.mainMenu.BottomNavigationMenu;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
     @Override

@@ -9,145 +9,153 @@
     <RelativeLayout android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="28dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-20dp">
-
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="28dp">
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-20dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="28dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Welcome"
-                android:textColor="@color/primary"
-                android:textSize="32sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Please log in with your information"
-                android:textColor="@color/primary"
-                android:alpha="0.7">
-
-            </TextView>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="30dp">
-
-            </View>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email Adress"
-                android:textColor="@color/primary"
-                android:alpha="0.7"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/etxt_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/email_icon"
-                android:inputType="textEmailAddress">
-
-            </EditText>
-
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Password"
-                android:textColor="@color/primary"
-                android:alpha="0.7"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:id="@+id/etxt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/password_icon"
-                android:inputType="textPassword"/>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"/>
 
             <LinearLayout
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="28dp">
 
                 <TextView
-                    android:id="@+id/txt_ask_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Don't have an account?"
+                    android:text="Welcome"
                     android:textColor="@color/primary"
-                    android:alpha="0.7"/>
+                    android:textSize="32sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Please log in with your information"
+                    android:textColor="@color/primary">
+
+                </TextView>
 
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp">
+
+                </View>
 
                 <TextView
-                    android:id="@+id/txt_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign up"
+                    android:alpha="0.7"
+                    android:text="Email Adress"
                     android:textColor="@color/primary"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <EditText
+                    android:id="@+id/etxt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
+                    android:drawableEnd="@drawable/email_icon"
+                    android:drawableTint="@color/primary"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/primary">
+
+                </EditText>
+
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:text="Password"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etxt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
+                    android:drawableEnd="@drawable/password_icon"
+                    android:drawableTint="@color/primary"
+                    android:inputType="textPassword"
+                    android:textColor="@color/primary" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/txt_ask_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.7"
+                        android:text="Don't have an account?"
+                        android:textColor="@color/primary" />
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/txt_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sign up"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text="Log in"
+                        app:cornerRadius="32dp" />
+
+                    <ProgressBar
+                        android:id="@+id/pb_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="Log in"
-                    app:cornerRadius="32dp"/>
-
-                <ProgressBar
-                    android:id="@+id/pb_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:visibility="invisible"/>
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="10dp"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
 </FrameLayout>

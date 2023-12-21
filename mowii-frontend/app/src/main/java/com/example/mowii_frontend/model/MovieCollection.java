@@ -8,19 +8,22 @@ public class MovieCollection {
     private String name;
     private int like;
     private List<Movie> movies = new ArrayList<>();
-    private User user;
+    private String userName;
+    private String userId;
 
     public MovieCollection() {
 
     }
 
-    public MovieCollection(User user, String name, int like) {
-        this.user = user;
+    public MovieCollection(String userId, String userName, String name, int like) {
+        this.userId = userId;
+        this.userName = userName;
         this.name = name;
         this.like = like;
     }
-    public MovieCollection(User user, String name, List<Movie> movies, int like) {
-        this.user = user;
+    public MovieCollection(String userId, String userName, String name, List<Movie> movies, int like) {
+        this.userId = userId;
+        this.userName = userName;
         this.name = name;
         this.movies = movies;
         this.like = like;
@@ -57,13 +60,10 @@ public class MovieCollection {
         this.movies = movies;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
+    public String getUserName() {return userName;}
 
 }

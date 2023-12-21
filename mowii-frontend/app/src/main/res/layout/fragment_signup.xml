@@ -62,8 +62,11 @@
                     android:id="@+id/etxt_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
                     android:drawableEnd="@drawable/profile_icon"
-                    android:inputType="textEmailAddress">
+                    android:drawableTint="@color/primary"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/primary">
 
                 </EditText>
 
@@ -88,8 +91,11 @@
                     android:id="@+id/etxt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
                     android:drawableEnd="@drawable/email_icon"
-                    android:inputType="textEmailAddress">
+                    android:drawableTint="@color/primary"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/primary">
 
                 </EditText>
 
@@ -114,8 +120,11 @@
                     android:id="@+id/etxt_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
                     android:drawableEnd="@drawable/password_icon"
-                    android:inputType="textPassword">
+                    android:drawableTint="@color/primary"
+                    android:inputType="textPassword"
+                    android:textColor="@color/primary">
 
                 </EditText>
 
