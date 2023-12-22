@@ -4,6 +4,7 @@ package com.mowii.mowii.controller;
 import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.model.AuthenticationRequest;
 import com.mowii.mowii.model.User;
+import com.mowii.mowii.service.MovieCollectionService;
 import com.mowii.mowii.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final MovieCollectionService movieCollectionService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MovieCollectionService movieCollectionService) {
         this.userService = userService;
+        this.movieCollectionService = movieCollectionService;
     }
 
     @GetMapping("/{id}")
@@ -88,7 +91,9 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
         try {
+            //Delete all collections of the user
             User deletedUser = userService.delete(id);
+            movieCollectionService.deleteCollectionsOfUser(id);
 
             return new ResponseEntity<>(deletedUser, HttpStatus.CREATED);
         } catch (UserNotFoundException e) {

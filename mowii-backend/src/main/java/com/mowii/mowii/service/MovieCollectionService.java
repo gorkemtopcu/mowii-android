@@ -69,9 +69,19 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
         return movieCollection;
     }
 
+
+
     public void updateMovieCollection(MovieCollection movieCollection) {
         movieCollectionRepository.save(movieCollection);
     }
 
 
+    public void deleteCollectionsOfUser(String userId) {
+        List<MovieCollection> userCollections = movieCollectionRepository.findAllByUserId(userId);
+        for (MovieCollection collection : userCollections) {
+            movieCollectionRepository.deleteById(collection.getId());
+        }
+
+
+    }
 }
