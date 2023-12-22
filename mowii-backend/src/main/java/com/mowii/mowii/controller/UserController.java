@@ -64,7 +64,7 @@ public class UserController {
             boolean isValid = user.getPassword().equals(request.getPassword());
 
             if (isValid) {
-                return new ResponseEntity<>("Authentication successful", HttpStatus.OK);
+                return new ResponseEntity<>(user, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
             }
@@ -89,6 +89,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
         try {
             User deletedUser = userService.delete(id);
+
             return new ResponseEntity<>(deletedUser, HttpStatus.CREATED);
         } catch (UserNotFoundException e) {
             String errorMessage = e.getMessage();
