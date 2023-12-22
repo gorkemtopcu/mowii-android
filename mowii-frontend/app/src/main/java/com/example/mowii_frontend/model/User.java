@@ -1,12 +1,14 @@
 package com.example.mowii_frontend.model;
 
+import java.util.List;
+
 public class User {
     private String password;
     private String id;
     private String name;
     private String email;
-    private int collectionCount;
-    private int totalLikes;
+    private List<MovieCollection> collections;
+    private List<MovieCollection> likedCollections;
 
     public User(){ }
 
@@ -21,13 +23,13 @@ public class User {
         this.email = email;
     }
 
-    public User(String password, String id, String name, String email, int collectionCount, int totalLikes) {
+    public User(String password, String id, String name, String email, List<MovieCollection> collections, List<MovieCollection> likedCollections) {
         this.password = password;
         this.id = id;
         this.name = name;
         this.email = email;
-        this.collectionCount = collectionCount;
-        this.totalLikes = totalLikes;
+        this.collections = collections;
+        this.likedCollections = likedCollections;
     }
 
     public String getPassword() {
@@ -46,14 +48,6 @@ public class User {
         return email;
     }
 
-    public int getCollectionCount() {
-        return collectionCount;
-    }
-
-    public int getTotalLikes() {
-        return totalLikes;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -70,11 +64,20 @@ public class User {
         this.email = email;
     }
 
-    public void setCollectionCount(int collectionCount) {
-        this.collectionCount = collectionCount;
-    }
+    public List<MovieCollection> getCollections() {return collections;}
 
-    public void setTotalLikes(int totalLikes) {
-        this.totalLikes = totalLikes;
+    public void setCollections(List<MovieCollection> collections) {this.collections = collections;}
+
+    public List<MovieCollection> getLikedCollections() {return likedCollections;}
+
+    public void setLikedCollections(List<MovieCollection> likedCollections) {this.likedCollections = likedCollections;}
+    public int getCollectionCount(){return collections.size();}
+    public int getTotalLikes()
+    {
+        int totalLikes = 0;
+        for (MovieCollection col:collections) {
+            totalLikes += col.getLike();
+        }
+        return totalLikes;
     }
 }

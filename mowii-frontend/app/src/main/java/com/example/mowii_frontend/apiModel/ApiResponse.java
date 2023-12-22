@@ -1,5 +1,4 @@
 package com.example.mowii_frontend.apiModel;
-import retrofit2.Response;
 
 public class ApiResponse<T> {
     private final boolean isSuccess;

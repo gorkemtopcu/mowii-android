@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mowii_frontend.databinding.FragmentCollectionsBinding;
+import com.example.mowii_frontend.R;
+import com.example.mowii_frontend.databinding.FragmentHomeBinding;
 import com.example.mowii_frontend.model.Movie;
-import com.example.mowii_frontend.view.recyclerView.RecyclerViewInterface;
 import com.example.mowii_frontend.viewModel.HomeViewModel;
 
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class MoviesFragment extends Fragment implements RecyclerViewInterface{
+public class MoviesFragment extends Fragment {
 
-    private FragmentCollectionsBinding binding;
-    private final ArrayList<Movie> movieModels = new ArrayList<>();
+    private FragmentHomeBinding binding;
+    private final ArrayList<Movie> data = new ArrayList<>();
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -29,25 +29,27 @@ public class MoviesFragment extends Fragment implements RecyclerViewInterface{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentCollectionsBinding.inflate(getLayoutInflater());
-        binding.rvCollections.setLayoutManager(new LinearLayoutManager(getActivity()));
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.bind(view);
+        binding.rvMovies.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        HomeViewModel collectionViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
-        collectionViewModel.getAllMoviesResult().observe(getViewLifecycleOwner(), movieResult -> {
+        HomeViewModel homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        homeViewModel.getAllMoviesResult().observe(getViewLifecycleOwner(), movieResult -> {
             if (movieResult != null && movieResult.isSuccess()) {
                 onRequestSuccessful(movieResult.getData());
             } else {
                 onRequestFailed();
             }
-            binding.pbCollections.setVisibility(View.INVISIBLE);
+            binding.pbMovies.setVisibility(View.INVISIBLE);
         });
-        collectionViewModel.getAllMovies();
+        homeViewModel.getAllMovies();
 
         return binding.getRoot();
     }
 
     private void onRequestFailed() {
-        binding.txtErrorMessage.setVisibility(View.VISIBLE);
+        binding.txtMovies.setText(getString(R.string.error));
+        binding.txtMovies.setVisibility(View.VISIBLE);
     }
 
     private void onRequestSuccessful(ArrayList<Movie> results) {
@@ -59,19 +61,15 @@ public class MoviesFragment extends Fragment implements RecyclerViewInterface{
     }
 
     private void onNoItems() {
-        binding.txtNoItemsMessage.setVisibility(View.VISIBLE);
+        binding.txtMovies.setText(getString(R.string.no_item));
+        binding.txtMovies.setVisibility(View.VISIBLE);
     }
 
     private void onItemExists(ArrayList<Movie> results) {
-        movieModels.clear();
-        movieModels.addAll(results);
+        data.clear();
+        data.addAll(results);
         MovieAdapter adapter = new MovieAdapter(getActivity(), results);
-        binding.rvCollections.setAdapter(adapter);
-        binding.rvCollections.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        // Handle item click if needed
+        binding.rvMovies.setAdapter(adapter);
+        binding.rvMovies.setVisibility(View.VISIBLE);
     }
 }

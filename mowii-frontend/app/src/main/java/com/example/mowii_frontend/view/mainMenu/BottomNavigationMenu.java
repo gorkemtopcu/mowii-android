@@ -58,7 +58,6 @@ public class BottomNavigationMenu extends AppCompatActivity {
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.container, fragment);
-            transaction.addToBackStack(null);
             transaction.commit();
             return true;
         }
