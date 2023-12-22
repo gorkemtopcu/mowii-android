@@ -23,8 +23,8 @@ public class SplashActivity extends AppCompatActivity {
         // Simulating a delay for demonstration purposes
         new Handler().postDelayed(() -> {
 
-            //Intent intent = new Intent(SplashActivity.this, AuthenticationActivity.class);
-            Intent intent = new Intent(SplashActivity.this, BottomNavigationMenu.class);
+            Intent intent = new Intent(SplashActivity.this, AuthenticationActivity.class);
+            //Intent intent = new Intent(SplashActivity.this, BottomNavigationMenu.class);
             startActivity(intent);
 
             // Finish the current activity (splash screen) to prevent going back

@@ -33,12 +33,4 @@ public class MovieCollection {
         this.name = name;
         this.like = like;
     }
-
-    public MovieCollection(String user, String name, List<Movie> movies, int like) {
-        this.userId = userId;
-        this.userName = userName;
-        this.name = name;
-        this.movies = movies;
-        this.like = like;
-    }
 }

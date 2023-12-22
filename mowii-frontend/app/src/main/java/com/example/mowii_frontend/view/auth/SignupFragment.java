@@ -3,6 +3,7 @@ package com.example.mowii_frontend.view.auth;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.view.mainMenu.BottomNavigationMenu;
 import com.example.mowii_frontend.viewModel.SignUpViewModel;
 
@@ -46,7 +47,7 @@ public class SignupFragment extends Fragment {
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         signUpViewModel.getAuthenticationResult().observe(getViewLifecycleOwner(), registrationResult -> {
             if (registrationResult != null) {
-                if (registrationResult.isSuccess())  { onRegistrationSuccessful();}
+                if (registrationResult.isSuccess())  { onRegistrationSuccessful(registrationResult.getData());}
                 else { onRegistrationFailed( registrationResult.getErrorMessage()); }
             }
         });
@@ -88,7 +89,10 @@ public class SignupFragment extends Fragment {
         }
     }
 
-    private void onRegistrationSuccessful() {
+    private void onRegistrationSuccessful(User authenticatedUser) {
+        UserManager userManager = UserManager.getInstance();
+        userManager.setCurrentUser(authenticatedUser);
+
         Intent intent = new Intent(requireActivity(), BottomNavigationMenu.class);
         startActivity(intent);
 

@@ -20,9 +20,7 @@ public class Movie {
     private double imdbScore;
     private int releaseYear;
 
-    public Movie() {
-
-    }
+    public Movie() { }
 
     public Movie(String title, List<String> genres, String director, List<String> actors, String plot, double imdbScore, int releaseYear) {
         this.title = title;

@@ -15,27 +15,27 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LogInViewModel extends ViewModel {
-    private final MutableLiveData<ApiResponse> authenticationResult = new MutableLiveData<>();
+    private final MutableLiveData<ApiResponse<User>> authenticationResult = new MutableLiveData<>();
 
-    public LiveData<ApiResponse> getAuthenticationResult() {
+    public LiveData<ApiResponse<User>> getAuthenticationResult() {
         return authenticationResult;
     }
 
     private final ApiService apiService = RetrofitClient.createService(ApiService.class);
 
     public void authenticateUser(User user) {
-        Call<Void> call = apiService.authenticateUser(user);
+        Call<User> call = apiService.authenticateUser(user);
 
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 200) {authenticationResult.setValue(new ApiResponse(true, "", response.toString())); }
-                else authenticationResult.setValue(new ApiResponse(false, "Invalid Credentials.", ""));
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.code() == 200) {authenticationResult.setValue(new ApiResponse<User>(true, "", response.body())); }
+                else authenticationResult.setValue(new ApiResponse<User>(false, "Invalid Credentials.", null));
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                authenticationResult.setValue(new ApiResponse(false, "Something went wrong.", ""));
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                authenticationResult.setValue(new ApiResponse<User>(false, "Something went wrong.", null));
             }
         });
     }

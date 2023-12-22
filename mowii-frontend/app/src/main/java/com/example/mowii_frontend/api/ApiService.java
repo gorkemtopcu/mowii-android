@@ -13,10 +13,10 @@ import retrofit2.http.Path;
 
 public interface ApiService {
     @POST("user/create")
-    Call<Void> registerUser(@Body User user);
+    Call<User> registerUser(@Body User user);
 
     @POST("user/authenticate")
-    Call<Void> authenticateUser(@Body User user);
+    Call<User> authenticateUser(@Body User user);
 
     @GET("/movie-collection/all")
     Call<ArrayList<MovieCollection>> getAllMovieCollections();

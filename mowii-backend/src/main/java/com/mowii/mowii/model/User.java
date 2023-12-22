@@ -18,7 +18,6 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private int collectionCount;
 
     @DBRef
     private List<MovieCollection> collections = new ArrayList<>();
@@ -27,8 +26,7 @@ public class User {
     private List<MovieCollection> likedCollections = new ArrayList<>();
 
 
-    public User() {
-    }
+    public User() { }
 
     public User(String name, String email, String password, List<MovieCollection> collections, List<MovieCollection> likedCollections) {
         this.name = name;
@@ -44,7 +42,6 @@ public class User {
     public void appendMyCollection(MovieCollection movieCollection) {
         collections.add(movieCollection);
     }
-
     public void removeLikeCollection(MovieCollection movieCollection) {
         likedCollections.remove(movieCollection);
     }

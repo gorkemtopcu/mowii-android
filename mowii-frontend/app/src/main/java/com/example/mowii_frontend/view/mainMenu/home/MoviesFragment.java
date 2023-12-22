@@ -17,12 +17,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-public class HomeFragment extends Fragment implements RecyclerViewInterface{
+public class MoviesFragment extends Fragment implements RecyclerViewInterface{
 
     private FragmentCollectionsBinding binding;
     private final ArrayList<Movie> movieModels = new ArrayList<>();
 
-    public HomeFragment() {
+    public MoviesFragment() {
         // Required empty public constructor
     }
 

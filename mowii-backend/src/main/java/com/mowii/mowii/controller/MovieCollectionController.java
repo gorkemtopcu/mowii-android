@@ -49,7 +49,6 @@ public class MovieCollectionController {
     public ResponseEntity<?> createMovieCollection(@RequestBody MovieCollectionCreationInput movieCollectionCreationInput) {
         try {
             User owner = userService.getById(movieCollectionCreationInput.getUserId());
-            owner.setCollectionCount(owner.getCollectionCount() + 1);
             MovieCollection movieCollection = new MovieCollection(owner.getId(), owner.getName(), movieCollectionCreationInput.getName(),0);
             movieCollectionService.save(movieCollection);
             owner.appendMyCollection(movieCollection);
