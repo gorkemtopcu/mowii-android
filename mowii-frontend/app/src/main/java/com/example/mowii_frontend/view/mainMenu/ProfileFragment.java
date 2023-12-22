@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.databinding.FragmentProfileBinding;
@@ -43,11 +44,14 @@ public class ProfileFragment extends Fragment {
             binding.txtTotalLikes.setText("Total Likes: " + user.getTotalLikes());
             binding.txtUsername.setText(user.getName());
             setUserCollections(user.getCollections());
-        }
-        else {
+        } else {
             binding.userProfile.setVisibility(View.GONE);
             binding.txtProfileError.setVisibility(View.VISIBLE);
         }
+
+        // Add LinearLayoutManager for RecyclerView
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        binding.rvMycollections.setLayoutManager(layoutManager);
 
         return view;
     }
