@@ -35,6 +35,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         binding = FragmentProfileBinding.bind(view);
+        binding.rvMycollections.setLayoutManager(new LinearLayoutManager(getActivity()));
         User user = UserManager.getInstance().getCurrentUser();
 
         if (user != null) {
@@ -48,10 +49,6 @@ public class ProfileFragment extends Fragment {
             binding.userProfile.setVisibility(View.GONE);
             binding.txtProfileError.setVisibility(View.VISIBLE);
         }
-
-        // Add LinearLayoutManager for RecyclerView
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        binding.rvMycollections.setLayoutManager(layoutManager);
 
         return view;
     }
