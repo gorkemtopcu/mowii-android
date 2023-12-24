@@ -12,17 +12,24 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mowii_frontend.R;
+import com.example.mowii_frontend.api.ApiService;
 import com.example.mowii_frontend.model.MovieCollection;
+import com.example.mowii_frontend.model.MovieCollectionLikeInput;
+import com.example.mowii_frontend.viewModel.LikeViewModel;
 
 import java.util.List;
 
 public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollectionAdapter.MovieCollectionViewHolder> {
     Context ctx;
     List<MovieCollection> data;
+    LikeViewModel likeViewModel; // Declare LikeViewModel field
+
 
     public MovieCollectionAdapter(Context ctx, List<MovieCollection> data) {
         this.ctx = ctx;
         this.data = data;
+        this.likeViewModel = likeViewModel; // Assign LikeViewModel from the constructor
+
     }
 
     @NonNull
@@ -41,7 +48,10 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         holder.likes.setText(data.get(position).getLike() + " ");
 
         holder.row.setOnClickListener(v -> onRowClicked(position));
+        holder.row.setOnClickListener(v -> onLikeClicked(position));
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -59,7 +69,14 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         ctx.startActivity(intent);
     }
 
-    public static class MovieCollectionViewHolder extends RecyclerView.ViewHolder {
+    private void onLikeClicked(int position) {
+        MovieCollection selectedCollection = data.get(position);
+
+
+
+    }
+
+    public class MovieCollectionViewHolder extends RecyclerView.ViewHolder {
         TextView collectionName;
         TextView userName;
         TextView likes;
@@ -72,5 +89,6 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
             likes = itemView.findViewById(R.id.txt_likes);
             row = itemView.findViewById(R.id.rv_collection_row);
         }
+
     }
 }
