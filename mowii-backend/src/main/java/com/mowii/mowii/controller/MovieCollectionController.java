@@ -55,12 +55,12 @@ public class MovieCollectionController {
             userService.save(owner);
 
             return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("/unlike")
+    @PostMapping("/unlike")
     public ResponseEntity<?> unlikeMovieCollection(@RequestBody MovieCollectionLikeInput movieCollectionLikeInput) {
         try {
             MovieCollection movieCollection = movieCollectionService.getById(movieCollectionLikeInput.getCollectionId());
@@ -77,7 +77,7 @@ public class MovieCollectionController {
             liker.removeLikeCollection(movieCollection);
             userService.save(liker);
             return new ResponseEntity<>(movieCollection, HttpStatus.OK);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
@@ -100,7 +100,7 @@ public class MovieCollectionController {
             liker.appendLikeCollection(movieCollection);
             userService.save(liker);
             return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
@@ -130,7 +130,7 @@ public class MovieCollectionController {
 
             return new ResponseEntity<>("Movie added to collection successfully", HttpStatus.OK);
 
-        } catch (UserNotFoundException e) {
+        } catch (MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }

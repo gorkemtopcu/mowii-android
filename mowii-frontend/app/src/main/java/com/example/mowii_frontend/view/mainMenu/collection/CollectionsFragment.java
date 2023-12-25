@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.databinding.FragmentCollectionsBinding;
 import com.example.mowii_frontend.model.MovieCollection;
-import com.example.mowii_frontend.viewModel.CollectionsViewModel;
+import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
 import java.util.ArrayList;
 
@@ -20,6 +20,8 @@ public class CollectionsFragment extends Fragment {
 
     private FragmentCollectionsBinding binding;
     private final ArrayList<MovieCollection> data = new ArrayList<>();
+
+    private MovieCollectionViewModel movieCollectionViewModel;
 
     public CollectionsFragment() {
         // Required empty public constructor
@@ -33,8 +35,8 @@ public class CollectionsFragment extends Fragment {
         binding = FragmentCollectionsBinding.bind(view);
         binding.rvCollections.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        CollectionsViewModel collectionViewModel = new ViewModelProvider(requireActivity()).get(CollectionsViewModel.class);
-        collectionViewModel.getAllCollectionsResult().observe(getViewLifecycleOwner(), collectionResult -> {
+        movieCollectionViewModel = new ViewModelProvider(requireActivity()).get(MovieCollectionViewModel.class);
+        movieCollectionViewModel.getAllCollectionsResult().observe(getViewLifecycleOwner(), collectionResult -> {
             if (collectionResult != null && collectionResult.isSuccess()) {
                 onRequestSuccessful(collectionResult.getData());
             } else {
@@ -42,7 +44,7 @@ public class CollectionsFragment extends Fragment {
             }
             binding.pbCollections.setVisibility(View.INVISIBLE);
         });
-        collectionViewModel.getAllCollections();
+        movieCollectionViewModel.getAllCollections();
 
         return view;
     }
@@ -70,7 +72,7 @@ public class CollectionsFragment extends Fragment {
     private void onItemExists(ArrayList<MovieCollection> results) {
         data.clear();
         data.addAll(results);
-        MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results);
+        MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results, movieCollectionViewModel);
         binding.rvCollections.setAdapter(adapter);
         binding.rvCollections.setVisibility(View.VISIBLE);
     }

@@ -7,7 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.mowii_frontend.api.ApiService;
 import com.example.mowii_frontend.api.RetrofitClient;
-import com.example.mowii_frontend.apiModel.ApiResponse;
+import com.example.mowii_frontend.api.ApiResponse;
+import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.MovieCollectionLikeInput;
 
 import retrofit2.Call;
@@ -24,11 +25,11 @@ public class LikeViewModel extends ViewModel {
     private final ApiService apiService = RetrofitClient.createService(ApiService.class);
 
     public void likeMovieCollection(MovieCollectionLikeInput input) {
-        Call<Void> call = apiService.likeMovieCollection(input);
+        Call<MovieCollection> call = apiService.likeMovieCollection(input);
 
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<MovieCollection>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+            public void onResponse(@NonNull Call<MovieCollection> call, @NonNull Response<MovieCollection> response) {
                 if (response.code() == 200) {
                     likeResult.setValue(new ApiResponse<>(true, "Like successful", null));
                 } else {
@@ -37,18 +38,18 @@ public class LikeViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieCollection> call, @NonNull Throwable t) {
                 likeResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
             }
         });
     }
 
     public void unlikeMovieCollection(MovieCollectionLikeInput input) {
-        Call<Void> call = apiService.unlikeMovieCollection(input);
+        Call<MovieCollection> call = apiService.unlikeMovieCollection(input);
 
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<MovieCollection>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+            public void onResponse(@NonNull Call<MovieCollection> call, @NonNull Response<MovieCollection> response) {
                 if (response.code() == 200) {
                     likeResult.setValue(new ApiResponse<>(true, "Unlike successful", null));
                 } else {
@@ -57,7 +58,7 @@ public class LikeViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieCollection> call, @NonNull Throwable t) {
                 likeResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
             }
         });

@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.apiModel;
+package com.example.mowii_frontend.api;
 
 public class ApiResponse<T> {
     private final boolean isSuccess;

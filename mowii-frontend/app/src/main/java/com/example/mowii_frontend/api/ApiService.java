@@ -26,9 +26,9 @@ public interface ApiService {
     @GET("/movie/getAll")
     Call<ArrayList<Movie>> getAllMovies();
 
-    @DELETE("/movie-collection/unlike")
-    Call<Void> unlikeMovieCollection(MovieCollectionLikeInput input);
+    @POST("/movie-collection/unlike")
+    Call<MovieCollection> unlikeMovieCollection(@Body MovieCollectionLikeInput input);
 
     @POST("/movie-collection/like")
-    Call<Void> likeMovieCollection(MovieCollectionLikeInput input);
+    Call<MovieCollection> likeMovieCollection(@Body MovieCollectionLikeInput input);
 }

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.mowii_frontend.api.ApiService;
 import com.example.mowii_frontend.api.RetrofitClient;
-import com.example.mowii_frontend.apiModel.ApiResponse;
+import com.example.mowii_frontend.api.ApiResponse;
 import com.example.mowii_frontend.model.User;
 
 import retrofit2.Call;

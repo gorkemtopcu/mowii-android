@@ -1,6 +1,8 @@
 package com.example.mowii_frontend.model;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class User {
     private String password;
@@ -9,6 +11,7 @@ public class User {
     private String email;
     private List<MovieCollection> collections;
     private List<MovieCollection> likedCollections;
+    private HashSet<String> likedCollectionIdSet;
 
     public User(){ }
 
@@ -71,13 +74,31 @@ public class User {
     public List<MovieCollection> getLikedCollections() {return likedCollections;}
 
     public void setLikedCollections(List<MovieCollection> likedCollections) {this.likedCollections = likedCollections;}
+    public void addLikedCollection(MovieCollection likedCollection) {
+        if (this.likedCollectionIdSet.add(likedCollection.getId())) {
+            this.likedCollections.add(likedCollection);
+        }
+    }
+    public void removeLikedCollection(MovieCollection likedCollection) {
+        if (this.likedCollectionIdSet.remove(likedCollection.getId())){
+            this.likedCollections.remove(likedCollection);
+        }
+    }
+
     public int getCollectionCount(){return collections.size();}
-    public int getTotalLikes()
-    {
+    public int getTotalLikes() {
         int totalLikes = 0;
         for (MovieCollection col:collections) {
             totalLikes += col.getLike();
         }
         return totalLikes;
+    }
+
+    public boolean checkIsCollectionLiked(MovieCollection movieCollection) {
+        if(likedCollectionIdSet == null) {
+            likedCollectionIdSet = new HashSet<>();
+            for (MovieCollection mc: likedCollections) {likedCollectionIdSet.add(mc.getId());}
+        }
+        return likedCollectionIdSet.contains(movieCollection.getId());
     }
 }
