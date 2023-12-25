@@ -118,7 +118,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
                         }
                         likes.setClickable(true);
                     });
-                    movieCollectionViewModel.unlikeCollection(selectedCollection);
+                    movieCollectionViewModel.unlikeCollection(selectedCollection.getId(), myUser.getId());
                 } else {
                     // like collection
                     myUser.addLikedCollection(collectionId);
@@ -132,7 +132,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
                         }
                         likes.setClickable(true);
                     });
-                    movieCollectionViewModel.likeCollection(selectedCollection);
+                    movieCollectionViewModel.likeCollection(selectedCollection.getId(), myUser.getId());
                 }
             });
         }

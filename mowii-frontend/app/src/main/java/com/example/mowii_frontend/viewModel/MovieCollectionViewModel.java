@@ -73,8 +73,8 @@ public class MovieCollectionViewModel extends ViewModel {
         });
     }
 
-    public void likeCollection(MovieCollection movieCollection){
-        Call<MovieCollection> call = apiService.likeMovieCollection(new MovieCollectionLikeInput(movieCollection.getId(), movieCollection.getUserId()));
+    public void likeCollection(String collectionId, String likerId){
+        Call<MovieCollection> call = apiService.likeMovieCollection(new MovieCollectionLikeInput(collectionId, likerId));
         call.enqueue(new Callback<MovieCollection>() {
             @Override
             public void onResponse(@NonNull Call<MovieCollection> call, @NonNull Response<MovieCollection> response) {
@@ -89,8 +89,8 @@ public class MovieCollectionViewModel extends ViewModel {
         });
     }
 
-    public void unlikeCollection(MovieCollection movieCollection){
-        Call<MovieCollection> call = apiService.unlikeMovieCollection(new MovieCollectionLikeInput(movieCollection.getId(), movieCollection.getUserId()));
+    public void unlikeCollection(String collectionId, String likerId){
+        Call<MovieCollection> call = apiService.unlikeMovieCollection(new MovieCollectionLikeInput(collectionId, likerId));
         call.enqueue(new Callback<MovieCollection>() {
             @Override
             public void onResponse(@NonNull Call<MovieCollection> call, @NonNull Response<MovieCollection> response) {
