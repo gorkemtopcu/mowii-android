@@ -17,6 +17,7 @@ import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.User;
+import com.example.mowii_frontend.view.mainMenu.ProfileFragment;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
     @Override
     public void onBindViewHolder(@NonNull MovieCollectionViewHolder holder, int position) {
         MovieCollection movieCollection = data.get(position);
-        boolean isLiked = myUser.checkIsCollectionLiked(movieCollection);
+        boolean isLiked = myUser.checkIsCollectionLiked(movieCollection.getId());
         holder.setLikeIcon(isLiked);
         holder.collectionName.setText(movieCollection.getName());
         holder.userName.setText(movieCollection.getUserName());
@@ -75,6 +76,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         @SuppressLint("SetTextI18n")
         public void setLikeText(int likeCount) {
             likes.setText(likeCount + " ");
+
         }
 
         public void setLikeIcon(boolean isLiked) {
@@ -100,11 +102,12 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
                 likes.setClickable(false);
 
                 int likeCount = selectedCollection.getLike();
-                boolean isLiked = myUser.checkIsCollectionLiked(selectedCollection);
+                String collectionId = selectedCollection.getId();
+                boolean isLiked = myUser.checkIsCollectionLiked(collectionId);
 
                 if (isLiked) {
                     // unlike collection
-                    myUser.removeLikedCollection(selectedCollection);
+                    myUser.removeLikedCollection(collectionId);
                     selectedCollection.setLike(likeCount - 1);
                     setLikeText(likeCount - 1);
                     setLikeIcon(false);
@@ -118,7 +121,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
                     movieCollectionViewModel.unlikeCollection(selectedCollection);
                 } else {
                     // like collection
-                    myUser.addLikedCollection(selectedCollection);
+                    myUser.addLikedCollection(collectionId);
                     selectedCollection.setLike(likeCount + 1);
                     setLikeText(likeCount + 1);
                     setLikeIcon(true);
@@ -135,13 +138,13 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         }
 
         private void onLikeFailed(MovieCollection movieCollection) {
-            myUser.removeLikedCollection(movieCollection);
+            myUser.removeLikedCollection(movieCollection.getId());
             setLikeIcon(false);
             setLikeText(movieCollection.getLike());
         }
 
         private void onUnlikeFailed(MovieCollection movieCollection) {
-            myUser.addLikedCollection(movieCollection);
+            myUser.addLikedCollection(movieCollection.getId());
             setLikeIcon(true);
             setLikeText(movieCollection.getLike());
         }

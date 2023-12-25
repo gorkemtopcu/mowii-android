@@ -17,9 +17,9 @@ public class User {
     private String email;
     private String password;
 
-    private List<String> collectionsId = new ArrayList<>();
+    private List<String> collections = new ArrayList<>();
 
-    private List<String> likedCollectionsId = new ArrayList<>();
+    private List<String> likedCollections = new ArrayList<>();
 
 
     public User() { }
@@ -28,17 +28,17 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.collectionsId = collections;
-        this.likedCollectionsId = likedCollections;
+        this.collections = collections;
+        this.likedCollections = likedCollections;
     }
 
     public void appendLikeCollection(String movieCollection) {
-        likedCollectionsId.add(movieCollection);
+        likedCollections.add(movieCollection);
     }
     public void appendMyCollection(String movieCollection) {
-        collectionsId.add(movieCollection);
+        collections.add(movieCollection);
     }
     public void removeLikeCollection(String movieCollection) {
-        likedCollectionsId.remove(movieCollection);
+        likedCollections.remove(movieCollection);
     }
 }

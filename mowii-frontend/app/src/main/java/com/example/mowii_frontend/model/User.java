@@ -9,8 +9,8 @@ public class User {
     private String id;
     private String name;
     private String email;
-    private List<MovieCollection> collections;
-    private List<MovieCollection> likedCollections;
+    private List<String> collections;
+    private List<String> likedCollections;
     private HashSet<String> likedCollectionIdSet;
 
     public User(){ }
@@ -26,7 +26,7 @@ public class User {
         this.email = email;
     }
 
-    public User(String password, String id, String name, String email, List<MovieCollection> collections, List<MovieCollection> likedCollections) {
+    public User(String password, String id, String name, String email, List<String> collections, List<String> likedCollections) {
         this.password = password;
         this.id = id;
         this.name = name;
@@ -67,38 +67,38 @@ public class User {
         this.email = email;
     }
 
-    public List<MovieCollection> getCollections() {return collections;}
+    public List<String> getCollections() {return collections;}
 
-    public void setCollections(List<MovieCollection> collections) {this.collections = collections;}
+    public void setCollections(List<String> collections) {this.collections = collections;}
 
-    public List<MovieCollection> getLikedCollections() {return likedCollections;}
+    public List<String> getLikedCollections() {return likedCollections;}
 
-    public void setLikedCollections(List<MovieCollection> likedCollections) {this.likedCollections = likedCollections;}
-    public void addLikedCollection(MovieCollection likedCollection) {
-        if (this.likedCollectionIdSet.add(likedCollection.getId())) {
+    public void setLikedCollections(List<String> likedCollections) {this.likedCollections = likedCollections;}
+    public void addLikedCollection(String likedCollection) {
+        if (this.likedCollectionIdSet.add(likedCollection)) {
             this.likedCollections.add(likedCollection);
         }
     }
-    public void removeLikedCollection(MovieCollection likedCollection) {
-        if (this.likedCollectionIdSet.remove(likedCollection.getId())){
+    public void removeLikedCollection(String likedCollection) {
+        if (this.likedCollectionIdSet.remove(likedCollection)){
             this.likedCollections.remove(likedCollection);
         }
     }
 
     public int getCollectionCount(){return collections.size();}
-    public int getTotalLikes() {
+
+    public int getTotalLikes(List<MovieCollection> movieCollections) {
         int totalLikes = 0;
-        for (MovieCollection col:collections) {
-            totalLikes += col.getLike();
+        for (MovieCollection mc : movieCollections) {
+            totalLikes += mc.getLike();
         }
         return totalLikes;
     }
 
-    public boolean checkIsCollectionLiked(MovieCollection movieCollection) {
+    public boolean checkIsCollectionLiked(String id) {
         if(likedCollectionIdSet == null) {
-            likedCollectionIdSet = new HashSet<>();
-            for (MovieCollection mc: likedCollections) {likedCollectionIdSet.add(mc.getId());}
+            likedCollectionIdSet = new HashSet<>(likedCollections);
         }
-        return likedCollectionIdSet.contains(movieCollection.getId());
+        return likedCollectionIdSet.contains(id);
     }
 }

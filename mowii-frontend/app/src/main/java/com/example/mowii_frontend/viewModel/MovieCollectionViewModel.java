@@ -19,11 +19,16 @@ import retrofit2.Response;
 
 public class MovieCollectionViewModel extends ViewModel {
     private final MutableLiveData<ApiResponse<ArrayList<MovieCollection>>> allCollectionsResult = new MutableLiveData<>();
+    private final MutableLiveData<ApiResponse<ArrayList<MovieCollection>>> userCollectionsResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> likeCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> unlikeCollectionResult = new MutableLiveData<>();
 
     public LiveData<ApiResponse<ArrayList<MovieCollection>>> getAllCollectionsResult() {
         return allCollectionsResult;
+    }
+
+    public LiveData<ApiResponse<ArrayList<MovieCollection>>> getUserCollectionsResult() {
+        return userCollectionsResult;
     }
 
     public LiveData<ApiResponse<MovieCollection>> likeCollectionResult() {
@@ -48,6 +53,22 @@ public class MovieCollectionViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull Call<ArrayList<MovieCollection>> call, @NonNull Throwable t) {
                 allCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
+            }
+        });
+    }
+
+    public void getUserCollections(String userId) {
+        Call<ArrayList<MovieCollection>> call = apiService.getAllMovieCollectionsByUserId(userId);
+        call.enqueue(new Callback<ArrayList<MovieCollection>>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<MovieCollection>> call, @NonNull Response<ArrayList<MovieCollection>> response) {
+                if (response.isSuccessful()) { userCollectionsResult.setValue(new ApiResponse<ArrayList<MovieCollection>>(true, "", response.body())); }
+                else userCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<MovieCollection>> call, @NonNull Throwable t) {
+                userCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
             }
         });
     }

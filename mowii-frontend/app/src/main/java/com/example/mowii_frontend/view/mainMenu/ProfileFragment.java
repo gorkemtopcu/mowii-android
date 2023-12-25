@@ -22,10 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
-
+    User myUser = UserManager.getInstance().getCurrentUser();
     FragmentProfileBinding binding;
     private final ArrayList<MovieCollection> data = new ArrayList<>();
     private MovieCollectionViewModel movieCollectionViewModel;
+    private int likeCount;
 
 
     public ProfileFragment() {
@@ -39,23 +40,32 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         binding = FragmentProfileBinding.bind(view);
         binding.rvMycollections.setLayoutManager(new LinearLayoutManager(getActivity()));
-        User user = UserManager.getInstance().getCurrentUser();
         movieCollectionViewModel = new ViewModelProvider(requireActivity()).get(MovieCollectionViewModel.class);
 
-        if (user != null) {
+        if (myUser != null) {
             binding.userProfile.setVisibility(View.VISIBLE);
             binding.txtProfileError.setVisibility(View.GONE);
-            binding.txtTotalCollections.setText("Total Collections: " + user.getCollectionCount());
-            binding.txtTotalLikes.setText("Total Likes: " + user.getTotalLikes());
-            binding.txtUsername.setText(user.getName());
-            setUserCollections(user.getCollections());
-            movieCollectionViewModel.likeCollectionResult().observe(getViewLifecycleOwner(), likeCollectionResult -> {
-                if (likeCollectionResult.isSuccess())
-                    binding.txtTotalLikes.setText("Total Likes: " + user.getTotalLikes());
+
+            binding.txtUsername.setText(myUser.getName());
+            movieCollectionViewModel.getUserCollectionsResult().observe(getViewLifecycleOwner(), userCollectionsResult->{
+                if (userCollectionsResult.isSuccess()){
+                    onUserCollectionsFetchSuccessful(userCollectionsResult.getData());
+                } else {
+                    onUserCollectionsFetchFailed();
+                }
             });
+            movieCollectionViewModel.getUserCollections(myUser.getId());
+
+            movieCollectionViewModel.likeCollectionResult().observe(getViewLifecycleOwner(), likeCollectionResult -> {
+                if(likeCollectionResult.isSuccess()) {
+                    binding.txtTotalLikes.setText("Total Likes: " + ++likeCount);
+                }
+            });
+
             movieCollectionViewModel.unlikeCollectionResult().observe(getViewLifecycleOwner(), unlikeCollectionResult -> {
-                if (unlikeCollectionResult.isSuccess())
-                    binding.txtTotalLikes.setText("Total Likes: " + user.getTotalLikes());
+                if(unlikeCollectionResult.isSuccess()) {
+                    binding.txtTotalLikes.setText("Total Likes: " + --likeCount);
+                }
             });
         } else {
             binding.userProfile.setVisibility(View.GONE);
@@ -65,6 +75,19 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
+    private void onUserCollectionsFetchSuccessful(ArrayList<MovieCollection> data) {
+        setUserCollections(data);
+        likeCount = myUser.getTotalLikes(data);
+        binding.txtTotalCollections.setText("Total Collections: " + data.size());
+        binding.txtTotalLikes.setText("Total Likes: " + likeCount);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void onUserCollectionsFetchFailed() {
+        binding.txtTotalCollections.setText("Total Collections: ?");
+        binding.txtTotalLikes.setText("Total Likes: ?");
+    }
 
     private void setUserCollections(List<MovieCollection> results) {
         if (results != null && !results.isEmpty()) {

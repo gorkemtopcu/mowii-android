@@ -45,6 +45,17 @@ public class MovieCollectionController {
         }
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getMovieCollectionByUserId(@PathVariable String userId) {
+        try {
+            List<MovieCollection> movieCollections = movieCollectionService.getByUserId(userId);
+            return new ResponseEntity<>(movieCollections, HttpStatus.OK);
+        } catch (MovieCollectionNotFoundException | UserNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createMovieCollection(@RequestBody MovieCollectionCreationInput movieCollectionCreationInput) {
         try {
@@ -58,21 +69,6 @@ public class MovieCollectionController {
         } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping("/match-id-wcollections")
-    public ResponseEntity<?> matchIdWithCollections(@RequestBody List<String> listOfIds) {
-        try {
-            List<MovieCollection> matchedCollections = movieCollectionService.findAllById(listOfIds);
-
-            if (matchedCollections.isEmpty()) {
-                return new ResponseEntity<>("No matching collections found", HttpStatus.NOT_FOUND);
-            }
-
-            return new ResponseEntity<>(matchedCollections, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error processing request", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

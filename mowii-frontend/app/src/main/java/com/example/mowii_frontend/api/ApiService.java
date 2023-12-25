@@ -23,6 +23,9 @@ public interface ApiService {
     @GET("/movie-collection/all")
     Call<ArrayList<MovieCollection>> getAllMovieCollections();
 
+    @GET("/movie-collection/user/{userId}")
+    Call<ArrayList<MovieCollection>> getAllMovieCollectionsByUserId(@Path("userId") String userId);
+
     @GET("/movie/getAll")
     Call<ArrayList<Movie>> getAllMovies();
 
