@@ -17,7 +17,6 @@ import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.User;
-import com.example.mowii_frontend.view.mainMenu.ProfileFragment;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
 import java.util.List;
@@ -67,7 +66,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
 
         public MovieCollectionViewHolder(@NonNull View itemView) {
             super(itemView);
-            collectionName = itemView.findViewById(R.id.txt_movieName);
+            collectionName = itemView.findViewById(R.id.txtmovieName);
             userName = itemView.findViewById(R.id.txtReleaseYear);
             likes = itemView.findViewById(R.id.txt_likes);
             row = itemView.findViewById(R.id.rv_collection_row);

@@ -1,6 +1,7 @@
 package com.example.mowii_frontend.view.mainMenu.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +32,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Movie currentItem = items.get(position);
-        holder.bind(currentItem);
+        Movie currentMovie = items.get(position);
+        holder.bind(currentMovie);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, MovieDetailsActivity.class);
+            intent.putExtra("MOVIE_ID", currentMovie.getId()); // Pass the movie ID
+            intent.putExtra("MOVIE_TITLE", currentMovie.getTitle()); // Pass the movie title
+            intent.putExtra("MOVIE_DIRECTOR", currentMovie.getDirector()); // Pass the movie director
+            intent.putStringArrayListExtra("MOVIE_GENRES", new ArrayList<>(currentMovie.getGenres()));
+            intent.putStringArrayListExtra("MOVIE_ACTORS", new ArrayList<>(currentMovie.getActors()));
+            intent.putExtra("MOVIE_PLOT", currentMovie.getPlot());
+            intent.putExtra("MOVIE_SCORE", currentMovie.getImdbScore());
+            intent.putExtra("MOVIE_RELEASE_YEAR", currentMovie.getReleaseYear());
+            // Add more information as needed
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -45,9 +60,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         TextView movieDirector;
         TextView movieYear;
 
+
+
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
-            movieName = itemView.findViewById(R.id.txt_movieName);
+            movieName = itemView.findViewById(R.id.txtmovieName);
             movieYear = itemView.findViewById(R.id.txtReleaseYear);
         }
 
