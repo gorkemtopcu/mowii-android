@@ -51,7 +51,7 @@ public class MovieCollectionController {
             User owner = userService.getById(movieCollectionCreationInput.getUserId());
             MovieCollection movieCollection = new MovieCollection(owner.getId(), owner.getName(), movieCollectionCreationInput.getName(),0);
             movieCollectionService.save(movieCollection);
-            owner.appendMyCollection(movieCollection);
+            owner.appendMyCollection(movieCollection.getId());
             userService.save(owner);
 
             return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
@@ -60,13 +60,29 @@ public class MovieCollectionController {
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping("/match-id-wcollections")
+    public ResponseEntity<?> matchIdWithCollections(@RequestBody List<String> listOfIds) {
+        try {
+            List<MovieCollection> matchedCollections = movieCollectionService.findAllById(listOfIds);
+
+            if (matchedCollections.isEmpty()) {
+                return new ResponseEntity<>("No matching collections found", HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(matchedCollections, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error processing request", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/unlike")
     public ResponseEntity<?> unlikeMovieCollection(@RequestBody MovieCollectionLikeInput movieCollectionLikeInput) {
         try {
             MovieCollection movieCollection = movieCollectionService.getById(movieCollectionLikeInput.getCollectionId());
 
             // Check if the collection is liked by the user
-            if (!movieCollectionService.isCollectionAlreadyLiked(movieCollectionLikeInput.getLikerId(), movieCollection)) {
+            if (!movieCollectionService.isCollectionAlreadyLiked(movieCollectionLikeInput.getLikerId(), movieCollection.getId())) {
                 return new ResponseEntity<>("Collection is not liked by the user", HttpStatus.BAD_REQUEST);
             }
 
@@ -74,7 +90,7 @@ public class MovieCollectionController {
             movieCollectionService.updateMovieCollection(movieCollection);
 
             User liker = userService.getById(movieCollectionLikeInput.getLikerId());
-            liker.removeLikeCollection(movieCollection);
+            liker.removeLikeCollection(movieCollection.getId());
             userService.save(liker);
             return new ResponseEntity<>(movieCollection, HttpStatus.OK);
         } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
@@ -89,7 +105,7 @@ public class MovieCollectionController {
             MovieCollection movieCollection = movieCollectionService.getById(movieCollectionLikeInput.getCollectionId());
 
             // Check if the collection is already liked by the user
-            if (movieCollectionService.isCollectionAlreadyLiked(movieCollectionLikeInput.getLikerId(), movieCollection)) {
+            if (movieCollectionService.isCollectionAlreadyLiked(movieCollectionLikeInput.getLikerId(), movieCollection.getId())) {
                 return new ResponseEntity<>("Collection is already liked by the user", HttpStatus.BAD_REQUEST);
             }
 
@@ -97,7 +113,7 @@ public class MovieCollectionController {
             movieCollectionService.updateMovieCollection(movieCollection);
 
             User liker = userService.getById(movieCollectionLikeInput.getLikerId());
-            liker.appendLikeCollection(movieCollection);
+            liker.appendLikeCollection(movieCollection.getId());
             userService.save(liker);
             return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
         } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
