@@ -89,8 +89,8 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
                 Intent intent = new Intent(ctx, CollectionDetails.class);
                 intent.putExtra("collectionId", selectedCollection.getId());
                 intent.putExtra("collectionName", selectedCollection.getName());
+                intent.putExtra("creatorName", myUser.getName());
                 intent.putExtra("likeCount", selectedCollection.getLike());
-
                 ctx.startActivity(intent);
             });
         }
