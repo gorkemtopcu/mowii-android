@@ -9,6 +9,7 @@ public class Movie {
     private String director;
     private List<String> actors;
     private String plot;
+    private String posterLink;
     private double imdbScore;
     private int releaseYear;
 
@@ -17,12 +18,13 @@ public class Movie {
 
     }
 
-    public Movie(String id, String title, List<String> genres, String director, List<String> actors, String plot, double imdbScore, int releaseYear) {
+    public Movie(String id, String title, List<String> genres, String director, String posterLink, List<String> actors, String plot, double imdbScore, int releaseYear) {
         this.id = id;
         this.title = title;
         this.genres = genres;
         this.director = director;
         this.actors = actors;
+        this.posterLink = posterLink;
         this.plot = plot;
         this.imdbScore = imdbScore;
         this.releaseYear = releaseYear;
@@ -74,6 +76,14 @@ public class Movie {
 
     public void setPlot(String plot) {
         this.plot = plot;
+    }
+
+    public String getPosterLink() {
+        return posterLink;
+    }
+
+    public void setPosterLink(String posterLink) {
+        this.posterLink = posterLink;
     }
 
     public double getImdbScore() {

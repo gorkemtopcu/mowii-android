@@ -40,6 +40,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             intent.putExtra("MOVIE_ID", currentMovie.getId()); // Pass the movie ID
             intent.putExtra("MOVIE_TITLE", currentMovie.getTitle()); // Pass the movie title
             intent.putExtra("MOVIE_DIRECTOR", currentMovie.getDirector()); // Pass the movie director
+            intent.putExtra("MOVIE_POSTER", currentMovie.getPosterLink()); // Pass the movie director
             intent.putStringArrayListExtra("MOVIE_GENRES", new ArrayList<>(currentMovie.getGenres()));
             intent.putStringArrayListExtra("MOVIE_ACTORS", new ArrayList<>(currentMovie.getActors()));
             intent.putExtra("MOVIE_PLOT", currentMovie.getPlot());
