@@ -34,4 +34,7 @@ public interface ApiService {
 
     @POST("/movie-collection/like")
     Call<MovieCollection> likeMovieCollection(@Body MovieCollectionLikeInput input);
+
+    @GET("/movie-collection/movies/{id}")
+    Call<ArrayList<Movie>> getMoviesByCollectionId(@Path("id") String collectionId);
 }

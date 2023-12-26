@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.databinding.FragmentHomeBinding;
 import com.example.mowii_frontend.model.Movie;
-import com.example.mowii_frontend.viewModel.HomeViewModel;
+import com.example.mowii_frontend.viewModel.MovieViewModel;
 
 import java.util.ArrayList;
 
@@ -33,8 +33,8 @@ public class MoviesFragment extends Fragment {
         binding = FragmentHomeBinding.bind(view);
         binding.rvMovies.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        HomeViewModel homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
-        homeViewModel.getAllMoviesResult().observe(getViewLifecycleOwner(), movieResult -> {
+        MovieViewModel movieViewModel = new ViewModelProvider(requireActivity()).get(MovieViewModel.class);
+        movieViewModel.getAllMoviesResult().observe(getViewLifecycleOwner(), movieResult -> {
             if (movieResult != null && movieResult.isSuccess()) {
                 onRequestSuccessful(movieResult.getData());
             } else {
@@ -42,7 +42,7 @@ public class MoviesFragment extends Fragment {
             }
             binding.pbMovies.setVisibility(View.INVISIBLE);
         });
-        homeViewModel.getAllMovies();
+        movieViewModel.getAllMovies();
 
         return binding.getRoot();
     }

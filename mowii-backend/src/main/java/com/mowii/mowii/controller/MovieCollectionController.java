@@ -45,6 +45,19 @@ public class MovieCollectionController {
         }
     }
 
+    @GetMapping("/movies/{id}")
+    public ResponseEntity<?> getMoviesByCollectionById(@PathVariable String id) {
+        try {
+
+            MovieCollection collection = movieCollectionService.getById(id);
+            List<Movie> movieList = collection.getMovies();
+            return new ResponseEntity<>(movieList, HttpStatus.OK);
+        } catch (MovieCollectionNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getMovieCollectionByUserId(@PathVariable String userId) {
         try {

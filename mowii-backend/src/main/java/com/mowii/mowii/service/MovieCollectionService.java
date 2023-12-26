@@ -1,6 +1,7 @@
 package com.mowii.mowii.service;
 
 import com.mowii.mowii.exception.MovieCollectionNotFoundException;
+import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.model.MovieCollection;
 import com.mowii.mowii.model.User;
 import com.mowii.mowii.repository.MovieCollectionRepository;
@@ -96,4 +97,5 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
     public List<MovieCollection> findAllById(List<String> listOfIds) {
         return movieCollectionRepository.findAllById(listOfIds);
     }
+
 }
