@@ -2,6 +2,7 @@ package com.example.mowii_frontend.view.mainMenu.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.mowii_frontend.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -29,7 +31,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            int movieId = intent.getIntExtra("MOVIE_ID", -1);
+            String movieId = intent.getStringExtra("MOVIE_ID");
             String movieTitle = intent.getStringExtra("MOVIE_TITLE");
             String movieDirector = intent.getStringExtra("MOVIE_DIRECTOR");
             ArrayList<String> genres = intent.getStringArrayListExtra("MOVIE_GENRES");
@@ -47,16 +49,22 @@ public class MovieDetailsActivity extends AppCompatActivity {
             txtPlot.setText(moviePlot);
 
             TextView txtReleaseYear = findViewById(R.id.txtReleaseYear);
-            txtReleaseYear.setText(releaseYear);
+            txtReleaseYear.setText(String.valueOf(releaseYear));
 
             TextView txtIMDB = findViewById(R.id.txtIMDB);
-            txtIMDB.setText((int) movieScore);
+            txtIMDB.setText(String.valueOf(movieScore));
 
             TextView txtGenre = findViewById(R.id.txtGenre);
-            txtGenre.setText((CharSequence) genres);
+            String genresString = TextUtils.join(", ", genres);
+            txtGenre.setText(genresString);
+
+            TextView txtActors = findViewById(R.id.txtActors);
+            String actorsString = TextUtils.join(", ", actors);
+            txtActors.setText(actorsString);
 
             TextView txtDirector = findViewById(R.id.txtDirector);
-            txtDirector.setText(movieDirector);
+            String drc = "Director: " + movieDirector;
+            txtDirector.setText(drc);
             // Set other retrieved data to respective views...
         }
     }

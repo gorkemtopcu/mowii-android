@@ -17,9 +17,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.mainMenu.collection.CollectionDetails"
+            android:name=".view.mainMenu.home.MovieDetailsActivity"
             android:exported="false"
             android:parentActivityName=".view.mainMenu.BottomNavigationMenu"/>
+        <activity
+            android:name=".view.mainMenu.collection.CollectionDetails"
+            android:exported="false"
+            android:parentActivityName=".view.mainMenu.BottomNavigationMenu" />
         <activity
             android:name=".view.auth.AuthenticationActivity"
             android:exported="false" />
@@ -34,11 +38,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.mainMenu.home.MovieDetailsActivity"
-            android:exported="false"
-            android:parentActivityName=".view.mainMenu.BottomNavigationMenu">
         </activity>
     </application>
 
