@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mowii_frontend.R;
@@ -15,22 +17,27 @@ import com.example.mowii_frontend.databinding.FragmentProfileBinding;
 import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.User;
+import com.example.mowii_frontend.view.mainMenu.collection.CreateMovieCollectionDialogFragment;
 import com.example.mowii_frontend.view.mainMenu.collection.MovieCollectionAdapter;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements CreateMovieCollectionDialogFragment.CreateMovieCollectionDialogListener{
     User myUser = UserManager.getInstance().getCurrentUser();
     FragmentProfileBinding binding;
     private final ArrayList<MovieCollection> data = new ArrayList<>();
     private MovieCollectionViewModel movieCollectionViewModel;
     private int likeCount;
 
-
     public ProfileFragment() {
         // Required empty public constructor
+    }
+
+    private void showCreateMovieCollectionDialog() {
+        CreateMovieCollectionDialogFragment dialog = new CreateMovieCollectionDialogFragment();
+        dialog.show(requireActivity().getSupportFragmentManager(), "NewCollectionDialog");
     }
 
     @SuppressLint("SetTextI18n")
@@ -40,6 +47,8 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         binding = FragmentProfileBinding.bind(view);
         binding.rvMycollections.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.btnCreateCollection.setOnClickListener(v -> showCreateMovieCollectionDialog());
+
         movieCollectionViewModel = new ViewModelProvider(requireActivity()).get(MovieCollectionViewModel.class);
 
         if (myUser != null) {
@@ -109,5 +118,13 @@ public class ProfileFragment extends Fragment {
         MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results, movieCollectionViewModel);
         binding.rvMycollections.setAdapter(adapter);
         binding.rvMycollections.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onCollectionCreate(String collectionName) {
+        movieCollectionViewModel.createCollection().observe(getViewLifecycleOwner(), createCollectionResult ->{
+
+        });
+        movieCollectionViewModel.createCollection(myUser.getId(), collectionName);
     }
 }

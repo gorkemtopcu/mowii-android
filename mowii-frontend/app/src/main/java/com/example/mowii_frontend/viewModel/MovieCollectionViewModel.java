@@ -22,6 +22,7 @@ public class MovieCollectionViewModel extends ViewModel {
     private final MutableLiveData<ApiResponse<ArrayList<MovieCollection>>> userCollectionsResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> likeCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> unlikeCollectionResult = new MutableLiveData<>();
+    private final MutableLiveData<ApiResponse<MovieCollection>> createCollectionResult = new MutableLiveData<>();
 
     public LiveData<ApiResponse<ArrayList<MovieCollection>>> getAllCollectionsResult() {
         return allCollectionsResult;
@@ -37,6 +38,10 @@ public class MovieCollectionViewModel extends ViewModel {
 
     public LiveData<ApiResponse<MovieCollection>> unlikeCollectionResult(){
         return unlikeCollectionResult;
+    }
+
+    public LiveData<ApiResponse<MovieCollection>> createCollection() {
+        return createCollectionResult;
     }
 
     private final ApiService apiService = RetrofitClient.createService(ApiService.class);
@@ -103,5 +108,9 @@ public class MovieCollectionViewModel extends ViewModel {
                 unlikeCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
             }
         });
+    }
+
+    public void createCollection(String userId, String name) {
+
     }
 }
