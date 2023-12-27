@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.mainMenu;
+package com.example.mowii_frontend.view.home;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,8 +16,8 @@ import com.example.mowii_frontend.databinding.FragmentProfileBinding;
 import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.User;
-import com.example.mowii_frontend.view.mainMenu.collection.CreateMovieCollectionDialogFragment;
-import com.example.mowii_frontend.view.mainMenu.collection.MovieCollectionAdapter;
+import com.example.mowii_frontend.view.home.collection.CreateMovieCollectionDialogFragment;
+import com.example.mowii_frontend.view.home.collection.MovieCollectionAdapter;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
 import java.util.ArrayList;
@@ -129,7 +129,7 @@ public class ProfileFragment extends Fragment implements CreateMovieCollectionDi
         createMovieCollectionDialogFragment.getBtnCreate().setVisibility(View.GONE);
         createMovieCollectionDialogFragment.getPbCreateCollection().setVisibility(View.VISIBLE);
 
-        movieCollectionViewModel.createCollection().observe(getViewLifecycleOwner(), createCollectionResult ->{
+        movieCollectionViewModel.createCollectionResult().observe(getViewLifecycleOwner(), createCollectionResult ->{
             if (createCollectionResult.isSuccess()){
                 createMovieCollectionDialogFragment.dismiss();
             } else {
@@ -142,6 +142,6 @@ public class ProfileFragment extends Fragment implements CreateMovieCollectionDi
             createMovieCollectionDialogFragment.getPbCreateCollection().setVisibility(View.GONE);
         });
 
-        movieCollectionViewModel.createCollection(myUser.getId(), collectionName);
+        movieCollectionViewModel.createCollectionResult(myUser.getId(), collectionName);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.mainMenu.home;
+package com.example.mowii_frontend.view.home.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class MoviesFragment extends Fragment {
 
+    private MovieViewModel movieViewModel;
     private FragmentHomeBinding binding;
     private final ArrayList<Movie> data = new ArrayList<>();
 
@@ -33,7 +34,7 @@ public class MoviesFragment extends Fragment {
         binding = FragmentHomeBinding.bind(view);
         binding.rvMovies.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        MovieViewModel movieViewModel = new ViewModelProvider(requireActivity()).get(MovieViewModel.class);
+        movieViewModel = new ViewModelProvider(requireActivity()).get(MovieViewModel.class);
         movieViewModel.getAllMoviesResult().observe(getViewLifecycleOwner(), movieResult -> {
             if (movieResult != null && movieResult.isSuccess()) {
                 onRequestSuccessful(movieResult.getData());
@@ -63,6 +64,7 @@ public class MoviesFragment extends Fragment {
     private void onNoItems() {
         binding.txtMovies.setText(getString(R.string.no_item));
         binding.txtMovies.setVisibility(View.VISIBLE);
+        binding.rvMovies.setVisibility(View.GONE);
     }
 
     private void onItemExists(ArrayList<Movie> results) {
@@ -71,5 +73,6 @@ public class MoviesFragment extends Fragment {
         MovieAdapter adapter = new MovieAdapter(getActivity(), results);
         binding.rvMovies.setAdapter(adapter);
         binding.rvMovies.setVisibility(View.VISIBLE);
+        binding.txtMovies.setVisibility(View.GONE);
     }
 }

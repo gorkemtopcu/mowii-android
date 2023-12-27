@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.mainMenu.home;
+package com.example.mowii_frontend.view.home.home;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
