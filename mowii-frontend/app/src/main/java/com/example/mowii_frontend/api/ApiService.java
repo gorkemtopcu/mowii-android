@@ -1,6 +1,7 @@
 package com.example.mowii_frontend.api;
 import com.example.mowii_frontend.model.Movie;
 import com.example.mowii_frontend.model.MovieCollection;
+import com.example.mowii_frontend.model.MovieCollectionCreationInput;
 import com.example.mowii_frontend.model.MovieCollectionLikeInput;
 import com.example.mowii_frontend.model.User;
 
@@ -37,4 +38,7 @@ public interface ApiService {
 
     @GET("/movie-collection/movies/{id}")
     Call<ArrayList<Movie>> getMoviesByCollectionId(@Path("id") String collectionId);
+
+    @POST("/movie-collection/create")
+    Call<MovieCollection> createMovieCollection(@Body MovieCollectionCreationInput input);
 }

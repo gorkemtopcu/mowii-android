@@ -12,13 +12,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.view.mainMenu.collection.CollectionsFragment;
+import com.example.mowii_frontend.view.mainMenu.collection.CreateMovieCollectionDialogFragment;
 import com.example.mowii_frontend.view.mainMenu.home.MoviesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class BottomNavigationMenu extends AppCompatActivity {
+public class BottomNavigationMenu extends AppCompatActivity{
 
     private Map<Integer, Fragment> fragmentMap;
 

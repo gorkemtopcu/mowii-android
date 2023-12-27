@@ -108,7 +108,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/iconButton"
+                android:id="@+id/btn_createCollection"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@drawable/circle_button_background"

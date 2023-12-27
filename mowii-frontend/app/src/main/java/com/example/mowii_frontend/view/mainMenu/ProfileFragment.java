@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,19 +16,20 @@ import com.example.mowii_frontend.databinding.FragmentProfileBinding;
 import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.User;
+import com.example.mowii_frontend.view.mainMenu.collection.CreateMovieCollectionDialogFragment;
 import com.example.mowii_frontend.view.mainMenu.collection.MovieCollectionAdapter;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements CreateMovieCollectionDialogFragment.CreateMovieCollectionDialogListener{
     User myUser = UserManager.getInstance().getCurrentUser();
     FragmentProfileBinding binding;
     private final ArrayList<MovieCollection> data = new ArrayList<>();
     private MovieCollectionViewModel movieCollectionViewModel;
+    private CreateMovieCollectionDialogFragment createMovieCollectionDialogFragment;
     private int likeCount;
-
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -40,6 +42,8 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         binding = FragmentProfileBinding.bind(view);
         binding.rvMycollections.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.btnCreateCollection.setOnClickListener(v -> showCreateMovieCollectionDialog());
+
         movieCollectionViewModel = new ViewModelProvider(requireActivity()).get(MovieCollectionViewModel.class);
 
         if (myUser != null) {
@@ -75,6 +79,13 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    private void showCreateMovieCollectionDialog() {
+        createMovieCollectionDialogFragment= new CreateMovieCollectionDialogFragment();
+        createMovieCollectionDialogFragment.setListener(this); // Set the listener
+        createMovieCollectionDialogFragment.show(getChildFragmentManager(), "NewCollectionDialog");
+    }
+
+
     @SuppressLint("SetTextI18n")
     private void onUserCollectionsFetchSuccessful(ArrayList<MovieCollection> data) {
         setUserCollections(data);
@@ -109,5 +120,28 @@ public class ProfileFragment extends Fragment {
         MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results, movieCollectionViewModel);
         binding.rvMycollections.setAdapter(adapter);
         binding.rvMycollections.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onCollectionCreate(String collectionName) {
+        createMovieCollectionDialogFragment.getBtnCancel().setClickable(false);
+        createMovieCollectionDialogFragment.getBtnCreate().setClickable(false);
+        createMovieCollectionDialogFragment.getBtnCreate().setVisibility(View.GONE);
+        createMovieCollectionDialogFragment.getPbCreateCollection().setVisibility(View.VISIBLE);
+
+        movieCollectionViewModel.createCollection().observe(getViewLifecycleOwner(), createCollectionResult ->{
+            if (createCollectionResult.isSuccess()){
+                createMovieCollectionDialogFragment.dismiss();
+            } else {
+                Toast.makeText(getContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+            }
+
+            createMovieCollectionDialogFragment.getBtnCreate().setClickable(true);
+            createMovieCollectionDialogFragment.getBtnCancel().setClickable(true);
+            createMovieCollectionDialogFragment.getBtnCreate().setVisibility(View.VISIBLE);
+            createMovieCollectionDialogFragment.getPbCreateCollection().setVisibility(View.GONE);
+        });
+
+        movieCollectionViewModel.createCollection(myUser.getId(), collectionName);
     }
 }
