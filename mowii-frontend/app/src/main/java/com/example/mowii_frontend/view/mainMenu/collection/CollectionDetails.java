@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.home.collection;
+package com.example.mowii_frontend.view.mainMenu.collection;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,17 +16,18 @@ import android.widget.TextView;
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.databinding.ActivityCollectionDetailsBinding;
 import com.example.mowii_frontend.model.Movie;
-import com.example.mowii_frontend.view.home.home.MovieAdapter;
+import com.example.mowii_frontend.model.MovieCollection;
+import com.example.mowii_frontend.view.mainMenu.home.MovieAdapter;
+import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 import com.example.mowii_frontend.viewModel.MovieViewModel;
 
 import java.util.ArrayList;
 
 public class CollectionDetails extends AppCompatActivity {
 
-    private MovieViewModel movieViewModel;
     private final ArrayList<Movie> data = new ArrayList<>();
+    private MovieViewModel movieViewModel;
     private ActivityCollectionDetailsBinding binding; // Add this line
-    private String collectionId;
 
 
     @SuppressLint("SetTextI18n")
@@ -43,7 +44,7 @@ public class CollectionDetails extends AppCompatActivity {
         setContentView(view);
 
         // Retrieve the data from the intent
-        collectionId = getIntent().getStringExtra("collectionId");
+        String collectionId = getIntent().getStringExtra("collectionId");
         String collectionName = getIntent().getStringExtra("collectionName");
         String userName = getIntent().getStringExtra("creatorName");
         String likeCount = String.valueOf(getIntent().getIntExtra("likeCount", 0));
@@ -66,7 +67,6 @@ public class CollectionDetails extends AppCompatActivity {
             } else {
                 onRequestFailed();
             }
-            binding.pbCollectionDetails.setVisibility(View.GONE);
         });
         movieViewModel.getMoviesByCollectionId(collectionId);
 
@@ -81,7 +81,7 @@ public class CollectionDetails extends AppCompatActivity {
     private void onRequestFailed() {
         ProgressBar pb = findViewById(R.id.pb_collection_details);
         pb.setVisibility(View.INVISIBLE);
-        TextView error = findViewById(R.id.txt_collectionMoviesError);
+        TextView error = findViewById(R.id.txt_collectionmovies);
         error.setVisibility(View.VISIBLE);
     }
 
@@ -91,27 +91,24 @@ public class CollectionDetails extends AppCompatActivity {
         } else {
             onNoItems();
         }
+        
     }
 
     private void onNoItems() {
-        binding.txtCollectionMoviesNoItem.setVisibility(View.VISIBLE);
+        ProgressBar pb = findViewById(R.id.pb_collection_details);
+        pb.setVisibility(View.INVISIBLE);
 
-        binding.txtCollectionMoviesError.setVisibility(View.INVISIBLE);
-        binding.rvMovies.setVisibility(View.INVISIBLE);
     }
 
     private void onItemExists(ArrayList<Movie> results) {
         data.clear();
         data.addAll(results);
-        boolean isBelongToUser = getIntent().getBooleanExtra("isBelongMyCollections", false);
-        MovieAdapter adapter = isBelongToUser ?
-                new MovieAdapter(this, results, movieViewModel, collectionId)
-                : new MovieAdapter(this, results);
+        MovieAdapter adapter = new MovieAdapter(this, results);
+        ProgressBar pb = findViewById(R.id.pb_collection_details);
+        pb.setVisibility(View.INVISIBLE);
         binding.rvMovies.setAdapter(adapter);
-        binding.txtCollectionMoviesNoItem.setVisibility(View.INVISIBLE);
-        binding.txtCollectionMoviesError.setVisibility(View.INVISIBLE);
-
         binding.rvMovies.setVisibility(View.VISIBLE);
+
     }
 
     // Handle the back button click

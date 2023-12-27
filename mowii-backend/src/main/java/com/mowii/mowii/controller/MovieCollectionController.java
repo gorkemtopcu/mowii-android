@@ -1,7 +1,6 @@
 package com.mowii.mowii.controller;
 
 import com.mowii.mowii.exception.MovieCollectionNotFoundException;
-import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.model.*;
 import com.mowii.mowii.service.MovieCollectionService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/movie-collection")
@@ -157,35 +155,12 @@ public class MovieCollectionController {
 
             return new ResponseEntity<>("Movie added to collection successfully", HttpStatus.OK);
 
-        } catch (MovieCollectionNotFoundException | MovieNotFoundException e) {
+        } catch (MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/remove-movie")
-    public ResponseEntity<?> removeMovieFromCollection(@RequestBody AddMovieToCollectionInput input) {
-        try {
-            MovieCollection movieCollection = movieCollectionService.getById(input.getId());
-
-            if (movieCollection.getMovies() == null) {
-                return new ResponseEntity<>("Movie is not found in the collection", HttpStatus.BAD_REQUEST);
-            }
-
-            for (Movie movie: movieCollection.getMovies()) {
-                if(!Objects.equals(movie.getId(), input.getMovieId())) { continue; }
-                movieCollection.getMovies().remove(movie);
-                movieCollectionService.updateMovieCollection(movieCollection);
-                return new ResponseEntity<>("Movie removed from collection successfully", HttpStatus.OK);
-            }
-
-            return new ResponseEntity<>("Movie is not found in the collection", HttpStatus.BAD_REQUEST);
-
-        } catch (MovieCollectionNotFoundException | MovieNotFoundException e) {
-            String errorMessage = e.getMessage();
-            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-        }
-    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteMovieCollection(@PathVariable String id) {

@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.mowii_frontend.api.ApiService;
 import com.example.mowii_frontend.api.RetrofitClient;
 import com.example.mowii_frontend.api.ApiResponse;
-import com.example.mowii_frontend.model.AddMovieToCollectionInput;
+import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.MovieCollectionCreationInput;
 import com.example.mowii_frontend.model.MovieCollectionLikeInput;
@@ -26,8 +26,6 @@ public class MovieCollectionViewModel extends ViewModel {
     private final MutableLiveData<ApiResponse<MovieCollection>> likeCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> unlikeCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> createCollectionResult = new MutableLiveData<>();
-    private final MutableLiveData<ApiResponse<Void>> addMovieToCollectionResult = new MutableLiveData<>();
-    private final MutableLiveData<ApiResponse<Void>> removeMovieFromCollectionResult = new MutableLiveData<>();
 
     public LiveData<ApiResponse<ArrayList<MovieCollection>>> getAllCollectionsResult() {
         return allCollectionsResult;
@@ -45,16 +43,8 @@ public class MovieCollectionViewModel extends ViewModel {
         return unlikeCollectionResult;
     }
 
-    public LiveData<ApiResponse<MovieCollection>> createCollectionResult() {
+    public LiveData<ApiResponse<MovieCollection>> createCollection() {
         return createCollectionResult;
-    }
-
-    public LiveData<ApiResponse<Void>> addMovieToCollectionResult(){
-        return addMovieToCollectionResult;
-    }
-
-    public LiveData<ApiResponse<Void>> removeMovieFromCollectionResult(){
-        return removeMovieFromCollectionResult;
     }
 
     private final ApiService apiService = RetrofitClient.createService(ApiService.class);
@@ -131,7 +121,7 @@ public class MovieCollectionViewModel extends ViewModel {
         });
     }
 
-    public void createCollectionResult(String userId, String name) {
+    public void createCollection(String userId, String name) {
         Call<MovieCollection> call = apiService.createMovieCollection(new MovieCollectionCreationInput(userId, name));
         call.enqueue(new Callback<MovieCollection>() {
             @Override
@@ -148,45 +138,6 @@ public class MovieCollectionViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull Call<MovieCollection> call, @NonNull Throwable t) {
                 createCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
-            }
-        });
-    }
-
-
-    public void addMovieToCollection(String id, String movieId) {
-        Call<Void> call = apiService.addMovieToCollection(new AddMovieToCollectionInput(id, movieId));
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.isSuccessful()) {
-                    addMovieToCollectionResult.setValue(new ApiResponse<>(true, "", null));
-                } else {
-                    addMovieToCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                addMovieToCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
-            }
-        });
-    }
-
-    public void removeMovieFromCollection(String id, String movieId) {
-        Call<Void> call = apiService.removeMovieFromCollection(new AddMovieToCollectionInput(id, movieId));
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                if (response.isSuccessful()) {
-                    removeMovieFromCollectionResult.setValue(new ApiResponse<>(true, "", null));
-                } else {
-                    removeMovieFromCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                removeMovieFromCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
             }
         });
     }

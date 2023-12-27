@@ -1,5 +1,4 @@
 package com.example.mowii_frontend.api;
-import com.example.mowii_frontend.model.AddMovieToCollectionInput;
 import com.example.mowii_frontend.model.Movie;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.MovieCollectionCreationInput;
@@ -10,9 +9,9 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -42,9 +41,4 @@ public interface ApiService {
 
     @POST("/movie-collection/create")
     Call<MovieCollection> createMovieCollection(@Body MovieCollectionCreationInput input);
-
-    @PUT("/movie-collection/add-movie")
-    Call<Void> addMovieToCollection(@Body AddMovieToCollectionInput input);
-    @PUT("/movie-collection/remove-movie")
-    Call<Void> removeMovieFromCollection(@Body AddMovieToCollectionInput input);
 }
