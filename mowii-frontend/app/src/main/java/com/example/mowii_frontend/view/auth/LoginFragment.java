@@ -43,8 +43,11 @@ public class LoginFragment extends Fragment {
         logInViewModel = new ViewModelProvider(this).get(LogInViewModel.class);
         logInViewModel.getAuthenticationResult().observe(getViewLifecycleOwner(), authResult -> {
             if (authResult != null) {
-                if (authResult.isSuccess())  { onLoginSuccessful(authResult.getData()); }
-                else { onLoginFailed(authResult.getErrorMessage()); }
+                if (authResult.isSuccess()) {
+                    onLoginSuccessful(authResult.getData());
+                } else {
+                    onLoginFailed(authResult.getErrorMessage());
+                }
             }
         });
 
@@ -69,7 +72,7 @@ public class LoginFragment extends Fragment {
         logInViewModel.authenticateUser(user);
     }
 
-    private void onLoginSuccessful(User authenticatedUser){
+    private void onLoginSuccessful(User authenticatedUser) {
         UserManager userManager = UserManager.getInstance();
         userManager.setCurrentUser(authenticatedUser);
 

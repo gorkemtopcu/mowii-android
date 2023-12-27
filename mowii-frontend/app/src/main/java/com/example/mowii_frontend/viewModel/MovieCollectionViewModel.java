@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModel;
 import com.example.mowii_frontend.api.ApiService;
 import com.example.mowii_frontend.api.RetrofitClient;
 import com.example.mowii_frontend.api.ApiResponse;
+import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.model.MovieCollection;
+import com.example.mowii_frontend.model.MovieCollectionCreationInput;
 import com.example.mowii_frontend.model.MovieCollectionLikeInput;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieCollectionViewModel extends ViewModel {
+
     private final MutableLiveData<ApiResponse<ArrayList<MovieCollection>>> allCollectionsResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<ArrayList<MovieCollection>>> userCollectionsResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> likeCollectionResult = new MutableLiveData<>();
@@ -36,7 +39,7 @@ public class MovieCollectionViewModel extends ViewModel {
         return likeCollectionResult;
     }
 
-    public LiveData<ApiResponse<MovieCollection>> unlikeCollectionResult(){
+    public LiveData<ApiResponse<MovieCollection>> unlikeCollectionResult() {
         return unlikeCollectionResult;
     }
 
@@ -51,8 +54,10 @@ public class MovieCollectionViewModel extends ViewModel {
         call.enqueue(new Callback<ArrayList<MovieCollection>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<MovieCollection>> call, @NonNull Response<ArrayList<MovieCollection>> response) {
-                if (response.isSuccessful()) { allCollectionsResult.setValue(new ApiResponse<ArrayList<MovieCollection>>(true, "", response.body())); }
-                else allCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
+                if (response.isSuccessful()) {
+                    allCollectionsResult.setValue(new ApiResponse<ArrayList<MovieCollection>>(true, "", response.body()));
+                } else
+                    allCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
             }
 
             @Override
@@ -67,8 +72,10 @@ public class MovieCollectionViewModel extends ViewModel {
         call.enqueue(new Callback<ArrayList<MovieCollection>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<MovieCollection>> call, @NonNull Response<ArrayList<MovieCollection>> response) {
-                if (response.isSuccessful()) { userCollectionsResult.setValue(new ApiResponse<ArrayList<MovieCollection>>(true, "", response.body())); }
-                else userCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
+                if (response.isSuccessful()) {
+                    userCollectionsResult.setValue(new ApiResponse<ArrayList<MovieCollection>>(true, "", response.body()));
+                } else
+                    userCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
             }
 
             @Override
@@ -78,13 +85,15 @@ public class MovieCollectionViewModel extends ViewModel {
         });
     }
 
-    public void likeCollection(String collectionId, String likerId){
+    public void likeCollection(String collectionId, String likerId) {
         Call<MovieCollection> call = apiService.likeMovieCollection(new MovieCollectionLikeInput(collectionId, likerId));
         call.enqueue(new Callback<MovieCollection>() {
             @Override
             public void onResponse(@NonNull Call<MovieCollection> call, @NonNull Response<MovieCollection> response) {
-                if (response.isSuccessful()) { likeCollectionResult.setValue(new ApiResponse<MovieCollection>(true, "", response.body())); }
-                else likeCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
+                if (response.isSuccessful()) {
+                    likeCollectionResult.setValue(new ApiResponse<MovieCollection>(true, "", response.body()));
+                } else
+                    likeCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
             }
 
             @Override
@@ -94,13 +103,15 @@ public class MovieCollectionViewModel extends ViewModel {
         });
     }
 
-    public void unlikeCollection(String collectionId, String likerId){
+    public void unlikeCollection(String collectionId, String likerId) {
         Call<MovieCollection> call = apiService.unlikeMovieCollection(new MovieCollectionLikeInput(collectionId, likerId));
         call.enqueue(new Callback<MovieCollection>() {
             @Override
             public void onResponse(@NonNull Call<MovieCollection> call, @NonNull Response<MovieCollection> response) {
-                if (response.isSuccessful()) { unlikeCollectionResult.setValue(new ApiResponse<MovieCollection>(true, "", response.body())); }
-                else unlikeCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
+                if (response.isSuccessful()) {
+                    unlikeCollectionResult.setValue(new ApiResponse<MovieCollection>(true, "", response.body()));
+                } else
+                    unlikeCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong.", null));
             }
 
             @Override
@@ -111,6 +122,23 @@ public class MovieCollectionViewModel extends ViewModel {
     }
 
     public void createCollection(String userId, String name) {
+        Call<MovieCollection> call = apiService.createMovieCollection(new MovieCollectionCreationInput(userId, name));
+        call.enqueue(new Callback<MovieCollection>() {
+            @Override
+            public void onResponse(@NonNull Call<MovieCollection> call, @NonNull Response<MovieCollection> response) {
+                if (response.isSuccessful()) {
+                    createCollectionResult.setValue(new ApiResponse<MovieCollection>(true, "", response.body()));
+                    getUserCollections(userId);
+                    getAllCollections();
+                } else {
+                    createCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
+                }
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<MovieCollection> call, @NonNull Throwable t) {
+                createCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
+            }
+        });
     }
 }
