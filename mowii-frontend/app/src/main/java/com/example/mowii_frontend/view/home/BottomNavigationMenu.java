@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.mainMenu;
+package com.example.mowii_frontend.view.home;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,9 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mowii_frontend.R;
-import com.example.mowii_frontend.view.mainMenu.collection.CollectionsFragment;
-import com.example.mowii_frontend.view.mainMenu.collection.CreateMovieCollectionDialogFragment;
-import com.example.mowii_frontend.view.mainMenu.home.MoviesFragment;
+import com.example.mowii_frontend.view.home.collection.CollectionsFragment;
+import com.example.mowii_frontend.view.home.home.MoviesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;

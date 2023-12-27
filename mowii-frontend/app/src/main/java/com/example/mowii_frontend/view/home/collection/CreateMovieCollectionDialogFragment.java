@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.mainMenu.collection;
+package com.example.mowii_frontend.view.home.collection;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;

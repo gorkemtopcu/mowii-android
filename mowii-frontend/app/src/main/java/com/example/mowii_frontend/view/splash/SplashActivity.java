@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.view.auth.AuthenticationActivity;
-import com.example.mowii_frontend.view.mainMenu.BottomNavigationMenu;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
