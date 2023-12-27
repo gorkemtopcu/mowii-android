@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.mainMenu.home;
+package com.example.mowii_frontend.view.home.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,14 +7,10 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mowii_frontend.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
