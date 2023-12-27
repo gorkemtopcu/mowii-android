@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.mowii_frontend.R;
 import com.squareup.picasso.Picasso;
@@ -29,6 +30,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
             return insets;
         });*/
 
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(""); // or use null
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         if (intent != null) {
             String movieId = intent.getStringExtra("MOVIE_ID");

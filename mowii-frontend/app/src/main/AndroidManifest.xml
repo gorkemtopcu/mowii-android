@@ -26,7 +26,12 @@
         <activity
             android:name=".view.mainMenu.collection.CollectionDetails"
             android:exported="false"
-            android:parentActivityName=".view.mainMenu.BottomNavigationMenu" />
+            android:parentActivityName=".view.mainMenu.BottomNavigationMenu">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.mainMenu.BottomNavigationMenu" />
+        </activity>
+
         <activity
             android:name=".view.auth.AuthenticationActivity"
             android:exported="false" />
