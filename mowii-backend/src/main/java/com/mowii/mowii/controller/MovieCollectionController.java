@@ -136,26 +136,23 @@ public class MovieCollectionController {
 
 
     @PutMapping("/add-movie")
-    public ResponseEntity<?> addMovieToCollection(@RequestBody AddMovieToCollectionInput input) {
+    public ResponseEntity<?> addMovieToCollections(@RequestBody AddMovieToCollectionsInput input) {
         try {
             Movie movie = movieService.getById(input.getMovieId());
-            MovieCollection movieCollection = movieCollectionService.getById(input.getId());
 
-            if (movieCollection.getMovies() == null) {
-                movieCollection.setMovies(new ArrayList<>()); // Initialize the list if it's null
+            for (String id: input.getIdList()){
+                MovieCollection movieCollection = movieCollectionService.getById(id);
+                if (movieCollection.getMovies() == null) {
+                    movieCollection.setMovies(new ArrayList<>()); // Initialize the list if it's null
+                }
+                // Add the movie to the collection
+                movieCollection.getMovies().add(movie);
+
+                // Update the movie collection
+                movieCollectionService.updateMovieCollection(movieCollection);
             }
 
-            if (movieCollection.getMovies().contains(movie)) {
-                return new ResponseEntity<>("Movie is already in the collection", HttpStatus.BAD_REQUEST);
-            }
-
-            // Add the movie to the collection
-            movieCollection.getMovies().add(movie);
-
-            // Update the movie collection
-            movieCollectionService.updateMovieCollection(movieCollection);
-
-            return new ResponseEntity<>("Movie added to collection successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Movie added to collections successfully", HttpStatus.OK);
 
         } catch (MovieCollectionNotFoundException | MovieNotFoundException e) {
             String errorMessage = e.getMessage();
@@ -164,9 +161,9 @@ public class MovieCollectionController {
     }
 
     @PutMapping("/remove-movie")
-    public ResponseEntity<?> removeMovieFromCollection(@RequestBody AddMovieToCollectionInput input) {
+    public ResponseEntity<?> removeMovieFromCollection(@RequestBody AddMovieToCollectionsInput input) {
         try {
-            MovieCollection movieCollection = movieCollectionService.getById(input.getId());
+            MovieCollection movieCollection = movieCollectionService.getById(input.getIdList());
 
             if (movieCollection.getMovies() == null) {
                 return new ResponseEntity<>("Movie is not found in the collection", HttpStatus.BAD_REQUEST);
