@@ -4,6 +4,7 @@ import com.example.mowii_frontend.model.Movie;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.MovieCollectionCreationInput;
 import com.example.mowii_frontend.model.MovieCollectionLikeInput;
+import com.example.mowii_frontend.model.RemoveMovieFromCollectionInput;
 import com.example.mowii_frontend.model.User;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public interface ApiService {
     Call<MovieCollection> createMovieCollection(@Body MovieCollectionCreationInput input);
 
     @PUT("/movie-collection/add-movie")
-    Call<Void> addMovieToCollection(@Body AddMovieToCollectionInput input);
+    Call<Void> addMovieToCollections(@Body AddMovieToCollectionInput input);
     @PUT("/movie-collection/remove-movie")
-    Call<Void> removeMovieFromCollection(@Body AddMovieToCollectionInput input);
+    Call<Void> removeMovieFromCollection(@Body RemoveMovieFromCollectionInput input);
 }

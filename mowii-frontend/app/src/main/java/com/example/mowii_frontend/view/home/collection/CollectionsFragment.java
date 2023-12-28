@@ -72,7 +72,7 @@ public class CollectionsFragment extends Fragment {
     private void onItemExists(ArrayList<MovieCollection> results) {
         data.clear();
         data.addAll(results);
-        MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results, movieCollectionViewModel);
+        MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results, movieCollectionViewModel,false);
         binding.rvCollections.setAdapter(adapter);
         binding.rvCollections.setVisibility(View.VISIBLE);
     }

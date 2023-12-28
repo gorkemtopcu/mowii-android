@@ -1,14 +1,16 @@
 package com.example.mowii_frontend.model;
 
+import java.util.List;
+
 public class AddMovieToCollectionInput {
-    private String id;
+    private List<String> idList;
     private String movieId;
 
     public AddMovieToCollectionInput() {
     }
 
-    public AddMovieToCollectionInput(String id, String movieId) {
-        this.id = id;
+    public AddMovieToCollectionInput(List<String> idList, String movieId) {
+        this.idList = idList;
         this.movieId = movieId;
     }
 
@@ -20,11 +22,11 @@ public class AddMovieToCollectionInput {
         this.movieId = movieId;
     }
 
-    public String getId() {
-        return id;
+    public List<String> getId() {
+        return idList;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(List<String> idList) {
+        this.idList = idList;
     }
 }

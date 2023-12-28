@@ -27,11 +27,24 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
     private final List<MovieCollection> data;
     private final MovieCollectionViewModel movieCollectionViewModel;
     private final User myUser = UserManager.getInstance().getCurrentUser();
+    private final boolean isAddMovie;
 
-    public MovieCollectionAdapter(Context ctx, List<MovieCollection> data, MovieCollectionViewModel movieCollectionViewModel) {
+    public interface MovieCollectionAdapterListener {
+        void onMovieCollectionSelected(String collectionId);
+    }
+
+    private MovieCollectionAdapterListener listener;
+
+    public void setListener(MovieCollectionAdapterListener listener) {
+        this.listener = listener;
+    }
+
+
+    public MovieCollectionAdapter(Context ctx, List<MovieCollection> data, MovieCollectionViewModel movieCollectionViewModel, boolean isAddMovie) {
         this.ctx = ctx;
         this.data = data;
         this.movieCollectionViewModel = movieCollectionViewModel;
+        this.isAddMovie = isAddMovie;
     }
 
     @NonNull
@@ -49,8 +62,9 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         holder.setLikeIcon(isLiked);
         holder.collectionName.setText(movieCollection.getName());
         holder.userName.setText(movieCollection.getUserName());
+        holder.likes.setVisibility(isAddMovie ? View.INVISIBLE : View.VISIBLE);
         holder.setLikeText(movieCollection.getLike());
-        holder.setRowClick(movieCollection);
+        holder.setRowClick(movieCollection, isAddMovie);
         holder.setLikeClicked(movieCollection);
     }
 
@@ -84,16 +98,30 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
             likes.setCompoundDrawablesWithIntrinsicBounds(0, 0, likeIcon, 0);
         }
 
-        public void setRowClick(MovieCollection selectedCollection) {
+        public void setRowClick(MovieCollection selectedCollection, boolean isMovieAdd) {
             row.setOnClickListener(v -> {
-                Intent intent = new Intent(ctx, CollectionDetails.class);
-                intent.putExtra("collectionId", selectedCollection.getId());
-                intent.putExtra("collectionName", selectedCollection.getName());
-                intent.putExtra("creatorName", selectedCollection.getUserName());
-                intent.putExtra("likeCount", selectedCollection.getLike());
-                intent.putExtra("isBelongMyCollections", Objects.equals(myUser.getId(), selectedCollection.getUserId()));
-                ctx.startActivity(intent);
+                if (isMovieAdd) {
+                    setItemClickMovieAdd(selectedCollection);
+                } else {
+                    setItemClick(selectedCollection);
+                }
             });
+        }
+
+        private void setItemClick(MovieCollection selectedCollection){
+            Intent intent = new Intent(ctx, CollectionDetails.class);
+            intent.putExtra("collectionId", selectedCollection.getId());
+            intent.putExtra("collectionName", selectedCollection.getName());
+            intent.putExtra("creatorName", selectedCollection.getUserName());
+            intent.putExtra("likeCount", selectedCollection.getLike());
+            intent.putExtra("isBelongMyCollections", Objects.equals(myUser.getId(), selectedCollection.getUserId()));
+            ctx.startActivity(intent);
+        }
+
+        private void setItemClickMovieAdd(MovieCollection selectedCollection) {
+            if(listener != null) {
+                listener.onMovieCollectionSelected(selectedCollection.getId());
+            }
         }
 
         @SuppressLint("SetTextI18n")

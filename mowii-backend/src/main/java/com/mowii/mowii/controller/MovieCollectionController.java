@@ -161,9 +161,9 @@ public class MovieCollectionController {
     }
 
     @PutMapping("/remove-movie")
-    public ResponseEntity<?> removeMovieFromCollection(@RequestBody AddMovieToCollectionsInput input) {
+    public ResponseEntity<?> removeMovieFromCollection(@RequestBody RemoveMovieFromCollectionInput input) {
         try {
-            MovieCollection movieCollection = movieCollectionService.getById(input.getIdList());
+            MovieCollection movieCollection = movieCollectionService.getById(input.getId());
 
             if (movieCollection.getMovies() == null) {
                 return new ResponseEntity<>("Movie is not found in the collection", HttpStatus.BAD_REQUEST);

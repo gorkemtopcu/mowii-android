@@ -12,8 +12,10 @@ import com.example.mowii_frontend.model.AddMovieToCollectionInput;
 import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.MovieCollectionCreationInput;
 import com.example.mowii_frontend.model.MovieCollectionLikeInput;
+import com.example.mowii_frontend.model.RemoveMovieFromCollectionInput;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +28,7 @@ public class MovieCollectionViewModel extends ViewModel {
     private final MutableLiveData<ApiResponse<MovieCollection>> likeCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> unlikeCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> createCollectionResult = new MutableLiveData<>();
-    private final MutableLiveData<ApiResponse<Void>> addMovieToCollectionResult = new MutableLiveData<>();
+    private final MutableLiveData<ApiResponse<Void>> addMovieToCollectionsResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<Void>> removeMovieFromCollectionResult = new MutableLiveData<>();
 
     public LiveData<ApiResponse<ArrayList<MovieCollection>>> getAllCollectionsResult() {
@@ -50,7 +52,7 @@ public class MovieCollectionViewModel extends ViewModel {
     }
 
     public LiveData<ApiResponse<Void>> addMovieToCollectionResult(){
-        return addMovieToCollectionResult;
+        return addMovieToCollectionsResult;
     }
 
     public LiveData<ApiResponse<Void>> removeMovieFromCollectionResult(){
@@ -152,28 +154,27 @@ public class MovieCollectionViewModel extends ViewModel {
         });
     }
 
-
-    public void addMovieToCollection(String id, String movieId) {
-        Call<Void> call = apiService.addMovieToCollection(new AddMovieToCollectionInput(id, movieId));
+    public void addMovieToCollections(List<String> id, String movieId) {
+        Call<Void> call = apiService.addMovieToCollections(new AddMovieToCollectionInput(id, movieId));
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    addMovieToCollectionResult.setValue(new ApiResponse<>(true, "", null));
+                    addMovieToCollectionsResult.setValue(new ApiResponse<>(true, "", null));
                 } else {
-                    addMovieToCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
+                    addMovieToCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                addMovieToCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
+                addMovieToCollectionsResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
             }
         });
     }
 
     public void removeMovieFromCollection(String id, String movieId) {
-        Call<Void> call = apiService.removeMovieFromCollection(new AddMovieToCollectionInput(id, movieId));
+        Call<Void> call = apiService.removeMovieFromCollection(new RemoveMovieFromCollectionInput(id, movieId));
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
