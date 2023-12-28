@@ -10,13 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.model.Movie;
 import com.example.mowii_frontend.view.home.collection.AddMovieToCollectionsDialogFragment;
-import com.example.mowii_frontend.view.home.collection.AddMovieToCollectionsDialogFragment.AddMovieToCollectionsDialogFragmentListener;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 import com.example.mowii_frontend.viewModel.MovieViewModel;
 
@@ -24,14 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> implements AddMovieToCollectionsDialogFragmentListener {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private final Context ctx;
     private final ArrayList<Movie> items;
     private final boolean isBelongMyCollections;
     private final MovieViewModel movieViewModel;
     private final String movieCollectionId;
-    private AddMovieToCollectionsDialogFragment addMovieToCollectionsDialogFragment;
 
     public MovieAdapter(Context ctx, ArrayList<Movie> items) {
         this.ctx = ctx;
@@ -85,7 +84,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             // activate add button
             holder.getBtnAddMovie().setVisibility(View.VISIBLE);
             holder.getBtnRemoveMovie().setVisibility(View.GONE);
-            holder.getBtnRemoveMovie().setOnClickListener(v->onBtnMovieAddClicked(currentMovie));
+            holder.getBtnAddMovie().setOnClickListener(v->onBtnMovieAddClicked(currentMovie));
         }
     }
 
@@ -95,14 +94,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     private void onBtnMovieAddClicked(Movie movie) {
-        addMovieToCollectionsDialogFragment = new AddMovieToCollectionsDialogFragment(movie);
-        addMovieToCollectionsDialogFragment.setListener(this);
-        addMovieToCollectionsDialogFragment.show(addMovieToCollectionsDialogFragment.getParentFragmentManager(), "AddMovieToCollectionDialog");
-    }
-
-    @Override
-    public void onMovieAdded(List<String> collectionIds, Movie selectedMovie, MovieCollectionViewModel movieCollectionViewModel) {
-        movieCollectionViewModel.addMovieToCollections(collectionIds, selectedMovie.getId());
+        AddMovieToCollectionsDialogFragment addMovieToCollectionsDialogFragment = new AddMovieToCollectionsDialogFragment(movie);
+        addMovieToCollectionsDialogFragment.show(((FragmentActivity)ctx).getSupportFragmentManager(), "AddMovieToCollectionDialog");
     }
 
     private void onBtnMovieRemoveClicked(Movie movie) {
@@ -116,8 +109,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         });
         movieCollectionViewModel.removeMovieFromCollection(movieCollectionId, movie.getId());
     }
-
-
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
         private final TextView movieName;

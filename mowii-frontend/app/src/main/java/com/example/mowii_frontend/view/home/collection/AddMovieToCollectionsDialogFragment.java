@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,17 +24,21 @@ import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.User;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-public class AddMovieToCollectionsDialogFragment extends DialogFragment {
+public class AddMovieToCollectionsDialogFragment extends DialogFragment implements MovieCollectionAdapter.MovieCollectionAdapterListener {
 
     private final Movie selectedMovie;
-    private List<String> selectedCollections;
+    private HashSet<String> selectedCollections;
     private Button btnCancel;
     private Button btnAdd;
     private ProgressBar pbMyCollections;
+    private ProgressBar pbAddMovie;
     private RecyclerView rvMyCollections;
     private TextView txtMyCollectionsError;
+    MovieCollectionViewModel movieCollectionViewModel;
 
     public AddMovieToCollectionsDialogFragment(Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
@@ -40,28 +46,28 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment {
 
     private final User myUser = UserManager.getInstance().getCurrentUser();
 
-
-    public interface AddMovieToCollectionsDialogFragmentListener {
-        void onMovieAdded(List<String> collectionIds, Movie selectedMovie, MovieCollectionViewModel movieCollectionViewModel);
-    }
-
-    private AddMovieToCollectionsDialogFragmentListener listener;
-
-    public void setListener(AddMovieToCollectionsDialogFragmentListener listener) {
-        this.listener = listener;
+    @Override
+    public void onCollectionClicked(String collectionId, boolean isSelected) {
+        if (selectedCollections != null) {
+            if (isSelected) {
+                selectedCollections.add(collectionId);
+            } else {
+                selectedCollections.remove(collectionId);
+            }
+        }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_create_movie_collection_dialog, container);
+        return inflater.inflate(R.layout.fragment_add_movie_to_collection, container,false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        MovieCollectionViewModel movieCollectionViewModel = new MovieCollectionViewModel();
+        movieCollectionViewModel = new MovieCollectionViewModel();
         movieCollectionViewModel.getUserCollectionsResult().observe(getViewLifecycleOwner(), userCollectionsResult -> {
             if (userCollectionsResult.isSuccess()) {
                 onUserCollectionsSuccessful(userCollectionsResult.getData());
@@ -74,25 +80,46 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment {
 
         if (getDialog() != null && getDialog().getWindow() != null) {
             WindowManager.LayoutParams params;
-            params = getDialog().getWindow().getAttributes();
+            Window window = getDialog().getWindow();
+            params = window.getAttributes();
             params.width = ViewGroup.LayoutParams.MATCH_PARENT; // Set your desired width here
-            getDialog().getWindow().setAttributes(params);
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            window.setAttributes(params);
+            window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         }
 
         btnCancel = view.findViewById(R.id.btn_cancel_add_movie);
         btnAdd = view.findViewById(R.id.btn_add_movie);
         pbMyCollections = view.findViewById(R.id.pb_addMovieMyCollections);
-        rvMyCollections = view.findViewById(R.id.rv_mycollections);
+        pbAddMovie = view.findViewById(R.id.pb_add_movie);
+
+        rvMyCollections = view.findViewById(R.id.rv_mycollections_movie_add);
         txtMyCollectionsError = view.findViewById(R.id.txt_mycollectionserror);
 
         btnCancel.setOnClickListener(v -> dismiss());
         btnAdd.setEnabled(false);
-        btnAdd.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onMovieAdded(selectedCollections, selectedMovie, movieCollectionViewModel);
+        btnAdd.setOnClickListener(v -> addMovieToCollections());
+    }
+
+    private void addMovieToCollections() {
+        MovieCollectionViewModel movieCollectionViewModel = new MovieCollectionViewModel();
+        List<String> collectionList = new ArrayList<>(selectedCollections);
+        movieCollectionViewModel.addMovieToCollectionResult().observe(getViewLifecycleOwner(), addMovieToCollectionsResult -> {
+            if (addMovieToCollectionsResult.isSuccess()) {
+                dismiss();
+            } else {
+                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
+            pbAddMovie.setVisibility(View.INVISIBLE);
+            btnAdd.setVisibility(View.VISIBLE);
+            btnAdd.setClickable(true);
+            btnCancel.setClickable(true);
         });
+
+        btnCancel.setClickable(false);
+        btnAdd.setClickable(false);
+        btnAdd.setVisibility(View.INVISIBLE);
+        pbAddMovie.setVisibility(View.VISIBLE);
+        movieCollectionViewModel.addMovieToCollections(collectionList, selectedMovie.getId());
     }
 
     private void onUserCollectionsSuccessful(List<MovieCollection> results) {
@@ -108,11 +135,14 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment {
         rvMyCollections.setVisibility(View.INVISIBLE);
     }
 
-    private void onItemExists(List<MovieCollection> items){
-
+    private void onItemExists(List<MovieCollection> items) {
+        MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), items, movieCollectionViewModel, true);
+        rvMyCollections.setAdapter(adapter);
+        rvMyCollections.setVisibility(View.VISIBLE);
+        txtMyCollectionsError.setVisibility(View.INVISIBLE);
     }
 
-    private void onNoItems(){
+    private void onNoItems() {
         txtMyCollectionsError.setText(R.string.no_item);
         txtMyCollectionsError.setVisibility(View.VISIBLE);
         rvMyCollections.setVisibility(View.INVISIBLE);

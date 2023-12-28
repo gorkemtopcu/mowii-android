@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
     private final boolean isAddMovie;
 
     public interface MovieCollectionAdapterListener {
-        void onMovieCollectionSelected(String collectionId);
+        void onCollectionClicked(String collectionId, boolean isSelected);
     }
 
     private MovieCollectionAdapterListener listener;
@@ -38,7 +39,6 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
     public void setListener(MovieCollectionAdapterListener listener) {
         this.listener = listener;
     }
-
 
     public MovieCollectionAdapter(Context ctx, List<MovieCollection> data, MovieCollectionViewModel movieCollectionViewModel, boolean isAddMovie) {
         this.ctx = ctx;
@@ -78,6 +78,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         TextView userName;
         TextView likes;
         ConstraintLayout row;
+        boolean isSelected;
 
         public MovieCollectionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -119,9 +120,10 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         }
 
         private void setItemClickMovieAdd(MovieCollection selectedCollection) {
-            if(listener != null) {
-                listener.onMovieCollectionSelected(selectedCollection.getId());
-            }
+            if(listener == null) return;
+            isSelected = !isSelected;
+            listener.onCollectionClicked(selectedCollection.getId(), isSelected);
+            row.setBackgroundColor(ContextCompat.getColor(ctx, isSelected ? R.color.primaryLight : R.color.white));
         }
 
         @SuppressLint("SetTextI18n")

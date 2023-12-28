@@ -67,7 +67,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/user_collections"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider1">
@@ -84,7 +84,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_mycollections"
+                    android:id="@+id/rv_mycollections_movie_add"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:visibility="invisible"
@@ -128,22 +128,39 @@
 
                 <Button
                     android:id="@+id/btn_cancel_add_movie"
-                    android:layout_width="0dp"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/primary"
-                    android:text="Cancel" />
+                    android:text="Cancel"
+                    android:textColor="@color/primaryLight" />
 
-                <Button
-                    android:id="@+id/btn_add_movie"
-                    android:layout_width="0dp"
+                <View
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:text="Add"
-                    android:textColor="@color/primary"
-                    android:backgroundTint="@color/primaryLight"/>
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/btn_add_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primaryLight"
+                        android:text="Add"
+                        android:textColor="@color/primary"
+                        android:visibility="visible" />
+
+                    <ProgressBar
+                        android:id="@+id/pb_add_movie"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone" />
+                </FrameLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
