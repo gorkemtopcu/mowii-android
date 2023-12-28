@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.mainMenu.collection;
+package com.example.mowii_frontend.view.home.collection;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,6 +20,7 @@ import com.example.mowii_frontend.model.User;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollectionAdapter.MovieCollectionViewHolder> {
     private final Context ctx;
@@ -88,8 +89,9 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
                 Intent intent = new Intent(ctx, CollectionDetails.class);
                 intent.putExtra("collectionId", selectedCollection.getId());
                 intent.putExtra("collectionName", selectedCollection.getName());
-                intent.putExtra("creatorName", myUser.getName());
+                intent.putExtra("creatorName", selectedCollection.getUserName());
                 intent.putExtra("likeCount", selectedCollection.getLike());
+                intent.putExtra("isBelongMyCollections", Objects.equals(myUser.getId(), selectedCollection.getUserId()));
                 ctx.startActivity(intent);
             });
         }
