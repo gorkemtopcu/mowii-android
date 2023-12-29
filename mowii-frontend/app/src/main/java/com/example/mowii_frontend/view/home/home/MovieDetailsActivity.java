@@ -15,6 +15,7 @@ import com.example.mowii_frontend.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -24,15 +25,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_movie_details);
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
 
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(""); // or use null
+        Objects.requireNonNull(getSupportActionBar()).setTitle(""); // or use null
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
@@ -47,8 +43,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
             double movieScore = intent.getDoubleExtra("MOVIE_SCORE", 0.0);
             int releaseYear = intent.getIntExtra("MOVIE_RELEASE_YEAR", 0);
 
-            // Now you have all the data from the intent, you can use it as needed
-            // For instance, set the values to corresponding TextViews or Views in your layout
             TextView txtMovieName = findViewById(R.id.txtmovieName);
             txtMovieName.setText(movieTitle);
 
@@ -56,10 +50,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
             txtPlot.setText(moviePlot);
 
             TextView txtReleaseYear = findViewById(R.id.txtReleaseYear);
-            txtReleaseYear.setText("Year:" + String.valueOf(releaseYear));
+            txtReleaseYear.setText("Year: " + releaseYear);
 
             TextView txtIMDB = findViewById(R.id.txtIMDB);
-            txtIMDB.setText("IMDB Score:" + String.valueOf(movieScore));
+            txtIMDB.setText("IMDB Score: " + movieScore);
 
             TextView txtGenre = findViewById(R.id.txtGenre);
             String genresString = TextUtils.join(", ", genres);
@@ -67,7 +61,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             TextView txtActors = findViewById(R.id.txtActors);
             String actorsString = TextUtils.join(", ", actors);
-            txtActors.setText("Actors:" + actorsString);
+            txtActors.setText("Actors: " + actorsString);
 
             TextView txtDirector = findViewById(R.id.txtDirector);
             String drc = "Director: " + movieDirector;

@@ -7,6 +7,79 @@
     android:layout_height="match_parent"
     android:background="@color/primary">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:title=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/layout_collection_info"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="107dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="106dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <TextView
+            android:id="@+id/txt_collection_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Collection Name"
+            android:textAlignment="center"
+            android:textColor="@color/primaryLight"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/primaryLight" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/txt_collection_creator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Collections: 100"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_collection_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Likes: 500"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/primaryLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_collection_info" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/collection_movies"
         android:layout_width="0dp"
@@ -14,7 +87,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_collection_info">
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -66,65 +139,4 @@
             app:layout_constraintStart_toStartOf="@+id/rv_movies"
             app:layout_constraintTop_toTopOf="@+id/rv_movies" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:title=""
-        app:titleTextColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <LinearLayout
-        android:id="@+id/layout_collection_info"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="107dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="106dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/txt_collection_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Collection Name"
-            android:textAlignment="center"
-            android:textColor="@color/primaryLight"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/primaryLight" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <TextView
-            android:id="@+id/txt_collection_creator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total Collections: 100"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/txt_collection_likes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total Likes: 500"
-            android:textSize="18sp" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

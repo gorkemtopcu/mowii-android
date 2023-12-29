@@ -36,7 +36,6 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment implemen
     private final HashSet<String> selectedCollections = new HashSet<>();
     private Button btnCancel;
     private Button btnAdd;
-    private ImageButton btnCreateCollection;
     private ProgressBar pbMyCollections;
     private ProgressBar pbAddMovie;
     private RecyclerView rvMyCollections;
@@ -91,7 +90,7 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment implemen
 
         btnCancel = view.findViewById(R.id.btn_cancel_add_movie);
         btnAdd = view.findViewById(R.id.btn_add_movie);
-        btnCreateCollection = view.findViewById(R.id.btn_createCollection);
+        ImageButton btnCreateCollection = view.findViewById(R.id.btn_createCollection);
         pbMyCollections = view.findViewById(R.id.pb_addMovieMyCollections);
         pbAddMovie = view.findViewById(R.id.pb_add_movie);
 
