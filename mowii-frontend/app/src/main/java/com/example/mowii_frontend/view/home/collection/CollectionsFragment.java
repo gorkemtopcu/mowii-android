@@ -49,10 +49,26 @@ public class CollectionsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        movieCollectionViewModel = new ViewModelProvider(requireActivity()).get(MovieCollectionViewModel.class);
+        movieCollectionViewModel.getAllCollectionsResult().observe(getViewLifecycleOwner(), collectionResult -> {
+            if (collectionResult != null && collectionResult.isSuccess()) {
+                onRequestSuccessful(collectionResult.getData());
+            } else {
+                onRequestFailed();
+            }
+            binding.pbCollections.setVisibility(View.INVISIBLE);
+        });
+        movieCollectionViewModel.getAllCollections();
+    }
 
     private void onRequestFailed() {
         binding.txtAllcollections.setText(getString(R.string.error));
         binding.txtAllcollections.setVisibility(View.VISIBLE);
+        binding.rvCollections.setVisibility(View.INVISIBLE);
     }
 
 
@@ -67,6 +83,7 @@ public class CollectionsFragment extends Fragment {
     private void onNoItems() {
         binding.txtAllcollections.setText(getString(R.string.no_item));
         binding.txtAllcollections.setVisibility(View.VISIBLE);
+        binding.rvCollections.setVisibility(View.INVISIBLE);
     }
 
     private void onItemExists(ArrayList<MovieCollection> results) {

@@ -21,6 +21,7 @@ import com.example.mowii_frontend.model.MovieCollection;
 import com.example.mowii_frontend.model.User;
 import com.example.mowii_frontend.viewModel.MovieCollectionViewModel;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 

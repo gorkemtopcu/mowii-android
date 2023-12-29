@@ -144,7 +144,7 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment implemen
         createMovieCollectionDialogFragment.getBtnCreate().setVisibility(View.GONE);
         createMovieCollectionDialogFragment.getPbCreateCollection().setVisibility(View.VISIBLE);
 
-        movieCollectionViewModel.createCollectionResult().observe(getViewLifecycleOwner(), createCollectionResult ->{
+        movieCollectionViewModel.createCollection().observe(getViewLifecycleOwner(), createCollectionResult ->{
             if (createCollectionResult.isSuccess()){
                 createMovieCollectionDialogFragment.dismiss();
             } else {
@@ -157,7 +157,7 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment implemen
             createMovieCollectionDialogFragment.getPbCreateCollection().setVisibility(View.GONE);
         });
 
-        movieCollectionViewModel.createCollectionResult(myUser.getId(), collectionName);
+        movieCollectionViewModel.createCollection(myUser.getId(), collectionName);
     }
 
     private void onUserCollectionsSuccessful(List<MovieCollection> results) {

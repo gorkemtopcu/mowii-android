@@ -28,6 +28,7 @@ public class MovieCollectionViewModel extends ViewModel {
     private final MutableLiveData<ApiResponse<MovieCollection>> likeCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> unlikeCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<MovieCollection>> createCollectionResult = new MutableLiveData<>();
+    private final MutableLiveData<ApiResponse<MovieCollection>> deleteCollectionResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<Void>> addMovieToCollectionsResult = new MutableLiveData<>();
     private final MutableLiveData<ApiResponse<Void>> removeMovieFromCollectionResult = new MutableLiveData<>();
 
@@ -47,8 +48,12 @@ public class MovieCollectionViewModel extends ViewModel {
         return unlikeCollectionResult;
     }
 
-    public LiveData<ApiResponse<MovieCollection>> createCollectionResult() {
+    public LiveData<ApiResponse<MovieCollection>> createCollection() {
         return createCollectionResult;
+    }
+
+    public LiveData<ApiResponse<MovieCollection>> deleteCollection() {
+        return deleteCollectionResult;
     }
 
     public LiveData<ApiResponse<Void>> addMovieToCollectionResult(){
@@ -133,7 +138,7 @@ public class MovieCollectionViewModel extends ViewModel {
         });
     }
 
-    public void createCollectionResult(String userId, String name) {
+    public void createCollection(String userId, String name) {
         Call<MovieCollection> call = apiService.createMovieCollection(new MovieCollectionCreationInput(userId, name));
         call.enqueue(new Callback<MovieCollection>() {
             @Override
@@ -150,6 +155,25 @@ public class MovieCollectionViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull Call<MovieCollection> call, @NonNull Throwable t) {
                 createCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
+            }
+        });
+    }
+
+    public void deleteCollection(String id) {
+        Call<MovieCollection> call = apiService.deleteMovieCollection(id);
+        call.enqueue(new Callback<MovieCollection>() {
+            @Override
+            public void onResponse(@NonNull Call<MovieCollection> call, @NonNull Response<MovieCollection> response) {
+                if (response.isSuccessful()) {
+                    deleteCollectionResult.setValue(new ApiResponse<MovieCollection>(true, "", response.body()));
+                } else {
+                    deleteCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MovieCollection> call, @NonNull Throwable t) {
+                deleteCollectionResult.setValue(new ApiResponse<>(false, "Something went wrong", null));
             }
         });
     }
