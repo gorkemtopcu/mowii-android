@@ -14,9 +14,24 @@
         android:background="?attr/colorPrimary"
         android:title=""
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/white">
+
+        <ImageButton
+            android:id="@+id/btn_delete_collection"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/delete_icon"
+            android:backgroundTint="@color/accent"
+            android:scaleType="fitCenter"
+            tools:layout_editor_absoluteX="372dp"
+            tools:layout_editor_absoluteY="22dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/layout_collection_info"

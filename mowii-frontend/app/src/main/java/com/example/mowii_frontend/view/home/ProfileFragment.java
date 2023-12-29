@@ -51,32 +51,42 @@ public class ProfileFragment extends Fragment implements CreateMovieCollectionDi
             binding.txtProfileError.setVisibility(View.GONE);
 
             binding.txtUsername.setText(myUser.getName());
-            movieCollectionViewModel.getUserCollectionsResult().observe(getViewLifecycleOwner(), userCollectionsResult->{
-                if (userCollectionsResult.isSuccess()){
-                    onUserCollectionsFetchSuccessful(userCollectionsResult.getData());
-                } else {
-                    onUserCollectionsFetchFailed();
-                }
-            });
-            movieCollectionViewModel.getUserCollections(myUser.getId());
-
-            movieCollectionViewModel.likeCollectionResult().observe(getViewLifecycleOwner(), likeCollectionResult -> {
-                if(likeCollectionResult.isSuccess()) {
-                    binding.txtTotalLikes.setText("Total Likes: " + ++likeCount);
-                }
-            });
-
-            movieCollectionViewModel.unlikeCollectionResult().observe(getViewLifecycleOwner(), unlikeCollectionResult -> {
-                if(unlikeCollectionResult.isSuccess()) {
-                    binding.txtTotalLikes.setText("Total Likes: " + --likeCount);
-                }
-            });
+            binding.txtTotalCollections.setText("Total Collections: ?");
+            binding.txtTotalLikes.setText("Total Likes: ?");
         } else {
             binding.userProfile.setVisibility(View.GONE);
             binding.txtProfileError.setVisibility(View.VISIBLE);
         }
 
+
+        movieCollectionViewModel.getUserCollectionsResult().observe(getViewLifecycleOwner(), userCollectionsResult->{
+            if (userCollectionsResult.isSuccess()){
+                onUserCollectionsFetchSuccessful(userCollectionsResult.getData());
+            } else {
+                onUserCollectionsFetchFailed();
+            }
+        });
+
+        movieCollectionViewModel.likeCollectionResult().observe(getViewLifecycleOwner(), likeCollectionResult -> {
+            if(likeCollectionResult.isSuccess()) {
+                binding.txtTotalLikes.setText("Total Likes: " + ++likeCount);
+            }
+        });
+
+        movieCollectionViewModel.unlikeCollectionResult().observe(getViewLifecycleOwner(), unlikeCollectionResult -> {
+            if(unlikeCollectionResult.isSuccess()) {
+                binding.txtTotalLikes.setText("Total Likes: " + --likeCount);
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        movieCollectionViewModel.getUserCollections(myUser.getId());
     }
 
     private void showCreateMovieCollectionDialog() {
@@ -112,6 +122,7 @@ public class ProfileFragment extends Fragment implements CreateMovieCollectionDi
     private void onNoItems() {
         binding.txtMycollections.setText(getString(R.string.no_item));
         binding.txtMycollections.setVisibility(View.VISIBLE);
+        binding.rvMycollections.setVisibility(View.INVISIBLE);
     }
 
     private void onItemExists(List<MovieCollection> results) {
@@ -129,7 +140,7 @@ public class ProfileFragment extends Fragment implements CreateMovieCollectionDi
         createMovieCollectionDialogFragment.getBtnCreate().setVisibility(View.GONE);
         createMovieCollectionDialogFragment.getPbCreateCollection().setVisibility(View.VISIBLE);
 
-        movieCollectionViewModel.createCollectionResult().observe(getViewLifecycleOwner(), createCollectionResult ->{
+        movieCollectionViewModel.createCollection().observe(getViewLifecycleOwner(), createCollectionResult ->{
             if (createCollectionResult.isSuccess()){
                 createMovieCollectionDialogFragment.dismiss();
             } else {
@@ -142,6 +153,6 @@ public class ProfileFragment extends Fragment implements CreateMovieCollectionDi
             createMovieCollectionDialogFragment.getPbCreateCollection().setVisibility(View.GONE);
         });
 
-        movieCollectionViewModel.createCollectionResult(myUser.getId(), collectionName);
+        movieCollectionViewModel.createCollection(myUser.getId(), collectionName);
     }
 }
