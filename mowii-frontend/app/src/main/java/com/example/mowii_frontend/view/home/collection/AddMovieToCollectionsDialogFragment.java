@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mowii_frontend.R;
@@ -93,6 +94,7 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment implemen
         pbAddMovie = view.findViewById(R.id.pb_add_movie);
 
         rvMyCollections = view.findViewById(R.id.rv_mycollections_movie_add);
+        rvMyCollections.setLayoutManager(new LinearLayoutManager(getContext()));
         txtMyCollectionsError = view.findViewById(R.id.txt_mycollectionserror);
 
         btnCancel.setOnClickListener(v -> dismiss());
@@ -137,6 +139,7 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment implemen
 
     private void onItemExists(List<MovieCollection> items) {
         MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), items, movieCollectionViewModel, true);
+        adapter.setListener(this);
         rvMyCollections.setAdapter(adapter);
         rvMyCollections.setVisibility(View.VISIBLE);
         txtMyCollectionsError.setVisibility(View.INVISIBLE);

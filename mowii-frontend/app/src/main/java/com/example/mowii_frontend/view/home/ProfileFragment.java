@@ -117,7 +117,7 @@ public class ProfileFragment extends Fragment implements CreateMovieCollectionDi
     private void onItemExists(List<MovieCollection> results) {
         data.clear();
         data.addAll(results);
-        MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), results, movieCollectionViewModel,false);
+        MovieCollectionAdapter adapter = new MovieCollectionAdapter(getActivity(), data, movieCollectionViewModel,false);
         binding.rvMycollections.setAdapter(adapter);
         binding.rvMycollections.setVisibility(View.VISIBLE);
     }
