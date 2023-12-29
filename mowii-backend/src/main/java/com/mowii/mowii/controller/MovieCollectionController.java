@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -140,12 +141,18 @@ public class MovieCollectionController {
         try {
             Movie movie = movieService.getById(input.getMovieId());
 
+            outerLoop:
             for (String id: input.getIdList()){
                 MovieCollection movieCollection = movieCollectionService.getById(id);
                 if (movieCollection.getMovies() == null) {
                     movieCollection.setMovies(new ArrayList<>()); // Initialize the list if it's null
                 }
-                // Add the movie to the collection
+
+                // If movie does not exist in collection: add movie to collection
+                for (Movie m: movieCollection.getMovies()) {
+                    if (Objects.equals(m.getId(), movie.getId())) continue outerLoop;
+                }
+
                 movieCollection.getMovies().add(movie);
 
                 // Update the movie collection

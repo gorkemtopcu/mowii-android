@@ -111,7 +111,7 @@
                 android:id="@+id/btn_createCollection"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@drawable/circle_button_background"
+                android:background="@drawable/circle_primary_light"
                 android:src="@drawable/add_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

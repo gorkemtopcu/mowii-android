@@ -5,6 +5,7 @@
     <color name="ternary">#872341</color>
     <color name="accent">#be3144</color>
     <color name="primaryLight">#FFD1E3</color>
+    <color name="primaryLightInactive">#FFEBF1</color>
     <color name="text">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#FFFFFF</color>

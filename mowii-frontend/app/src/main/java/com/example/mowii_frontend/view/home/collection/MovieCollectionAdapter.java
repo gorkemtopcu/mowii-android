@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,14 +59,16 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
     @Override
     public void onBindViewHolder(@NonNull MovieCollectionViewHolder holder, int position) {
         MovieCollection movieCollection = data.get(position);
-        boolean isLiked = myUser.checkIsCollectionLiked(movieCollection.getId());
-        holder.setLikeIcon(isLiked);
         holder.collectionName.setText(movieCollection.getName());
         holder.userName.setText(movieCollection.getUserName());
-        holder.likes.setVisibility(isAddMovie ? View.INVISIBLE : View.VISIBLE);
-        holder.setLikeText(movieCollection.getLike());
         holder.setRowClick(movieCollection, isAddMovie);
-        holder.setLikeClicked(movieCollection);
+        if(!isAddMovie) {
+            boolean isLiked = myUser.checkIsCollectionLiked(movieCollection.getId());
+            holder.setLikeIcon(isLiked);
+            holder.likes.setVisibility(View.VISIBLE);
+            holder.setLikeClicked(movieCollection);
+            holder.setLikeText(movieCollection.getLike());
+        }
     }
 
     @Override
@@ -78,6 +81,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
         TextView userName;
         TextView likes;
         ConstraintLayout row;
+        ImageButton selectedImage;
         boolean isSelected;
 
         public MovieCollectionViewHolder(@NonNull View itemView) {
@@ -86,6 +90,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
             userName = itemView.findViewById(R.id.txtReleaseYear);
             likes = itemView.findViewById(R.id.txt_likes);
             row = itemView.findViewById(R.id.rv_collection_row);
+            selectedImage = itemView.findViewById(R.id.image_movie_added);
         }
 
         @SuppressLint("SetTextI18n")
@@ -123,7 +128,7 @@ public class MovieCollectionAdapter extends RecyclerView.Adapter<MovieCollection
             if(listener == null) return;
             isSelected = !isSelected;
             listener.onCollectionClicked(selectedCollection.getId(), isSelected);
-            row.setBackgroundColor(ContextCompat.getColor(ctx, isSelected ? R.color.primaryLight : R.color.white));
+            selectedImage.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
         }
 
         @SuppressLint("SetTextI18n")

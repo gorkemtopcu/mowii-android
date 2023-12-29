@@ -32,7 +32,7 @@ import java.util.List;
 public class AddMovieToCollectionsDialogFragment extends DialogFragment implements MovieCollectionAdapter.MovieCollectionAdapterListener {
 
     private final Movie selectedMovie;
-    private HashSet<String> selectedCollections;
+    private final HashSet<String> selectedCollections = new HashSet<>();
     private Button btnCancel;
     private Button btnAdd;
     private ProgressBar pbMyCollections;
@@ -98,18 +98,22 @@ public class AddMovieToCollectionsDialogFragment extends DialogFragment implemen
         txtMyCollectionsError = view.findViewById(R.id.txt_mycollectionserror);
 
         btnCancel.setOnClickListener(v -> dismiss());
-        btnAdd.setEnabled(false);
         btnAdd.setOnClickListener(v -> addMovieToCollections());
     }
 
     private void addMovieToCollections() {
+        if (selectedCollections.isEmpty()){
+            Toast.makeText(getActivity(), "Collection is not selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         MovieCollectionViewModel movieCollectionViewModel = new MovieCollectionViewModel();
         List<String> collectionList = new ArrayList<>(selectedCollections);
         movieCollectionViewModel.addMovieToCollectionResult().observe(getViewLifecycleOwner(), addMovieToCollectionsResult -> {
             if (addMovieToCollectionsResult.isSuccess()) {
                 dismiss();
             } else {
-                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
             pbAddMovie.setVisibility(View.INVISIBLE);
             btnAdd.setVisibility(View.VISIBLE);
