@@ -1,4 +1,4 @@
-package com.example.mowii_frontend.view.mainMenu;
+package com.example.mowii_frontend.view.home;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,13 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mowii_frontend.R;
-import com.example.mowii_frontend.view.mainMenu.collection.CollectionsFragment;
+import com.example.mowii_frontend.view.home.collection.CollectionsFragment;
+import com.example.mowii_frontend.view.home.home.MoviesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class BottomNavigationMenu extends AppCompatActivity {
+public class BottomNavigationMenu extends AppCompatActivity{
 
     private Map<Integer, Fragment> fragmentMap;
 
@@ -31,7 +32,7 @@ public class BottomNavigationMenu extends AppCompatActivity {
         // Initialize the fragment map
         fragmentMap = new HashMap<>();
         fragmentMap.put(R.id.movie_collection, new CollectionsFragment());
-        fragmentMap.put(R.id.navigation_home, new HomeFragment());
+        fragmentMap.put(R.id.navigation_home, new MoviesFragment());
         fragmentMap.put(R.id.user_profile, new ProfileFragment());
 
         // Set the initial fragment
@@ -57,7 +58,6 @@ public class BottomNavigationMenu extends AppCompatActivity {
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.container, fragment);
-            transaction.addToBackStack(null);
             transaction.commit();
             return true;
         }

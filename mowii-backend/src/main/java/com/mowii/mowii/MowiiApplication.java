@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication
 @EnableMongoRepositories(basePackages = {"com.mowii"})
 public class MowiiApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(MowiiApplication.class, args);
 	}

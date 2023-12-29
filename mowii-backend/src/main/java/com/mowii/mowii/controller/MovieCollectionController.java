@@ -1,6 +1,7 @@
 package com.mowii.mowii.controller;
 
 import com.mowii.mowii.exception.MovieCollectionNotFoundException;
+import com.mowii.mowii.exception.MovieNotFoundException;
 import com.mowii.mowii.exception.UserNotFoundException;
 import com.mowii.mowii.model.*;
 import com.mowii.mowii.service.MovieCollectionService;
@@ -12,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/movie-collection")
@@ -45,29 +48,53 @@ public class MovieCollectionController {
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createMovieCollection(@RequestBody MovieCollectionCreationInput movieCollectionCreationInput) {
+    @GetMapping("/movies/{id}")
+    public ResponseEntity<?> getMoviesByCollectionById(@PathVariable String id) {
         try {
-            User owner = userService.getById(movieCollectionCreationInput.getUserId());
-            owner.setCollectionCount(owner.getCollectionCount() + 1);
-            MovieCollection movieCollection = new MovieCollection(owner.getId(), owner.getName(), movieCollectionCreationInput.getName(),0);
-            movieCollectionService.save(movieCollection);
-            owner.appendMyCollection(movieCollection);
-            userService.save(owner);
 
-            return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
-        } catch (UserNotFoundException e) {
+            MovieCollection collection = movieCollectionService.getById(id);
+            List<Movie> movieList = collection.getMovies();
+            return new ResponseEntity<>(movieList, HttpStatus.OK);
+        } catch (MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("/unlike")
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getMovieCollectionByUserId(@PathVariable String userId) {
+        try {
+            List<MovieCollection> movieCollections = movieCollectionService.getByUserId(userId);
+            return new ResponseEntity<>(movieCollections, HttpStatus.OK);
+        } catch (MovieCollectionNotFoundException | UserNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createMovieCollection(@RequestBody MovieCollectionCreationInput movieCollectionCreationInput) {
+        try {
+            User owner = userService.getById(movieCollectionCreationInput.getUserId());
+            MovieCollection movieCollection = new MovieCollection(owner.getId(), owner.getName(), movieCollectionCreationInput.getName(),0);
+            movieCollectionService.save(movieCollection);
+            owner.appendMyCollection(movieCollection.getId());
+            userService.save(owner);
+
+            return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
+        } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/unlike")
     public ResponseEntity<?> unlikeMovieCollection(@RequestBody MovieCollectionLikeInput movieCollectionLikeInput) {
         try {
             MovieCollection movieCollection = movieCollectionService.getById(movieCollectionLikeInput.getCollectionId());
 
             // Check if the collection is liked by the user
-            if (!movieCollectionService.isCollectionAlreadyLiked(movieCollectionLikeInput.getLikerId(), movieCollection)) {
+            if (!movieCollectionService.isCollectionAlreadyLiked(movieCollectionLikeInput.getLikerId(), movieCollection.getId())) {
                 return new ResponseEntity<>("Collection is not liked by the user", HttpStatus.BAD_REQUEST);
             }
 
@@ -75,10 +102,10 @@ public class MovieCollectionController {
             movieCollectionService.updateMovieCollection(movieCollection);
 
             User liker = userService.getById(movieCollectionLikeInput.getLikerId());
-            liker.removeLikeCollection(movieCollection);
+            liker.removeLikeCollection(movieCollection.getId());
             userService.save(liker);
             return new ResponseEntity<>(movieCollection, HttpStatus.OK);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
@@ -90,7 +117,7 @@ public class MovieCollectionController {
             MovieCollection movieCollection = movieCollectionService.getById(movieCollectionLikeInput.getCollectionId());
 
             // Check if the collection is already liked by the user
-            if (movieCollectionService.isCollectionAlreadyLiked(movieCollectionLikeInput.getLikerId(), movieCollection)) {
+            if (movieCollectionService.isCollectionAlreadyLiked(movieCollectionLikeInput.getLikerId(), movieCollection.getId())) {
                 return new ResponseEntity<>("Collection is already liked by the user", HttpStatus.BAD_REQUEST);
             }
 
@@ -98,10 +125,10 @@ public class MovieCollectionController {
             movieCollectionService.updateMovieCollection(movieCollection);
 
             User liker = userService.getById(movieCollectionLikeInput.getLikerId());
-            liker.appendLikeCollection(movieCollection);
+            liker.appendLikeCollection(movieCollection.getId());
             userService.save(liker);
             return new ResponseEntity<>(movieCollection, HttpStatus.CREATED);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | MovieCollectionNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
@@ -110,33 +137,59 @@ public class MovieCollectionController {
 
 
     @PutMapping("/add-movie")
-    public ResponseEntity<?> addMovieToCollection(@RequestBody AddMovieToCollectionInput input) {
+    public ResponseEntity<?> addMovieToCollections(@RequestBody AddMovieToCollectionsInput input) {
         try {
             Movie movie = movieService.getById(input.getMovieId());
-            MovieCollection movieCollection = movieCollectionService.getById(input.getId());
 
-            if (movieCollection.getMovies() == null) {
-                movieCollection.setMovies(new ArrayList<>()); // Initialize the list if it's null
+            outerLoop:
+            for (String id: input.getIdList()){
+                MovieCollection movieCollection = movieCollectionService.getById(id);
+                if (movieCollection.getMovies() == null) {
+                    movieCollection.setMovies(new ArrayList<>()); // Initialize the list if it's null
+                }
+
+                // If movie does not exist in collection: add movie to collection
+                for (Movie m: movieCollection.getMovies()) {
+                    if (Objects.equals(m.getId(), movie.getId())) continue outerLoop;
+                }
+
+                movieCollection.getMovies().add(movie);
+
+                // Update the movie collection
+                movieCollectionService.updateMovieCollection(movieCollection);
             }
 
-            if (movieCollection.getMovies().contains(movie)) {
-                return new ResponseEntity<>("Movie is already in the collection", HttpStatus.BAD_REQUEST);
-            }
+            return new ResponseEntity<>("Movie added to collections successfully", HttpStatus.OK);
 
-            // Add the movie to the collection
-            movieCollection.getMovies().add(movie);
-
-            // Update the movie collection
-            movieCollectionService.updateMovieCollection(movieCollection);
-
-            return new ResponseEntity<>("Movie added to collection successfully", HttpStatus.OK);
-
-        } catch (UserNotFoundException e) {
+        } catch (MovieCollectionNotFoundException | MovieNotFoundException e) {
             String errorMessage = e.getMessage();
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
 
+    @PutMapping("/remove-movie")
+    public ResponseEntity<?> removeMovieFromCollection(@RequestBody RemoveMovieFromCollectionInput input) {
+        try {
+            MovieCollection movieCollection = movieCollectionService.getById(input.getId());
+
+            if (movieCollection.getMovies() == null) {
+                return new ResponseEntity<>("Movie is not found in the collection", HttpStatus.BAD_REQUEST);
+            }
+
+            for (Movie movie: movieCollection.getMovies()) {
+                if(!Objects.equals(movie.getId(), input.getMovieId())) { continue; }
+                movieCollection.getMovies().remove(movie);
+                movieCollectionService.updateMovieCollection(movieCollection);
+                return new ResponseEntity<>("Movie removed from collection successfully", HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>("Movie is not found in the collection", HttpStatus.BAD_REQUEST);
+
+        } catch (MovieCollectionNotFoundException | MovieNotFoundException e) {
+            String errorMessage = e.getMessage();
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteMovieCollection(@PathVariable String id) {

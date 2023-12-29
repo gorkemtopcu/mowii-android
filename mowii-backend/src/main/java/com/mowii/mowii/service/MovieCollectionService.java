@@ -1,13 +1,11 @@
 package com.mowii.mowii.service;
 
 import com.mowii.mowii.exception.MovieCollectionNotFoundException;
-import com.mowii.mowii.exception.UserNotFoundException;
+import com.mowii.mowii.model.Movie;
 import com.mowii.mowii.model.MovieCollection;
 import com.mowii.mowii.model.User;
 import com.mowii.mowii.repository.MovieCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +25,9 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
         this.movieCollectionRepository = movieCollectionRepository;
     }
 
-    public boolean isCollectionAlreadyLiked(String likerId, MovieCollection movieCollection) {
+    public boolean isCollectionAlreadyLiked(String likerId, String movieCollection) {
         User liker = userService.getById(likerId);
-        List<MovieCollection> likedCollections = liker.getLikedCollections();
+        List<String> likedCollections = liker.getLikedCollections();
         // Check if the collection is already in the liked collections
         return likedCollections.contains(movieCollection);
     }
@@ -52,6 +50,17 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
         }
     }
 
+    public List<MovieCollection> getByUserId(String userId) {
+        Optional<List<MovieCollection>> movieCollectionOptional = movieCollectionRepository.findAllByUserId(userId);
+
+        if (movieCollectionOptional.isPresent()) {
+            return movieCollectionOptional.get();
+        } else {
+            // User not found, throw an exception or return a special value
+            throw new MovieCollectionNotFoundException("Movie collections not found with User ID: " + userId);
+        }
+    }
+
     @Override
     public List<MovieCollection> getAll() {
         return movieCollectionRepository.findAll();
@@ -69,9 +78,24 @@ public class MovieCollectionService implements MowiiService<MovieCollection> {
         return movieCollection;
     }
 
+
+
     public void updateMovieCollection(MovieCollection movieCollection) {
         movieCollectionRepository.save(movieCollection);
     }
 
+
+    public void deleteCollectionsOfUser(String userId) {
+        Optional<List<MovieCollection>> userCollections = movieCollectionRepository.findAllByUserId(userId);
+        if (userCollections.isEmpty()) return;
+
+        for (MovieCollection collection : userCollections.get()) {
+            movieCollectionRepository.deleteById(collection.getId());
+        }
+    }
+
+    public List<MovieCollection> findAllById(List<String> listOfIds) {
+        return movieCollectionRepository.findAllById(listOfIds);
+    }
 
 }

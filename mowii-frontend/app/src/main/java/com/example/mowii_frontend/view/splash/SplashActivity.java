@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mowii_frontend.R;
 import com.example.mowii_frontend.view.auth.AuthenticationActivity;
-import com.example.mowii_frontend.view.mainMenu.BottomNavigationMenu;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
@@ -23,8 +22,8 @@ public class SplashActivity extends AppCompatActivity {
         // Simulating a delay for demonstration purposes
         new Handler().postDelayed(() -> {
 
-            //Intent intent = new Intent(SplashActivity.this, AuthenticationActivity.class);
-            Intent intent = new Intent(SplashActivity.this, BottomNavigationMenu.class);
+            Intent intent = new Intent(SplashActivity.this, AuthenticationActivity.class);
+            //Intent intent = new Intent(SplashActivity.this, BottomNavigationMenu.class);
             startActivity(intent);
 
             // Finish the current activity (splash screen) to prevent going back

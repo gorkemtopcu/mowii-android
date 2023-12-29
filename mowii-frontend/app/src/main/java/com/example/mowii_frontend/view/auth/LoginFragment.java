@@ -16,8 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mowii_frontend.R;
+import com.example.mowii_frontend.manager.UserManager;
 import com.example.mowii_frontend.model.User;
-import com.example.mowii_frontend.view.mainMenu.BottomNavigationMenu;
+import com.example.mowii_frontend.view.home.BottomNavigationMenu;
 import com.example.mowii_frontend.viewModel.LogInViewModel;
 
 public class LoginFragment extends Fragment {
@@ -42,8 +43,11 @@ public class LoginFragment extends Fragment {
         logInViewModel = new ViewModelProvider(this).get(LogInViewModel.class);
         logInViewModel.getAuthenticationResult().observe(getViewLifecycleOwner(), authResult -> {
             if (authResult != null) {
-                if (authResult.isSuccess())  { onLoginSuccessful(); }
-                else { onLoginFailed(authResult.getErrorMessage()); }
+                if (authResult.isSuccess()) {
+                    onLoginSuccessful(authResult.getData());
+                } else {
+                    onLoginFailed(authResult.getErrorMessage());
+                }
             }
         });
 
@@ -68,7 +72,10 @@ public class LoginFragment extends Fragment {
         logInViewModel.authenticateUser(user);
     }
 
-    private void onLoginSuccessful(){
+    private void onLoginSuccessful(User authenticatedUser) {
+        UserManager userManager = UserManager.getInstance();
+        userManager.setCurrentUser(authenticatedUser);
+
         Intent intent = new Intent(requireActivity(), BottomNavigationMenu.class);
         startActivity(intent);
 

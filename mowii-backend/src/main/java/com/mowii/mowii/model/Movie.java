@@ -17,19 +17,19 @@ public class Movie {
     private String director;
     private List<String> actors;
     private String plot;
+    private String posterLink;
     private double imdbScore;
     private int releaseYear;
 
-    public Movie() {
+    public Movie() { }
 
-    }
-
-    public Movie(String title, List<String> genres, String director, List<String> actors, String plot, double imdbScore, int releaseYear) {
+    public Movie(String title, List<String> genres, String director, List<String> actors, String plot, String posterLink, double imdbScore, int releaseYear) {
         this.title = title;
         this.genres = genres;
         this.director = director;
         this.actors = actors;
         this.plot = plot;
+        this.posterLink = posterLink;
         this.imdbScore = imdbScore;
         this.releaseYear = releaseYear;
     }

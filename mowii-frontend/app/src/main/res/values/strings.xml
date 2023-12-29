@@ -2,4 +2,10 @@
     <string name="app_name">Mowii</string>
     <string name="error">Something went wrong</string>
     <string name="no_item">No items to display</string>
+    <string name="plot">Plot</string>
+    <string name="actors">Actors</string>
+    <string name="genre">Genre</string>
+    <string name="director">Director</string>
+    <string name="imdb_score">IMDB Score</string>
+    <string name="release_year">Release Year</string>
 </resources>

@@ -17,21 +17,33 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.mainMenu.collection.CollectionDetails"
+            android:name=".view.home.home.MovieDetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.home.BottomNavigationMenu" />
+        </activity>
+        <activity
+            android:name=".view.home.collection.CollectionDetails"
             android:exported="false"
-            android:parentActivityName=".view.mainMenu.BottomNavigationMenu"/>
+            android:parentActivityName=".view.mainMenu.BottomNavigationMenu">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.mainMenu.BottomNavigationMenu" />
+        </activity>
+
         <activity
             android:name=".view.auth.AuthenticationActivity"
             android:exported="false" />
         <activity
-            android:name=".view.mainMenu.BottomNavigationMenu"
-            android:exported="false" />
+            android:name=".view.home.BottomNavigationMenu"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
